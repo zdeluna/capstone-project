@@ -34,9 +34,10 @@ speed-measure-plugin.json
 /coverage
 /libpeerconnection.log
 npm-debug.log
-yarn-error.log
+*yarn-error.log
 testem.log
 /typings
+*.env
 
 # System Files
 .DS_Store
