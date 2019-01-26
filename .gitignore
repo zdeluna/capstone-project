@@ -39,6 +39,8 @@ testem.log
 /typings
 *.env
 *.atlas
+*.package-lock.json
+*.mongo.js.swo
 
 # System Files
 .DS_Store
