@@ -38,6 +38,7 @@ npm-debug.log
 testem.log
 /typings
 *.env
+*.atlas
 
 # System Files
 .DS_Store
