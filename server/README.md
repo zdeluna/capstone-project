@@ -24,19 +24,23 @@ nodemon server.js
 
 ## Sign up a new user using email and password
 
-###POST /signup
+### POST /signup
 
-Body parameters:
+#### Body parameters:
+
 email - The email address of the user
 password - The password of the user
 Response: 200 OK
 
 ## Login in a user using email and password
 
-###POST /login
+### POST /login
 
-Body parameters:
+#### Body parameters:
+
 email - The email address of the user
 password - The password of the user
 
 Response: 200 OK { token: token}
+
+---
