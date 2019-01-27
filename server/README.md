@@ -20,6 +20,8 @@ To run the server on port 5001
 nodemon server.js
 ```
 
+---
+
 # API Documentation
 
 ## Sign up a new user using email and password
@@ -28,9 +30,24 @@ nodemon server.js
 
 #### Body parameters:
 
-email - The email address of the user
-password - The password of the user
+username - The email address of the user\
+password - The password of the user\
+
 Response: 200 OK
+
+Example:/
+
+```
+{
+    "message": "Signup was sucessful",
+    "user": {
+        "_id": "5c4de670e191271eebc824e4",
+        "username": "user1@gmail.com",
+        "password": "$2b$10$4x1ovXtsEM7xPsLQgEc81OJELqq1xOxFyIILg37omPagUfIg9BjqC",
+        "__v": 0
+    }
+}
+```
 
 ## Login in a user using email and password
 
@@ -38,9 +55,11 @@ Response: 200 OK
 
 #### Body parameters:
 
-email - The email address of the user
-password - The password of the user
+username - The email address of the user\
+password - The password of the user\
 
 Response: 200 OK { token: token}
+
+Example:/
 
 ---
