@@ -30,16 +30,16 @@ nodemon server.js
 
 #### Body parameters:
 
-username - The email address of the user\
-password - The password of the user\
+username - The email address of the user  
+password - The password of the user
 
 Response: 200 OK
 
-Example:/
+Example:
 
 ```
 {
-    "message": "Signup was sucessful",
+    "msg": "Signup was sucessful",
     "user": {
         "_id": "5c4de670e191271eebc824e4",
         "username": "user1@gmail.com",
@@ -55,11 +55,17 @@ Example:/
 
 #### Body parameters:
 
-username - The email address of the user\
-password - The password of the user\
+username - The email address of the user  
+password - The password of the user
 
 Response: 200 OK { token: token}
 
-Example:/
+Example:
+
+```
+{
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjVjNGRlNjcwZTE5MTI3MWVlYmM4MjRlNCJ9LCJpYXQiOjE1NDg2MDk0NjB9.9Y3UHTC-DpoofVyVqw3devTR6BzCD9GNqwaml2LCqOQ"
+}
+```
 
 ---

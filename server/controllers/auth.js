@@ -21,7 +21,7 @@ exports.signup = async (req, res, next) => {
       if (!user) return res.status(422).json(statusMessage);
       else {
         res.status(200).json({
-          message: "Signup was sucessful",
+          msg: "Signup was sucessful",
           user: user
         });
       }
