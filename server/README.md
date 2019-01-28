@@ -27,7 +27,7 @@ nodemon server.js
 ### Authorization
 
 On protected routes, the user agent should sent the JWT in the Authorization header using the Bearer schema.  
-Authorization: Bearer <token>
+Authorization: Bearer `<token>`
 
 ## Sign up a new user using email and password
 
