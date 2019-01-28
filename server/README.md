@@ -24,6 +24,11 @@ nodemon server.js
 
 # API Documentation
 
+### Authorization
+
+On protected routes, the user agent should sent the JWT in the Authorization header using the Bearer schema.  
+Authorization: Bearer <token>
+
 ## Sign up a new user using email and password
 
 ### POST /signup
@@ -68,4 +73,39 @@ Example:
 }
 ```
 
+## Login using Google Oauth2
+
+## POST login/google
+
 ---
+
+## Delete a authenticated user using user id
+
+### DELETE /users/:id
+
+#### Parameters:
+
+id - The id of the authenticated user
+
+Response 204 No Content
+
+## Get a user using user id
+
+### GET /users/:id
+
+#### Parameters:
+
+id - The id of the authenticated user
+
+Response 200 OK
+
+Example: (Subject to change, will be much longer once we develop records, exercise, etc
+
+```
+{
+    "_id": "5c4f80dd0e00530787aeb957",
+    "username": "user1@gmail.com",
+    "password": "$2b$10$xrsA7AZDZ34OxGCAkHCZVOON9xpxsNc/ptrlzVzouZSjeTiL2kuJC",
+    "__v": 0
+}
+```
