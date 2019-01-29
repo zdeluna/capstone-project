@@ -7,6 +7,8 @@ const controller = require("../controllers/user");
 
 router.get("/:id", controller.getEntity);
 
+router.patch("/:id", authenticateUser, controller.updateEntity);
+
 router.delete("/:id", authenticateUser, controller.deleteEntity);
 
 module.exports = router;

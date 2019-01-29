@@ -15,6 +15,14 @@ let UserSchema = new Schema({
     type: String
   },
 
+  first_name: {
+    type: String
+  },
+
+  last_name: {
+    type: String
+  },
+
   /* Additional fields if user signs in using Google */
   accessToken: String,
   provider: String,
