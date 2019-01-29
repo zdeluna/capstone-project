@@ -5,7 +5,7 @@ const passport = require("passport");
 const authenticateUser = passport.authenticate("jwt", { session: false });
 const controller = require("../controllers/user");
 
-router.get("/:id", authenticateUser, controller.getEntity);
+router.get("/:id", controller.getEntity);
 
 router.delete("/:id", authenticateUser, controller.deleteEntity);
 

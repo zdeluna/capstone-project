@@ -22,6 +22,10 @@ nodemon server.js
 
 ---
 
+### Access development project on Google Cloud
+
+API endpoint can be reached at https://capstone-wazn.appspot.com/api/
+
 # API Documentation
 
 ### Authorization
