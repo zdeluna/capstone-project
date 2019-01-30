@@ -1,0 +1,7 @@
+runtime: nodejs8
+
+handlers:
+- url: /api/.*
+  script: auto
+
+instance_class: F2
