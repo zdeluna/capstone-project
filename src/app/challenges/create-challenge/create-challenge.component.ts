@@ -33,7 +33,26 @@ export class CreateChallengeComponent implements OnInit {
   ngOnInit() {
   }
 
-  validForActivity(activity: String, measurement: []) {
+  formIsValid(): void {
+    /* TODO:
+      * verify activity is selected and valid
+      * verify measurement is selected and valid
+      * verify duration is selected and valid
+      * 
+      * If false, 'Create' button on form will be disabled
+    */
+  }
+
+  submitForm(): void {
+    /* TODO:
+      * call formIsValid() (security for presentation-level attack)
+      ** if valid, call addChallenge from dbService
+      *** redirect to challenge page
+      ** if not valid, do nothing (should only happen under attack)
+    */
+  }
+
+  validMeasurementForActivity(activity: String, measurement: []): Boolean {
     let valid = false
     if(activity) {
       measurement.forEach(measurement => {

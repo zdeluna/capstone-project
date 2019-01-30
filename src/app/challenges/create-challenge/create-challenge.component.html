@@ -25,7 +25,7 @@
             <mat-form-field class="full-width">
               <mat-select placeholder="Measurement" formControlName="measurement">
                 <div *ngFor="let m of measurements">
-                  <mat-option *ngIf="validForActivity(form.value.activity, m.activities)" [value]="m.view"> {{m.view}} </mat-option>
+                  <mat-option *ngIf="validMeasurementForActivity(form.value.activity, m.activities)" [value]="m.view"> {{m.view}} </mat-option>
                 </div>
               </mat-select>
             </mat-form-field>
@@ -46,7 +46,7 @@
               <input matInput placeholder="Search for users" type="text" formControlName="invitees">
             </mat-form-field>
           </div>
-          <button mat-stroked-button style="margin-right: 5px" class="btn btn-primary" type="Submit" [disabled]="!form.valid"> Add </button>
+          <button mat-stroked-button style="margin-right: 5px" class="btn btn-success" type="Submit" [disabled]="!form.valid"> Create </button>
           <button mat-stroked-button class="btn btn-light" [disabled]="formIsEmpty()" (click)="clear()"> Clear </button>
         </form>
       </mat-card-content>
