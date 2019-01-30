@@ -12,40 +12,42 @@
         <form [formGroup]="form" (ngSubmit)="submitForm()">
           <div class="form-element">
             <h3 class="form-element-header">Activity</h3>
-            <mat-radio-group class="radio-buttons" formControlName="activity">
-              <mat-radio-button value="Walking">Walking</mat-radio-button>
-              <mat-radio-button value="Running">Running</mat-radio-button>
-              <mat-radio-button value="Biking">Biking</mat-radio-button>
-              <mat-radio-button value="Swimming">Swimming</mat-radio-button>
-              <mat-radio-button value="Weight">Weight</mat-radio-button>
+            <mat-radio-group (change)="checkForActivity()" class="radio-buttons" formControlName="activity">
+              <mat-radio-button value="walking">Walking</mat-radio-button>
+              <mat-radio-button value="running">Running</mat-radio-button>
+              <mat-radio-button value="biking">Biking</mat-radio-button>
+              <mat-radio-button value="swimming">Swimming</mat-radio-button>
+              <mat-radio-button value="weight">Weight</mat-radio-button>
             </mat-radio-group>
           </div>
           <div class="form-element">
             <h3 class="form-element-header">Measurement</h3>
             <mat-form-field class="full-width">
               <mat-select placeholder="Measurement" formControlName="measurement">
-                <mat-option *ngFor="let m of measurements" [value]="m"> {{m}} </mat-option>
+                <div *ngFor="let m of measurements">
+                  <mat-option *ngIf="validForActivity(form.value.activity, m.activities)" [value]="m.view"> {{m.view}} </mat-option>
+                </div>
               </mat-select>
             </mat-form-field>
           </div>
           <div class="form-element">
             <h3 class="form-element-header">Duration</h3>
-            <mat-radio-group class="radio-buttons" formControlName="activity">
-              <mat-radio-button value="Weekend">Weekend</mat-radio-button>
-              <mat-radio-button value="Work-Week">Work Week</mat-radio-button>
-              <mat-radio-button value="Full-Week">Full Week</mat-radio-button>
-              <mat-radio-button value="Month">Month</mat-radio-button>
-              <mat-radio-button value="Year">Year</mat-radio-button>
+            <mat-radio-group class="radio-buttons" formControlName="duration">
+              <mat-radio-button value="weekend">Weekend</mat-radio-button>
+              <mat-radio-button value="work-week">Work Week</mat-radio-button>
+              <mat-radio-button value="full-week">Full Week</mat-radio-button>
+              <mat-radio-button value="month">Month</mat-radio-button>
+              <mat-radio-button value="year">Year</mat-radio-button>
             </mat-radio-group>
           </div>
           <div class="form-element">
             <h3 class="form-element-header">Invite Participants</h3>
             <mat-form-field class="full-width">
-              <input matInput placeholder="Miles" type="text" formControlName="invitees">
+              <input matInput placeholder="Search for users" type="text" formControlName="invitees">
             </mat-form-field>
           </div>
           <button mat-stroked-button style="margin-right: 5px" class="btn btn-primary" type="Submit" [disabled]="!form.valid"> Add </button>
-          <button mat-stroked-button class="btn btn-light"[disabled]="formIsEmpty()" (click)="clear()"> Clear </button>
+          <button mat-stroked-button class="btn btn-light" [disabled]="formIsEmpty()" (click)="clear()"> Clear </button>
         </form>
       </mat-card-content>
     </mat-card>
