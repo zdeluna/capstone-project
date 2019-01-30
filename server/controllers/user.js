@@ -1,5 +1,6 @@
 const model = require("../models/user.js");
 var ObjectId = require("mongodb").ObjectId;
+const { matchedData } = require("express-validator/filter");
 
 const getEntityFromDB = async id => {
   var objectId = new ObjectId(id);
@@ -31,8 +32,9 @@ const updateEntityFromDB = async (id, data) => {
   var objectId = new ObjectId(id);
   return new Promise((resolve, reject) => {
     model.findByIdAndUpdate(objectId, data, (error, entity) => {
+      console.log(error);
       if (error) reject({ statusCode: 422, msg: error.message });
-      if (!entity) reject({ statusCode: 404, msg: USER_DOES_NOT_EXIST });
+      if (!entity) reject({ statusCode: 404, msg: "USER_DOES_NOT_EXIST" });
 
       resolve(entity);
     });
@@ -76,10 +78,17 @@ exports.deleteEntity = async (req, res) => {
 };
 
 exports.updateEntity = async (req, res) => {
+  let id = req.params.id;
+
   try {
-    await checkIfUserIsAuthorized();
-    let data = { $set: req.body };
-    let updatedEntity = await updateEntityFromDB(id, data);
+    await checkIfUserIsAuthorized(req);
+
+    // Use the matched data function of validator to return data that was validated thru express-validaotr. Optional data will be included
+    console.log(matchedData(req, { includeOptionals: true }));
+    let validatedFields = {
+      $set: matchedData(req, { includeOptionals: true })
+    };
+    let updatedEntity = await updateEntityFromDB(id, validatedFields);
     res.status(200).json(updatedEntity);
   } catch (error) {
     sendErrorResponse(res, error);
