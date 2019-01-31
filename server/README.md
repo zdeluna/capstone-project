@@ -113,3 +113,20 @@ Example: (Subject to change, will be much longer once we develop records, exerci
     "__v": 0
 }
 ```
+
+## Update an authenticated user using user id
+
+### PATCH /users/:id
+
+#### Parameters:
+
+id - The id of the authenticated user
+
+Body Parameters - All optional
+
+first_name - The first name of the user
+last_name - The last name of the user
+location - The city, state where the user resides
+date_of_birth - DOB of user - Formatted as “MM/DD/YYYY”
+
+Response 200 OK

@@ -96,3 +96,18 @@ exports.updateEntity = async (req, res) => {
     sendErrorResponse(res, error);
   }
 };
+
+exports.updateFriendship = async (req, res) => {
+  let userID = req.pararms.userID;
+  let friendID = req.params.friendID;
+
+  try {
+    await checkIfUserIsAuthorized(req);
+
+    /* status codes
+	 * 0 - pending 
+	 * 1 - rejecting
+	 * 2 - friends
+	*/
+  } catch (error) {}
+};

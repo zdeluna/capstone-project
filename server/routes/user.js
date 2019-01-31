@@ -9,6 +9,12 @@ const controller = require("../controllers/user");
 router.get("/:id", controller.getEntity);
 
 router.patch(
+  "/:userID/friends/:friendID",
+  authenticateUser,
+  controller.updateFriendship
+);
+
+router.patch(
   "/:id",
   authenticateUser,
   validator.update,

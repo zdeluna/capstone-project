@@ -23,8 +23,16 @@ let UserSchema = new Schema({
     type: String
   },
 
-  DOB: {
+  date_of_birth: {
     type: Date
+  },
+
+  location: {
+    type: String
+  },
+
+  friends: {
+    type: [String]
   },
 
   /* Additional fields if user signs in using Google */
