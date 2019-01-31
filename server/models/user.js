@@ -23,6 +23,10 @@ let UserSchema = new Schema({
     type: String
   },
 
+  DOB: {
+    type: Date
+  },
+
   /* Additional fields if user signs in using Google */
   accessToken: String,
   provider: String,

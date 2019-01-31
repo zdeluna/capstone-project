@@ -66,6 +66,8 @@ exports.getEntity = async (req, res) => {
 };
 
 exports.deleteEntity = async (req, res) => {
+  let id = req.params.id;
+
   try {
     await checkIfUserIsAuthorized(req);
     await getEntityFromDB(id);
@@ -84,9 +86,9 @@ exports.updateEntity = async (req, res) => {
     await checkIfUserIsAuthorized(req);
 
     // Use the matched data function of validator to return data that was validated thru express-validaotr. Optional data will be included
-    console.log(matchedData(req, { includeOptionals: true }));
+    console.log(matchedData(req, { includeOptionals: false }));
     let validatedFields = {
-      $set: matchedData(req, { includeOptionals: true })
+      $set: matchedData(req, { includeOptionals: false })
     };
     let updatedEntity = await updateEntityFromDB(id, validatedFields);
     res.status(200).json(updatedEntity);
