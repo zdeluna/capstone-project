@@ -5,17 +5,17 @@ let FriendshipSchema = new Schema({
   sender: {
     type: Schema.Types.ObjectId,
     required: true,
-    ref: "Users"
+    ref: "User"
   },
 
   recipient: {
     type: Schema.Types.ObjectId,
     required: true,
-    ref: "Users"
+    ref: "User"
   },
 
   status: {
-    type: int,
+    type: Number,
     required: true
   }
 });

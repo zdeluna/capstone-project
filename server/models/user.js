@@ -31,9 +31,19 @@ let UserSchema = new Schema({
     type: String
   },
 
-  friends: {
-    type: [String]
-  },
+  friends: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Friendship"
+    }
+  ],
+
+  pending_friends: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Friendship"
+    }
+  ],
 
   /* Additional fields if user signs in using Google */
   accessToken: String,
