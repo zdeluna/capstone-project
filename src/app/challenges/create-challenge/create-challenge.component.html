@@ -23,7 +23,7 @@
           <div class="form-element">
             <h3 class="form-element-header">Measurement</h3>
             <mat-form-field class="full-width">
-              <mat-select placeholder="Measurement" formControlName="measurement">
+              <mat-select placeholder="Measurement" (selectionChange)="checkForMeasurement()" formControlName="measurement">
                 <div *ngFor="let m of measurements">
                   <mat-option *ngIf="validMeasurementForActivity(form.value.activity, m.activities)" [value]="m.view"> {{m.view}} </mat-option>
                 </div>
@@ -32,13 +32,21 @@
           </div>
           <div class="form-element">
             <h3 class="form-element-header">Duration</h3>
-            <mat-radio-group class="radio-buttons" formControlName="duration">
+            <mat-radio-group class="radio-buttons" (change)="checkForDuration()" formControlName="duration">
               <mat-radio-button value="weekend">Weekend</mat-radio-button>
               <mat-radio-button value="work-week">Work Week</mat-radio-button>
               <mat-radio-button value="full-week">Full Week</mat-radio-button>
               <mat-radio-button value="month">Month</mat-radio-button>
               <mat-radio-button value="year">Year</mat-radio-button>
             </mat-radio-group>
+          </div>
+          <div class="form-element">
+            <h3 class="form-element-header">Start Date</h3>
+            <mat-form-field>
+              <input matInput [matDatepickerFilter]="myFilter" [min]="minDate" [matDatepicker]="picker" formControlName="startDate" placeholder="Choose a date">
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
           </div>
           <div class="form-element">
             <h3 class="form-element-header">Invite Participants</h3>

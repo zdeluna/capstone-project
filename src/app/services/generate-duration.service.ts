@@ -3,11 +3,7 @@ import { Injectable } from '@angular/core';
 @Injectable({
   providedIn: 'root'
 })
-export class DatabaseService {
+export class GenerateDurationService {
 
   constructor() { }
-
-  addChallenge() {
-    
-  }
 }
