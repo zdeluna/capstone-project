@@ -28,7 +28,7 @@ const createPendingFriendships = async (userID, friendID) => {
     );
 
     const friendshipFriend = await friendshipModel.findOneAndUpdate(
-      { sender: friendID, recipient: friendID },
+      { sender: friendID, recipient: userID },
       { $set: { status: 2 } },
       { upsert: true, new: true }
     );
@@ -49,22 +49,51 @@ const createPendingFriendships = async (userID, friendID) => {
   }
 };
 
-const acceptFriendShip = async (userID, friendID) => {
-  try {
-    // Add friend ID to friends field of user
+const removePendingFriends = async (userID, friendID) => {
+  // Store the document of the friendship where user is the sender, we will use the id to remove it from the pending friends field
+  const friendshipUser = await friendshipModel.findOne({
+    sender: userID,
+    recipient: friendID
+  });
 
+  // Remove from pending friends of user
+  await userModel.findOneAndUpdate(
+    { _id: userID },
+    { $pull: { pending_friends: friendshipUser._id } }
+  );
+
+  // Do the same thing, but for the friend
+  const friendshipFriend = await friendshipModel.findOne({
+    sender: friendID,
+    recipient: userID
+  });
+
+  // Remove from pending friends of friend
+  await userModel.findOneAndUpdate(
+    { _id: friendID },
+    { $pull: { pending_friends: friendshipFriend._id } }
+  );
+
+  // Remove both friendships from the friendships table
+  await deleteEntityFromDB(friendshipModel, friendshipUser._id);
+  await deleteEntityFromDB(friendshipModel, friendshipFriend._id);
+};
+
+const acceptFriendship = async (userID, friendID) => {
+  try {
+    // Add the friend ID to user's friends field
     await userModel.findOneAndUpdate(
       { _id: userID },
       { $push: { friends: friendID } }
     );
 
-    // Add user ID to friends field of friends
+    // Add the friend ID to user's friends field
     await userModel.findOneAndUpdate(
       { _id: friendID },
       { $push: { friends: userID } }
     );
 
-    // Remove the friendship from pending friendships
+    await removePendingFriends(userID, friendID);
   } catch (error) {
     return error;
   }
@@ -153,6 +182,7 @@ exports.updateEntity = async (req, res) => {
   }
 };
 
+/* Consulted https://stackoverflow.com/questions/50363220/modelling-for-friends-schema-in-mongoose?noredirect=1&lq=1 */
 exports.updateFriendship = async (req, res) => {
   let userID = new ObjectId(req.params.userID);
   let friendID = new ObjectId(req.params.friendID);
@@ -160,13 +190,16 @@ exports.updateFriendship = async (req, res) => {
 
   try {
     switch (status) {
-      case "0":
-        createPendingFriendships(userID, friendID);
+      case "1":
+        await createPendingFriendships(userID, friendID);
         break;
-      case "4":
-        acceptFriendShip(userID, friendID);
+      case "2":
+        await acceptFriendship(userID, friendID);
+        break;
+      case "3":
+        await rejectFriendship(userID, friendID);
+        break;
     }
-    console.log("in try");
     //await checkIfUserIsAuthorized(req);
     /* Consulted https://stackoverflow.com/questions/50363220/modelling-for-friends-schema-in-mongoose?noredirect=1&lq=1*/
 

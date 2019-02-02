@@ -34,10 +34,14 @@ let UserSchema = new Schema({
   friends: [
     {
       type: Schema.Types.ObjectId,
-      ref: "Friendship"
+      ref: "Users"
     }
   ],
-
+  /*
+  friends: {
+    type: Schema.Types.ObjectId,
+    ref: "Friendship"
+  },*/
   pending_friends: [
     {
       type: Schema.Types.ObjectId,
