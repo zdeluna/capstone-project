@@ -6,7 +6,7 @@ const validator = require("../controllers/user.validation");
 const authenticateUser = passport.authenticate("jwt", { session: false });
 const controller = require("../controllers/user");
 
-router.get("/:id", controller.getEntity);
+router.get("/:id", controller.getUser);
 
 router.patch(
   "/:userID/friends/:friendID",

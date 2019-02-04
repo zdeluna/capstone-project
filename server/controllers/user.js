@@ -4,7 +4,7 @@ var ObjectId = require("mongodb").ObjectId;
 const { matchedData } = require("express-validator/filter");
 
 const getEntityFromDB = async (model, id) => {
-  var objectId = new ObjectId(id);
+  let objectId = new ObjectId(id);
   return new Promise((resolve, reject) => {
     model.findById(objectId, (error, entity) => {
       if (error) {
@@ -12,6 +12,21 @@ const getEntityFromDB = async (model, id) => {
       }
 
       if (!entity) {
+        reject({ statusCode: 404, msg: "USER_DOES_NOT_EXIST" });
+      }
+      resolve(entity);
+    });
+  });
+};
+
+const getAllEntitiesFromDB = async model => {
+  return new Promise((resolve, reject) => {
+    model.find(error, entities => {
+      if (error) {
+        reject({ statusCode: 422, msg: error.message });
+      }
+
+      if (!entities) {
         reject({ statusCode: 404, msg: "USER_DOES_NOT_EXIST" });
       }
       resolve(entity);
@@ -146,6 +161,33 @@ exports.getEntity = async (req, res) => {
   }
 };
 
+exports.getUser = async (req, res) => {
+  var id = req.params.id;
+  var pending_friends = [];
+
+  try {
+    // Convert the mongodb document to a javascript object
+    // https://stackoverflow.com/questions/14768132/add-a-new-attribute-to-existing-json-object-in-node-js/29131856
+    var user = JSON.parse(JSON.stringify(await getEntityFromDB(userModel, id)));
+    for (let i = 0; i < user.pending_friends.length; i++) {
+      let friendship = await getEntityFromDB(
+        friendshipModel,
+        user.pending_friends[i]
+      );
+      pending_friends[i] = {
+        user: friendship.recipient,
+        status: friendship.status
+      };
+    }
+    //user.set("pending_friends", pending_friends, { strict: false });
+    user.pending_friends = pending_friends;
+
+    res.status(200).json(user);
+  } catch (error) {
+    sendErrorResponse(res, error);
+  }
+};
+
 exports.deleteEntity = async (req, res) => {
   let id = req.params.id;
 
@@ -193,23 +235,13 @@ exports.updateFriendship = async (req, res) => {
       case "1":
         await createPendingFriendships(userID, friendID);
         break;
-      case "2":
+      case "3":
         await acceptFriendship(userID, friendID);
         break;
-      case "3":
-        await rejectFriendship(userID, friendID);
+      case "4":
+        await removePendingFriends(userID, friendID);
         break;
     }
-    //await checkIfUserIsAuthorized(req);
-    /* Consulted https://stackoverflow.com/questions/50363220/modelling-for-friends-schema-in-mongoose?noredirect=1&lq=1*/
-
-    /* status codes
-	 * 0 - add friend
-	 * 1 - requested
-	 * 2 - pending
-	 * 3 - reject
-	 * 4 - accept 
-	*/
 
     res.status(200).end();
   } catch (error) {
