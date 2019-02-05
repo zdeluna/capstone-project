@@ -140,9 +140,9 @@ id - The id of the authenticated user
 
 Body Parameters - All optional
 
-first_name - The first name of the user
-last_name - The last name of the user
-location - The city, state where the user resides
+first_name - The first name of the user  
+last_name - The last name of the user  
+location - The city, state where the user resides  
 date_of_birth - DOB of user - Formatted as “MM/DD/YYYY”
 
 Response 200 OK
@@ -151,16 +151,16 @@ Response 200 OK
 
 ### PATCH /users/:userID/friends/:friendID
 
-userID - The id of the user
+userID - The id of the user  
 friendID = the id of the person the user wants to send a friend request
 
-Body Parameters - Required
+#### Body Parameters - Required
 
-status - The status code which indicates the stage of the friendship
-0 - Send a friend request
-3 - Accept a friend request
+status - The status code which indicates the stage of the friendship  
+0 - Send a friend request  
+3 - Accept a friend request  
 4 - Reject a friend request
 
-Other codes that are only used in get requests
-1 - A friend request has been sent to another user
+Other codes that are only used in get requests  
+1 - A friend request has been sent to another user  
 2 - A friend request has been received from another user
