@@ -22,7 +22,16 @@ nodemon server.js
 
 ---
 
+### Access development project on Google Cloud
+
+API endpoint can be reached at https://capstone-wazn.appspot.com/api/
+
 # API Documentation
+
+### Authorization
+
+On protected routes, the user agent should sent the JWT in the Authorization header using the Bearer schema.  
+Authorization: Bearer `<token>`
 
 ## Sign up a new user using email and password
 
@@ -68,4 +77,90 @@ Example:
 }
 ```
 
+## Login using Google Oauth2
+
+## POST login/google
+
 ---
+
+## Get all user entities
+
+### GET /users
+
+#### Parameters: None
+
+## Get a user using user id
+
+### GET /users/:id
+
+#### Parameters:
+
+id - The id of the authenticated user
+
+Response 200 OK
+
+Example: (Subject to change, will be much longer once we develop records, exercise, etc
+
+```
+{
+    "friends": ["5be8d38a9d57d3088a747d8f"],
+    "pending_friends": [
+        {
+            "user": "5c58d43a9de2d3088a747c9c",
+            "status": 1
+        }
+    ],
+    "_id": "5c58d4379de2d3088a747c9b",
+    "username": "user1@gmail.com",
+    "password": "$2b$10$tFqOv3glwOlp4QB3pZJNOOVdGQSEpWmERQ8gVKUA0roFS7LhtJzM6",
+    "__v": 0,
+    "date_of_birth": "1987-04-05T06:00:00.000Z",
+    "first_name": "Zachary",
+    "last_name": "DeLuna"
+}
+```
+
+## Update an authenticated user using user id
+
+### PATCH /users/:id
+
+#### Parameters:
+
+id - The id of the authenticated user
+
+Body Parameters - All optional
+
+first_name - The first name of the user  
+last_name - The last name of the user  
+location - The city, state where the user resides  
+date_of_birth - DOB of user - Formatted as “MM/DD/YYYY”
+
+Response 200 OK
+
+## Send/Accept/Reject a friend request
+
+### PATCH /users/:userID/friends/:friendID
+
+userID - The id of the user  
+friendID = the id of the person the user wants to send a friend request
+
+#### Body Parameters - Required
+
+status - The status code which indicates the stage of the friendship  
+0 - Send a friend request  
+3 - Accept a friend request  
+4 - Reject a friend request
+
+Other codes that are only seen in /users/:id GET requests  
+1 - A friend request has been sent to another user  
+2 - A friend request has been received from another user
+
+## Delete a authenticated user using user id
+
+### DELETE /users/:id
+
+#### Parameters:
+
+id - The id of the authenticated user
+
+Response 204 No Content
