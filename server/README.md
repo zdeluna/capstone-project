@@ -89,16 +89,6 @@ Example:
 
 #### Parameters: None
 
-## Delete a authenticated user using user id
-
-### DELETE /users/:id
-
-#### Parameters:
-
-id - The id of the authenticated user
-
-Response 204 No Content
-
 ## Get a user using user id
 
 ### GET /users/:id
@@ -161,6 +151,16 @@ status - The status code which indicates the stage of the friendship
 3 - Accept a friend request  
 4 - Reject a friend request
 
-Other codes that are only used in get requests  
+Other codes that are only seen in /users/:id GET requests  
 1 - A friend request has been sent to another user  
 2 - A friend request has been received from another user
+
+## Delete a authenticated user using user id
+
+### DELETE /users/:id
+
+#### Parameters:
+
+id - The id of the authenticated user
+
+Response 204 No Content
