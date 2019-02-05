@@ -2,37 +2,14 @@ const userModel = require("../models/user.js");
 const friendshipModel = require("../models/friendship.js");
 var ObjectId = require("mongodb").ObjectId;
 const { matchedData } = require("express-validator/filter");
-
-const getEntityFromDB = async (model, id) => {
-  let objectId = new ObjectId(id);
-  return new Promise((resolve, reject) => {
-    model.findById(objectId, (error, entity) => {
-      if (error) {
-        reject({ statusCode: 422, msg: error.message });
-      }
-
-      if (!entity) {
-        reject({ statusCode: 404, msg: "USER_DOES_NOT_EXIST" });
-      }
-      resolve(entity);
-    });
-  });
-};
-
-const getAllEntitiesFromDB = async model => {
-  return new Promise((resolve, reject) => {
-    model.find(error, entities => {
-      if (error) {
-        reject({ statusCode: 422, msg: error.message });
-      }
-
-      if (!entities) {
-        reject({ statusCode: 404, msg: "USER_DOES_NOT_EXIST" });
-      }
-      resolve(entity);
-    });
-  });
-};
+const {
+  getEntityFromDB,
+  getAllEntitiesFromDB,
+  deleteEntityFromDB,
+  updateEntityFromDB,
+  sendErrorResponse,
+  checkIfUserIsAuthorized
+} = require("./controller.js");
 
 const createPendingFriendships = async (userID, friendID) => {
   try {
@@ -114,40 +91,21 @@ const acceptFriendship = async (userID, friendID) => {
   }
 };
 
-const deleteEntityFromDB = async (model, id) => {
-  var objectId = new ObjectId(id);
-  return new Promise((resolve, reject) => {
-    model.deleteOne({ _id: objectId }, function(error) {
-      if (error) reject({ statusCode: 422, msg: error.message });
-      else resolve();
-    });
-  });
-};
-
-const updateEntityFromDB = async (model, id, data) => {
-  var objectId = new ObjectId(id);
-  return new Promise((resolve, reject) => {
-    model.findByIdAndUpdate(objectId, data, { new: true }, (error, entity) => {
-      console.log(error);
-      if (error) reject({ statusCode: 422, msg: error.message });
-      if (!entity) reject({ statusCode: 404, msg: "USER_DOES_NOT_EXIST" });
-
-      resolve(entity);
-    });
-  });
-};
-
-const sendErrorResponse = async (res, error) => {
-  res.status(error.statusCode).json({ errors: { msg: error.msg } });
-};
-
-const checkIfUserIsAuthorized = async req => {
-  return new Promise((resolve, reject) => {
-    if (req.params.id !== req.user._id) {
-      reject({ statusCode: 401, msg: "USER_IS_NOT_AUTHORIZED" });
-    }
-    resolve();
-  });
+const deleteFriendshipFromDB = async (userID, friendID) => {
+  try {
+    // Delete friendID from user table
+    await userModel.findOneAndUpdate(
+      { _id: userID },
+      { $pull: { friends: friendID } }
+    );
+    // Delete userID from friend's user table
+    await userModel.findOneAndUpdate(
+      { _id: friendID },
+      { $pull: { friends: userID } }
+    );
+  } catch (error) {
+    return error;
+  }
 };
 
 /* Public Functions that are directly called by the routers */
@@ -179,7 +137,6 @@ exports.getUser = async (req, res) => {
         status: friendship.status
       };
     }
-    //user.set("pending_friends", pending_friends, { strict: false });
     user.pending_friends = pending_friends;
 
     res.status(200).json(user);
@@ -189,10 +146,9 @@ exports.getUser = async (req, res) => {
 };
 
 exports.deleteEntity = async (req, res) => {
-  let id = req.params.id;
-
   try {
-    await checkIfUserIsAuthorized(req);
+    let id = req.params.id;
+    await checkIfUserIsAuthorized(id, req);
     await getEntityFromDB(userModel, id);
 
     await deleteEntityFromDB(userModel, id);
@@ -203,13 +159,11 @@ exports.deleteEntity = async (req, res) => {
 };
 
 exports.updateEntity = async (req, res) => {
-  let id = req.params.id;
-
   try {
-    await checkIfUserIsAuthorized(req);
+    let id = req.params.id;
+    await checkIfUserIsAuthorized(id, req);
 
     // Use the matched data function of validator to return data that was validated thru express-validaotr. Optional data will be included
-    console.log(matchedData(req, { includeOptionals: false }));
     let validatedFields = {
       $set: matchedData(req, { includeOptionals: false })
     };
@@ -226,13 +180,15 @@ exports.updateEntity = async (req, res) => {
 
 /* Consulted https://stackoverflow.com/questions/50363220/modelling-for-friends-schema-in-mongoose?noredirect=1&lq=1 */
 exports.updateFriendship = async (req, res) => {
-  let userID = new ObjectId(req.params.userID);
-  let friendID = new ObjectId(req.params.friendID);
-  let status = req.body.status;
-
   try {
+    await checkIfUserIsAuthorized(req.params.userID, req);
+
+    let userID = new ObjectId(req.params.userID);
+    let friendID = new ObjectId(req.params.friendID);
+    let status = req.body.status;
+
     switch (status) {
-      case "1":
+      case "0":
         await createPendingFriendships(userID, friendID);
         break;
       case "3":
@@ -245,6 +201,48 @@ exports.updateFriendship = async (req, res) => {
 
     res.status(200).end();
   } catch (error) {
-    sendErrorMessage({ statusCode: 422, msg: error.message });
+    sendErrorResponse(res, error);
+  }
+};
+
+exports.deleteFriendship = async (req, res) => {
+  try {
+    await checkIfUserIsAuthorized(req.params.userID, req);
+
+    let userID = new ObjectId(req.params.userID);
+    let friendID = new ObjectId(req.params.friendID);
+
+    await deleteFriendshipFromDB(userID, friendID);
+    res.status(204).end();
+  } catch (error) {
+    sendErrorResponse(res, error);
+  }
+};
+
+exports.getAllUsers = async (req, res) => {
+  try {
+    console.log("in function");
+    let users = await getAllEntitiesFromDB(userModel);
+
+    // Change the friendship foreign key id to the actual user id of the pending friendship
+    for (let k = 0; k < users.length; k++) {
+      users[k] = JSON.parse(JSON.stringify(users[k]));
+      pending_friends = [];
+      for (let i = 0; i < users[k].pending_friends.length; i++) {
+        let friendship = await getEntityFromDB(
+          friendshipModel,
+          users[k].pending_friends[i]
+        );
+        pending_friends[i] = {
+          user: friendship.recipient,
+          status: friendship.status
+        };
+      }
+      users[k].pending_friends = pending_friends;
+    }
+
+    res.status(200).json(users);
+  } catch (error) {
+    sendErrorResponse(res, error);
   }
 };

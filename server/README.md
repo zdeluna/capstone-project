@@ -83,6 +83,12 @@ Example:
 
 ---
 
+## Get all user entities
+
+### GET /users
+
+#### Parameters: None
+
 ## Delete a authenticated user using user id
 
 ### DELETE /users/:id
@@ -107,10 +113,20 @@ Example: (Subject to change, will be much longer once we develop records, exerci
 
 ```
 {
-    "_id": "5c4f80dd0e00530787aeb957",
+    "friends": ["5be8d38a9d57d3088a747d8f"],
+    "pending_friends": [
+        {
+            "user": "5c58d43a9de2d3088a747c9c",
+            "status": 1
+        }
+    ],
+    "_id": "5c58d4379de2d3088a747c9b",
     "username": "user1@gmail.com",
-    "password": "$2b$10$xrsA7AZDZ34OxGCAkHCZVOON9xpxsNc/ptrlzVzouZSjeTiL2kuJC",
-    "__v": 0
+    "password": "$2b$10$tFqOv3glwOlp4QB3pZJNOOVdGQSEpWmERQ8gVKUA0roFS7LhtJzM6",
+    "__v": 0,
+    "date_of_birth": "1987-04-05T06:00:00.000Z",
+    "first_name": "Zachary",
+    "last_name": "DeLuna"
 }
 ```
 
@@ -130,3 +146,21 @@ location - The city, state where the user resides
 date_of_birth - DOB of user - Formatted as “MM/DD/YYYY”
 
 Response 200 OK
+
+## Send/Accept/Reject a friend request
+
+### PATCH /users/:userID/friends/:friendID
+
+userID - The id of the user
+friendID = the id of the person the user wants to send a friend request
+
+Body Parameters - Required
+
+status - The status code which indicates the stage of the friendship
+0 - Send a friend request
+3 - Accept a friend request
+4 - Reject a friend request
+
+Other codes that are only used in get requests
+1 - A friend request has been sent to another user
+2 - A friend request has been received from another user

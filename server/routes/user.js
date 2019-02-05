@@ -14,6 +14,12 @@ router.patch(
   controller.updateFriendship
 );
 
+router.delete(
+  "/:userID/friends/:friendID",
+  authenticateUser,
+  controller.deleteFriendship
+);
+
 router.patch(
   "/:id",
   authenticateUser,
@@ -22,5 +28,7 @@ router.patch(
 );
 
 router.delete("/:id", authenticateUser, controller.deleteEntity);
+
+router.get("/", controller.getAllUsers);
 
 module.exports = router;
