@@ -56,11 +56,10 @@ exports.deleteEntityFromDB = async (model, id) => {
 
 exports.createEntityInDB = async (model, data) => {
   return new Promise((resolve, reject) => {
-    console.log(data);
     model.create(data, function(error, response) {
       if (error) {
         reject({ statusCode: 422, msg: error.message });
-      } else resolve(response.ops[0]);
+      } else resolve(response);
     });
   });
 };
