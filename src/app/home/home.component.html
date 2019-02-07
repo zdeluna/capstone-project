@@ -3,37 +3,63 @@
 </app-menu-bar>
 
 <div class='main-container'>
-
+    
   <div class="title-container">
-    <div class='title'>
-      <h1>
-        Challenge yourself.<br>
-        Challenge anyone.
-      </h1>
+    <div class="img">
+        <p>Picture Here!</p>
     </div>
-    <div class='title-brief'>
-      <h5>
-       Create your own free account to track <br />
-       your fitness and challenge your friends!! 
-      </h5>
+    <div class="greeting">
+      <h1><span>Hello Username!</span></h1>
+    </div>
+    <div class="date-time">
+      <span>Tuesday March 3rd, 5:06PM</span>
     </div>
   </div>
 
-  <div class='form-container'>
-    <form class='signup-form' action="">
-      <input type="text" value='Email'> <br>
-      <input type="text" value='Password'> <p></p>
-      <input type="submit" value="Create Account!"> 
-    </form>
+  <div class="challenges-container">
+    <div class="current-challenges">
+      <h3>Current Challenges</h3>
+      <ul>
+        <li>No current challenges</li>
+      </ul>
+    </div>
+    <div class="upcoming-challenges">
+      <h3>Upcoming Challenges</h3>
+      <ul>
+        <li>No upcoming challenges</li>
+      </ul>
+    </div>
   </div>
 
-  <div class="btn-container">
-    <button class="google-btn">
-      <img src="https://img.icons8.com/small/16/000000/google-logo.png">
-      <span> Sign in with Google! </span> 
-    </button>
+  <div class="activities-container">
+    <div class="activity">
+      <div class="icon">icon here</div>
+      <p>Create Challenges</p>
+    </div>
+    <div class="activity">
+      <div class="icon">icon here</div>
+      <p>Add Activity Minutes</p>
+    </div>
+    <div class="activity">
+      <div class="icon">icon here</div>
+      <p>Message Friends</p>
+    </div>
+    <div class="activity">
+      <div class="icon">icon here</div>
+      <p>Profile</p>
+    </div>
+    <div class="activity">
+      <div class="icon">icon here</div>
+      <p>Find Friends</p>
+    </div>
+    <div class="activity">
+      <div class="icon">icon here</div>
+      <p>Other</p>
+    </div>
   </div>
-  
-</div>
+
+<!-- end main container -->
+</div> 
+
 
 <router-outlet></router-outlet>

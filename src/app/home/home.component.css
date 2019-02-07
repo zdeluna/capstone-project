@@ -1,68 +1,108 @@
 .main-container {
-    text-align: center;
     position: relative;
-    top: 120px;
+    top: 60px;
+    padding: 10px;
+    font-family: Candara;
+}
+.main-container > div {
+    margin: 10px;
 }
 .title-container {
-    font-family: Candara;
-    display: flex;
+    text-align: center;
+    /* border: 1px solid black; */
+    /* display: flex;
     flex-direction: column;
-    align-items:  center;
-    /* ustify-contjent: center; */
-}
-.title {
-    text-align: left;
-}
-.title > h1 {
-    margin: 5px;
-}
-.title-brief {
-    color: gray;
-    text-align: left;
-}
-.title-brief > h5 {
-    margin: 5px;
-}
-input {
-    font-family: Candara;
-}
-.form-container {
-    margin-top: 25px;
-}
-.signup-form > input[type="text"] {
-    border: 1px solid aqua;
-    border-color: #00fff0;
-    color: grey;
-    padding: 3px;
-    margin: 3px;
-}
-.signup-form > input[type="submit"] {
-    border: 1px solid #00fff0;
-    background-color: #00fff0;
-    /* border-color: #00fff0; */
-    /* color: black; */
-    position: relative;
-    right: 48px;
+    align-items:  center; */
+    width: 525px;
     padding: 10px;
-    margin-top: 10px;
-    height: 35px;
+    position: relative;
+    /* left: 188px; */
+    left: 25%;
 }
-.google-btn{
-    background-color: orange;
-    border: orange;
-    font-family: Candara;
-    width: 150px;
-    height: 35px;
+.title-container > div {
+    /* margin: 10px; */
     padding: 5px;
+    /* border: 1px solid black; */
+}
+.img {
+    float: left;
+    height: 81px;
+    border-right: none;
+    border: 1px dashed black;
+}
+.greeting {
     position: relative;
-    right: 30px;
+    left: 99px;
+    height: 50px;
+    width: 365px;
 }
-.google-btn > img {
+.greeting > h1 {
+    /* position: relative; */
+    margin: auto;
+    vertical-align: middle;
+    /* text-align: left; */
+    height: 47px;
+    width: 360px;
+}
+.greeting > h1 > span {
     position: relative;
-    top: 4px;
-    right: 3px;
+    right: 45px;
+    top: 5px;
 }
-.google-btn > p {
-    width: 125px;
-    height: 17px;
+.date-time {
+    position: relative;
+    left: 100px;
+    height: 20px;
+    width: 365px;
+    margin-top: -1px;
+    margin-left: -1px;
 }
+.date-time > span {
+    position: relative;
+    right: 45px;
+}
+.challenges-container {
+    padding: 10px;
+    width: 525px;
+    position: relative;
+    left: 25%;
+    border: 1px solid black;
+}
+.challenges-container > div {
+    padding: 10px;
+    margin: 5px;
+}
+.current-challenges {
+    border-bottom: 1px solid black;
+}
+.activities-container {
+    display: flex;
+    flex-wrap: wrap;
+    text-align: center;
+    align-items: center;
+    padding: 10px;
+    /* position: relative;
+    left: 5%; */
+}
+.activities-container .activity {
+    padding: 10px;
+    margin: 10px;
+    /* height: 50px;
+    width: 50px; */
+    flex: 25%;
+    /* border: 1px solid black; */
+    margin-bottom: 35px;
+}
+.activities-container .activity .icon {
+    height: 50px;
+    width: 50px;
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    /* margin: 5px; */
+    border: 1px dashed black;
+} 
+/* .activities-container .activity > p {
+    border: 1px solid red;
+} */
+
