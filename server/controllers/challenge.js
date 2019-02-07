@@ -111,18 +111,19 @@ exports.updateParticipants = async (req, res) => {
 
     /* status codes
 	0  - Send challenge request
-	1  - Accept challenge request
-	2  - Reject challenge request
+	1  - Pending challenge request
+	2  - Accept challenge request
+	3  - Reject challenge request
 	*/
 
     switch (status) {
       case "0":
         await createChallengeRequest(challengeID, participantID);
         break;
-      case "1":
+      case "2":
         await acceptChallengeRequest(challengeID, participantID);
         break;
-      case "2":
+      case "3":
         await removePendingChallenges(challengeID, participantID);
         break;
     }
@@ -135,10 +136,29 @@ exports.updateParticipants = async (req, res) => {
 
 exports.getChallenge = async (req, res) => {
   let id = req.params.challengeID;
-  console.log("get challenge with id : " + id);
+  let pending_participants = [];
+
   try {
-    var entity = await getEntityFromDB(challengeModel, id);
-    res.status(200).json(entity);
+    /* Convert the mongodb document to a javascript object to display information about the challenge request instead of the challenge request object id number
+	https://stackoverflow.com/questions/14768132/add-a-new-attribute-to-existing-json-object-in-node-js/29131856
+  */
+    var challenge = JSON.parse(
+      JSON.stringify(await getEntityFromDB(challengeModel, id))
+    );
+
+    for (let i = 0; i < challenge.pending_participants.length; i++) {
+      let challengeRequest = await getEntityFromDB(
+        challengeRequestModel,
+        challenge.pending_participants[i]
+      );
+      pending_participants[i] = {
+        user: challengeRequest.recipient,
+        status: challengeRequest.status
+      };
+    }
+    challenge.pending_participants = pending_participants;
+
+    res.status(200).json(challenge);
   } catch (error) {
     sendErrorResponse(res, error);
   }
