@@ -13,9 +13,58 @@ const {
   checkIfUserIsAuthorized
 } = require("./controller.js");
 
-const acceptChallengeRequest = async (challengeID, participantID) => {};
+const acceptChallengeRequest = async (challengeID, participantID) => {
+  try {
+    // Add the challenge ID to the challenge field of the user document
+    await userModel.findOneAndUpdate(
+      { _id: participantID },
+      { $push: { challenges: challengeID } }
+    );
 
-const rejectChallengeRequest = async (challengeID, participantID) => {};
+    // Get the challenge request document
+    const challengeRequest = await challengeRequestModel.findOne({
+      recipient: participantID,
+      challenge_id: challengeID
+    });
+
+    // Add the participant's id to the participants field
+    await challengeModel.findOneAndUpdate(
+      { _id: challengeRequest.challenge_id },
+      { $push: { participants: participantID } }
+    );
+
+    removePendingChallenges(challengeID, participantID);
+  } catch (error) {
+    return error;
+  }
+};
+
+const removePendingChallenges = async (challengeID, participantID) => {
+  try {
+    // Get the challenge request document
+    const challengeRequest = await challengeRequestModel.findOne({
+      recipient: participantID,
+      challenge_id: challengeID
+    });
+
+    // Remove the challenge ID from pending challenges
+    await userModel.findOneAndUpdate(
+      { _id: participantID },
+      { $pull: { pending_challenges: challengeRequest._id } }
+    );
+
+    // Remove the challenge request from pending_challenges in challenges
+    await challengeModel.findOneAndUpdate(
+      { _id: challengeRequest.challenge_id },
+      { $pull: { pending_participants: challengeRequest._id } }
+    );
+
+    // Remove the challenge request
+    await deleteEntityFromDB(challengeRequestModel, challengeRequest._id);
+  } catch (error) {
+    return error;
+  }
+};
 
 const createChallengeRequest = async (challengeID, participantID) => {
   try {
@@ -74,7 +123,7 @@ exports.updateParticipants = async (req, res) => {
         await acceptChallengeRequest(challengeID, participantID);
         break;
       case "2":
-        await rejectChallengeRequest(challengeID, participantID);
+        await removePendingChallenges(challengeID, participantID);
         break;
     }
 
