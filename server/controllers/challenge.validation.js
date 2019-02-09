@@ -1,6 +1,20 @@
 const { check, validationResult } = require("express-validator/check");
 
-exports.create = [
+exports.createMessage = [
+  check("content")
+    .exists()
+    .withMessage("MESSAGE_CONTENT_BODY_PARAMETER_MUST_NOT_BE_EMPTY"),
+  (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(422).json({ errors: errors.array() });
+    } else {
+      return next();
+    }
+  }
+];
+
+exports.createChallenge = [
   check("name")
     .exists()
     .withMessage("CHALLENGE_MUST_HAVE_NAME"),

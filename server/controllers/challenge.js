@@ -13,6 +13,19 @@ const {
   checkIfUserIsAuthorized
 } = require("./controller.js");
 
+const createMessageInDB = async (challengeID, data, userID) => {
+  try {
+    await challengeModel.findOneAndUpdate(
+      {
+        _id: challengeID
+      },
+      { $push: { messages: { content: data.content, sender: userID } } }
+    );
+  } catch (error) {
+    return error;
+  }
+};
+
 const acceptChallengeRequest = async (challengeID, participantID) => {
   try {
     // Add the challenge ID to the challenge field of the user document
@@ -159,6 +172,20 @@ exports.getChallenge = async (req, res) => {
     challenge.pending_participants = pending_participants;
 
     res.status(200).json(challenge);
+  } catch (error) {
+    sendErrorResponse(res, error);
+  }
+};
+
+exports.createMessage = async (req, res) => {
+  let challengeID = new ObjectId(req.params.id);
+  let userID = new ObjectId(req.user._id);
+
+  try {
+    // Check if user is a participant in the challenge
+    let validatedFields = matchedData(req, { includeOptionals: false });
+    createMessageInDB(challengeID, validatedFields, userID);
+    res.status(200).end();
   } catch (error) {
     sendErrorResponse(res, error);
   }

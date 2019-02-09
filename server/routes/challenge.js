@@ -12,8 +12,15 @@ router.patch(
   controller.updateParticipants
 );
 
+router.post(
+  "/:id/messages",
+  authenticateUser,
+  validator.createMessage,
+  controller.createMessage
+);
+
 router.get("/:challengeID", controller.getChallenge);
 
-router.post("/", validator.create, controller.createChallenge);
+router.post("/", validator.createChallenge, controller.createChallenge);
 
 module.exports = router;

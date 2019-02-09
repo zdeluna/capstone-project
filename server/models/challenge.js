@@ -29,6 +29,8 @@ let challengeSchema = new Schema({
     }
   ],
 
+  messages: [{ sender: Schema.Types.ObjectId, content: String }],
+
   duration: {
     type: Number
   },
