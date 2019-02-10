@@ -15,29 +15,14 @@ const {
 
 const updateActivityInDB = async (challengeID, userID, total) => {
   try {
-    console.log(challengeID);
-    const challenge = await challengeModel.findOne({
-      _id: challengeID
-    }); //.participants;
-    console.log(challenge);
-    let updatedParticipants = challenge.participants;
-    console.log(updatedParticipants);
-
-    for (i = 0; i < updatedParticipants.length; i++) {
-      if (updatedParticipants[i].user_id == userID) {
-        updatedParticipants[i].total = total;
-        console.log("MATched");
-      }
-    }
-
-    console.log("updated array: " + updatedParticipants);
-
     return await challengeModel.findOneAndUpdate(
       {
-        _id: challengeID
+        _id: challengeID,
+        "participants.user_id": userID
       },
-
-      { $set: { participants: { updatedParticipants } } }
+      { $inc: { "participants.$.total": 10 } },
+      { new: true }
+      // { $set: { participants: updatedParticipants } }
     );
   } catch (error) {
     return error;
@@ -140,7 +125,7 @@ exports.createChallenge = async (req, res) => {
 
     // Add the user who created the challenge as a participant
     let participants = [];
-    participants.push({ user_id: new ObjectId(req._id), total: 0 });
+    participants.push({ user_id: new ObjectId(req.user._id), total: 0 });
     validatedFields.participants = participants;
 
     let challenge = await createEntityInDB(challengeModel, validatedFields);
