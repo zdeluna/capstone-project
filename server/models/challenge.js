@@ -32,7 +32,7 @@ let challengeSchema = new Schema({
   messages: [{ sender: Schema.Types.ObjectId, content: String }],
 
   duration: {
-    type: Number
+    type: String
   },
 
   participants: [{ user_id: Schema.Types.ObjectId, total: Number }]

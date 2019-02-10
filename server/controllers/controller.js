@@ -31,8 +31,6 @@ exports.getAllEntitiesFromDB = async model => {
       }
 
       if (!entities) {
-        console.log("NOOOOOOO");
-
         reject({
           statusCode: 404,
           msg:
@@ -82,7 +80,6 @@ exports.updateEntityFromDB = async (model, id, data) => {
 };
 
 exports.sendErrorResponse = (res, error) => {
-  console.log("sTATUS code : " + error.statusCode);
   res.status(error.statusCode).json({ errors: { msg: error.msg } });
 };
 

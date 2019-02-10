@@ -22,7 +22,6 @@ const updateActivityInDB = async (challengeID, userID, total) => {
       },
       { $inc: { "participants.$.total": 10 } },
       { new: true }
-      // { $set: { participants: updatedParticipants } }
     );
   } catch (error) {
     return error;
@@ -241,7 +240,6 @@ exports.updateActivity = async (req, res) => {
       $set: matchedData(req, { includeOptionals: false })
     };
 
-    console.log(2);
     let updatedChallenge = await updateActivityInDB(
       challengeID,
       participantID,
