@@ -1,5 +1,6 @@
 const userModel = require("../models/user.js");
 const friendshipModel = require("../models/friendship.js");
+const challengeRequestModel = require("../models/challengeRequest.js");
 var ObjectId = require("mongodb").ObjectId;
 const { matchedData } = require("express-validator/filter");
 const {
@@ -109,22 +110,13 @@ const deleteFriendshipFromDB = async (userID, friendID) => {
 };
 
 /* Public Functions that are directly called by the routers */
-exports.getEntity = async (req, res) => {
-  let id = req.params.id;
-  try {
-    var entity = await getEntityFromDB(userModel, id);
-    res.status(200).json(entity);
-  } catch (error) {
-    sendErrorResponse(res, error);
-  }
-};
-
 exports.getUser = async (req, res) => {
   var id = req.params.id;
   var pending_friends = [];
+  var pending_challenges = [];
 
   try {
-    // Convert the mongodb document to a javascript object
+    // Convert the mongodb document to a javascript object to display informationa about the friend request and not just the friendship object id number
     // https://stackoverflow.com/questions/14768132/add-a-new-attribute-to-existing-json-object-in-node-js/29131856
     var user = JSON.parse(JSON.stringify(await getEntityFromDB(userModel, id)));
     for (let i = 0; i < user.pending_friends.length; i++) {
@@ -138,6 +130,20 @@ exports.getUser = async (req, res) => {
       };
     }
     user.pending_friends = pending_friends;
+
+    for (let c = 0; c < user.pending_challenges.length; c++) {
+      let challengeRequest = await getEntityFromDB(
+        challengeRequestModel,
+        user.pending_challenges[c]
+      );
+
+      pending_challenges[c] = {
+        id: challengeRequest.challenge_id,
+        status: challengeRequest.status
+      };
+    }
+
+    user.pending_challenges = pending_challenges;
 
     res.status(200).json(user);
   } catch (error) {
@@ -158,7 +164,7 @@ exports.deleteEntity = async (req, res) => {
   }
 };
 
-exports.updateEntity = async (req, res) => {
+exports.updateUser = async (req, res) => {
   try {
     let id = req.params.id;
     await checkIfUserIsAuthorized(id, req);
