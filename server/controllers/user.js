@@ -164,7 +164,7 @@ exports.deleteEntity = async (req, res) => {
   }
 };
 
-exports.updateEntity = async (req, res) => {
+exports.updateUser = async (req, res) => {
   try {
     let id = req.params.id;
     await checkIfUserIsAuthorized(id, req);

@@ -6,10 +6,17 @@ const validator = require("../controllers/challenge.validation");
 const authenticateUser = passport.authenticate("jwt", { session: false });
 const controller = require("../controllers/challenge");
 
+router.post(
+  "/:challengeID/participants/:participantID",
+  authenticateUser,
+  controller.addParticipant
+);
+
 router.patch(
   "/:challengeID/participants/:participantID",
   authenticateUser,
-  controller.updateParticipants
+  validator.updateActivity,
+  controller.updateActivity
 );
 
 router.post(
@@ -21,6 +28,17 @@ router.post(
 
 router.get("/:challengeID", controller.getChallenge);
 
-router.post("/", validator.createChallenge, controller.createChallenge);
+router.patch(
+  "/:challengeID",
+  validator.updateChallenge,
+  controller.updateChallenge
+);
+
+router.post(
+  "/",
+  authenticateUser,
+  validator.createChallenge,
+  controller.createChallenge
+);
 
 module.exports = router;

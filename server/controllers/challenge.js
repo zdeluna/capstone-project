@@ -13,6 +13,37 @@ const {
   checkIfUserIsAuthorized
 } = require("./controller.js");
 
+const updateActivityInDB = async (challengeID, userID, total) => {
+  try {
+    console.log(challengeID);
+    const challenge = await challengeModel.findOne({
+      _id: challengeID
+    }); //.participants;
+    console.log(challenge);
+    let updatedParticipants = challenge.participants;
+    console.log(updatedParticipants);
+
+    for (i = 0; i < updatedParticipants.length; i++) {
+      if (updatedParticipants[i].user_id == userID) {
+        updatedParticipants[i].total = total;
+        console.log("MATched");
+      }
+    }
+
+    console.log("updated array: " + updatedParticipants);
+
+    return await challengeModel.findOneAndUpdate(
+      {
+        _id: challengeID
+      },
+
+      { $set: { participants: { updatedParticipants } } }
+    );
+  } catch (error) {
+    return error;
+  }
+};
+
 const createMessageInDB = async (challengeID, data, userID) => {
   try {
     await challengeModel.findOneAndUpdate(
@@ -43,7 +74,7 @@ const acceptChallengeRequest = async (challengeID, participantID) => {
     // Add the participant's id to the participants field
     await challengeModel.findOneAndUpdate(
       { _id: challengeRequest.challenge_id },
-      { $push: { participants: participantID } }
+      { $push: { participants: { user_id: participantID, total: 0 } } }
     );
 
     removePendingChallenges(challengeID, participantID);
@@ -107,6 +138,11 @@ exports.createChallenge = async (req, res) => {
   try {
     let validatedFields = matchedData(req, { includeOptionals: false });
 
+    // Add the user who created the challenge as a participant
+    let participants = [];
+    participants.push({ user_id: new ObjectId(req._id), total: 0 });
+    validatedFields.participants = participants;
+
     let challenge = await createEntityInDB(challengeModel, validatedFields);
     res.status(200).json(challenge);
   } catch (error) {
@@ -114,7 +150,7 @@ exports.createChallenge = async (req, res) => {
   }
 };
 
-exports.updateParticipants = async (req, res) => {
+exports.addParticipant = async (req, res) => {
   try {
     //await checkIfUserIsAuthorized(req.params.userID, req);
 
@@ -186,6 +222,47 @@ exports.createMessage = async (req, res) => {
     let validatedFields = matchedData(req, { includeOptionals: false });
     createMessageInDB(challengeID, validatedFields, userID);
     res.status(200).end();
+  } catch (error) {
+    sendErrorResponse(res, error);
+  }
+};
+
+exports.updateChallenge = async (req, res) => {
+  try {
+    let challengeID = req.params.challengeID;
+
+    // Use the matched data function of validator to return data that was validated thru express-validaotr. Optional data will be included
+    let validatedFields = {
+      $set: matchedData(req, { includeOptionals: false })
+    };
+
+    let updatedChallenge = await updateEntityFromDB(
+      challengeModel,
+      challengeID,
+      validatedFields
+    );
+    res.status(200).json(updatedChallenge);
+  } catch (error) {
+    sendErrorResponse(res, error);
+  }
+};
+
+exports.updateActivity = async (req, res) => {
+  try {
+    let challengeID = req.params.challengeID;
+    let participantID = req.params.participantID;
+    // Use the matched data function of validator to return data that was validated thru express-validaotr. Optional data will be included
+    let validatedFields = {
+      $set: matchedData(req, { includeOptionals: false })
+    };
+
+    console.log(2);
+    let updatedChallenge = await updateActivityInDB(
+      challengeID,
+      participantID,
+      10
+    );
+    res.status(200).json(updatedChallenge);
   } catch (error) {
     sendErrorResponse(res, error);
   }

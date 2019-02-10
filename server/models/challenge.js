@@ -35,12 +35,7 @@ let challengeSchema = new Schema({
     type: Number
   },
 
-  participants: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: "User"
-    }
-  ]
+  participants: [{ user_id: Schema.Types.ObjectId, total: Number }]
 });
 
 module.exports = mongoose.model("Challenge", challengeSchema);

@@ -20,12 +20,7 @@ router.delete(
   controller.deleteFriendship
 );
 
-router.patch(
-  "/:id",
-  authenticateUser,
-  validator.update,
-  controller.updateEntity
-);
+router.patch("/:id", authenticateUser, validator.update, controller.updateUser);
 
 router.delete("/:id", authenticateUser, controller.deleteEntity);
 
