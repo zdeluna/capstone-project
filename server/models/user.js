@@ -38,15 +38,25 @@ let UserSchema = new Schema(
         ref: "Users"
       }
     ],
-    /*
-  friends: {
-    type: Schema.Types.ObjectId,
-    ref: "Friendship"
-  },*/
+
     pending_friends: [
       {
         type: Schema.Types.ObjectId,
         ref: "Friendship"
+      }
+    ],
+
+    challenges: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Challenge"
+      }
+    ],
+
+    pending_challenges: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "ChallengeRequest"
       }
     ],
 

@@ -164,3 +164,91 @@ Other codes that are only seen in /users/:id GET requests
 id - The id of the authenticated user
 
 Response 204 No Content
+
+---
+
+## Get a challenge
+
+### GET /challenges/:id
+
+#### Parameters:
+
+id - The id of the challenge
+
+Response 200 OK
+
+Example:
+
+## Post a new challenge
+
+### POST /challenges/
+
+#### Body Parameters:
+
+name - The name of the challenge
+
+start_date - The start date of the challenge MM-DD-YYYY
+
+activity - The type of activity
+
+measurement - The unit of measurement to measure activity
+
+duration - The number of days of the challenge
+
+## Invite a participant to the challenge
+
+### POST /challenges/:challengeID/participants/:participantID
+
+#### Parameters:
+
+challengeID - The id of the challenge
+
+participantID - The user id of the invited user
+
+## Write a message on the message board of the challenge
+
+### POST /challenges/:id/messages
+
+#### Parameters:
+
+id - The id of the challenge
+
+#### Body Parameters
+
+content - The content of the message
+
+Requires a valid token of a user that is a participant of the challenge
+
+## Update a challenge
+
+### POST /challenges/:id
+
+#### Parameters:
+
+id - The id of the challenge
+
+#### Body Parameters: All optional
+
+name - The name of the challenge
+
+start_date - The start date of the challenge MM-DD-YYYY
+
+activity - The type of activity
+
+measurement - The unit of measurement to measure activity
+
+duration - The number of days of the challenge
+
+## Update the activity total of a participant
+
+### PATCH /challenges/:challengeID/participants/:participantID
+
+#### Parameters:
+
+challengeID - The id of the challenge
+
+participantID - The id of the participant
+
+#### Body Parameters: Required
+
+activity - The total amount of the participant in the challenge

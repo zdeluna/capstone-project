@@ -1,5 +1,6 @@
 const userModel = require("../models/user.js");
 const friendshipModel = require("../models/friendship.js");
+const challengeModel = require("../models/challenge.js");
 var ObjectId = require("mongodb").ObjectId;
 
 exports.getEntityFromDB = async (model, id) => {
@@ -53,6 +54,16 @@ exports.deleteEntityFromDB = async (model, id) => {
   });
 };
 
+exports.createEntityInDB = async (model, data) => {
+  return new Promise((resolve, reject) => {
+    model.create(data, function(error, response) {
+      if (error) {
+        reject({ statusCode: 422, msg: error.message });
+      } else resolve(response);
+    });
+  });
+};
+
 exports.updateEntityFromDB = async (model, id, data) => {
   var objectId = new ObjectId(id);
   return new Promise((resolve, reject) => {
@@ -70,7 +81,8 @@ exports.updateEntityFromDB = async (model, id, data) => {
   });
 };
 
-exports.sendErrorResponse = async (res, error) => {
+exports.sendErrorResponse = (res, error) => {
+  console.log("sTATUS code : " + error.statusCode);
   res.status(error.statusCode).json({ errors: { msg: error.msg } });
 };
 
