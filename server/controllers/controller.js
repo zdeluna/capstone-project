@@ -83,10 +83,11 @@ exports.sendErrorResponse = (res, error) => {
   res.status(error.statusCode).json({ errors: { msg: error.msg } });
 };
 
+// Check if the user's credients give them access to update the resource
 exports.checkIfUserIsAuthorized = async (id_of_user_to_update, req) => {
   return new Promise((resolve, reject) => {
     if (id_of_user_to_update !== req.user._id) {
-      reject({ statusCode: 401, msg: "USER_IS_NOT_AUTHORIZED" });
+      reject({ statusCode: 403, msg: "USER_IS_NOT_AUTHORIZED" });
     }
     resolve();
   });

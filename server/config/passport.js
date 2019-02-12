@@ -91,7 +91,7 @@ passport.use(
     {
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: "http://localhost:5001/auth/google/callback",
+      callbackURL: "http://localhost:5000/api/google/callback",
       scope: "https://www.googleapis.com/auth/plus.login"
     },
     function(accessToken, refreshToken, profile, callBack) {

@@ -8,6 +8,7 @@ let ExtractJWT = require("passport-jwt").ExtractJwt;
 let jwt = require("jsonwebtoken");
 
 exports.googleLogin = async (req, res) => {
+  console.log("in google login function");
   passport.authenticate("google", {
     scope: ["email profile"]
   });

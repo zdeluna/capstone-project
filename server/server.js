@@ -11,8 +11,6 @@ const User = require("./models/user");
 const startMongo = require("./config/mongo");
 const app = express();
 
-var GoogleStrategy = require("passport-google-oauth20").Strategy;
-
 const PORT = process.env.PORT || 5000;
 app.enable("trust proxy");
 
