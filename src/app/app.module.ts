@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatButtonModule, MatFormFieldModule, MatInputModule, MatOptionModule, MatSelectModule, MatListModule, MatRadioModule, MatSliderModule, MatCardModule, MatDatepickerModule, MatNativeDateModule } from '@angular/material';
+import { MatButtonModule, MatFormFieldModule, MatInputModule, MatOptionModule, MatSelectModule, MatListModule, MatRadioModule, MatSliderModule, MatCardModule, MatDatepickerModule, MatNativeDateModule, MatProgressBarModule } from '@angular/material';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -10,6 +10,7 @@ import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { MenuBarComponent } from './menu-bar/menu-bar.component';
 import { CreateChallengeComponent } from './challenges/create-challenge/create-challenge.component';
+import { ActiveChallengeComponent } from './challenges/active-challenge/active-challenge.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { CreateChallengeComponent } from './challenges/create-challenge/create-c
     HomeComponent,
     CreateChallengeComponent,
     MenuBarComponent,
-    LoginComponent
+    LoginComponent,
+    ActiveChallengeComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
@@ -35,7 +37,8 @@ import { CreateChallengeComponent } from './challenges/create-challenge/create-c
     MatSliderModule,
     MatCardModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatProgressBarModule
   ],
   providers: [],
   bootstrap: [AppComponent]

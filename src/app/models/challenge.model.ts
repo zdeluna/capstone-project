@@ -5,6 +5,6 @@ export class Challenge {
   startDate: Date;
   activity: string;
   measurement: string;
-  duration: number;
+  duration: string;
   invitees: string[];
 }
