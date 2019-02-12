@@ -1,0 +1,9 @@
+{
+  "/api/challenges": {
+    "target": "https://capstone-wazn.appspot.com/api/challenges",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true,
+    "pathRewrite": {"^/api" : ""}
+  }
+}

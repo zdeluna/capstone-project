@@ -20,7 +20,7 @@ import { CreateChallengeComponent } from './challenges/create-challenge/create-c
     LoginComponent
   ],
   imports: [
-    BrowserModule,
+    BrowserModule.withServerTransition({ appId: 'serverApp' }),
     BrowserAnimationsModule,
     AppRoutingModule,
     FormsModule,
