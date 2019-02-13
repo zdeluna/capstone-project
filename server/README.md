@@ -155,7 +155,7 @@ Other codes that are only seen in /users/:id GET requests
 1 - A friend request has been sent to another user  
 2 - A friend request has been received from another user
 
-## Delete a authenticated user using user id
+## Delete an authenticated user using user id
 
 ### DELETE /users/:id
 
@@ -252,3 +252,15 @@ participantID - The id of the participant
 #### Body Parameters: Required
 
 activity - The total amount of the participant in the challenge
+
+## Delete a challenge
+
+### DELETE /challenges/:id
+
+#### Parameters:
+
+id - The id of the challenge
+
+Response 204 No Content
+
+---

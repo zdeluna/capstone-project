@@ -45,7 +45,7 @@ exports.getAllEntitiesFromDB = async model => {
 exports.deleteEntityFromDB = async (model, id) => {
   var objectId = new ObjectId(id);
   return new Promise((resolve, reject) => {
-    model.deleteOne({ _id: objectId }, function(error) {
+    model.findOneAndDelete({ _id: objectId }, function(error) {
       if (error) reject({ statusCode: 422, msg: error.message });
       else resolve();
     });

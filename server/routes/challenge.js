@@ -34,6 +34,8 @@ router.patch(
   controller.updateChallenge
 );
 
+router.delete("/:id", authenticateUser, controller.deleteChallenge);
+
 router.post(
   "/",
   authenticateUser,
