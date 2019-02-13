@@ -1,62 +1,28 @@
-<app-menu-bar>
-
-</app-menu-bar>
-
-<div class='main-container'>
-    
-  <div class="title-container">
-    <div class="img">
-        <p>Picture Here!</p>
-    </div>
-    <div class="greeting">
-      <h1><span>Hello Username!</span></h1>
-    </div>
-    <div class="date-time">
-      <span>Tuesday March 3rd, 5:06PM</span>
-    </div>
+<body>
+  
+  <div class ="jumbotron">
+      <h1 *ngIf="user" class='profile-name'>Welcome, {{ user.firstName }}</h1>
+      <p> {{date}} </p>
   </div>
 
-  <div class="challenges-container">
-    <div class="current-challenges">
-      <h3>Current Challenges</h3>
-      <ul>
-        <li>No current challenges</li>
-      </ul>
-    </div>
-    <div class="upcoming-challenges">
-      <h3>Upcoming Challenges</h3>
-      <ul>
-        <li>No upcoming challenges</li>
-      </ul>
-    </div>
+  <div class="row-6" id='challenges'>
+    <h3>Challenges snapshot:</h3>
+    <ul>
+      <li>No current challenges</li>
+      <li>No upcoming challenges</li>
+    </ul>
   </div>
 
-  <div class="activities-container">
-    <div class="activity">
-      <div class="icon">icon here</div>
-      <p>Create Challenges</p>
-    </div>
-    <div class="activity">
-      <div class="icon">icon here</div>
-      <p>Add Activity Minutes</p>
-    </div>
-    <div class="activity">
-      <div class="icon">icon here</div>
-      <p>Message Friends</p>
-    </div>
-    <div class="activity">
-      <div class="icon">icon here</div>
-      <p>Profile</p>
-    </div>
-    <div class="activity">
-      <div class="icon">icon here</div>
-      <p>Find Friends</p>
-    </div>
-    <div class="activity">
-      <div class="icon">icon here</div>
-      <p>Other</p>
+  <div class ="row">
+    <div *ngFor="let category of categories" class="col-6 decision-button">
+        <a
+         [routerLink]="category.value">
+         <img class="decision-button-svg" [src]="category.location" [alt]="category.view"/>
+        </a>
+        <p>{{ category.view }}</p>
     </div>
   </div>
+  
+</body>
 
-<!-- end main container -->
-</div> 
+

@@ -1,37 +1,47 @@
-<app-menu-bar>
 
-</app-menu-bar>
+<div class='container'>
+  
+<body class="text-center">
 
-<div class='main-container'>
+    <form class="form-signin">
 
-  <div class="title-container">
-    <div class='title'>
-      <h1>
-        Challenge yourself.<br>
+      <h1 class='text-md-left'>
+        Challenge yourself.
         Challenge anyone.
       </h1>
-    </div>
-    <div class='title-brief'>
-      <h5>
-       Create your own free account to track <br />
-       your fitness and challenge your friends!! 
-      </h5>
-    </div>
-  </div>
 
-  <div class='form-container'>
-    <form class='signup-form' action="">
-      <input type="text" value='Email'> <br>
-      <input type="text" value='Password'> <p></p>
-      <input type="submit" value="Create Account!"> 
+      <p class="text-sm-left">
+        Create your own free account to track your fitness and challenge your friends!!
+      </p>
+
+      <label for="inputEmail" class="sr-only">
+        Email 
+      </label>
+
+      <input type="email" id="inputEmail" class="form-control" placeholder="Email" required autofocus>
+        <label for="inputPassword" class="sr-only">
+          Password
+        </label>
+
+      <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+        <div class="checkbox mb-3">
+          <label>
+            <input type="checkbox" value="remember-me"> 
+            Remember me
+          </label>
+        </div>
+
+      <button id='sign-in-btn' class="btn btn-lg btn-primary btn-block border: 1px solid aqua;
+      border-color: #00fff0;" type="submit">
+        Sign in
+      </button>
+
+      <button class="btn btn-lg btn-primary btn-block" id='google-btn'>
+          <img src="https://img.icons8.com/small/16/000000/google-logo.png">
+          <span> Sign in with Google! </span> 
+        </button>
+
     </form>
-  </div>
 
-  <div class="btn-container">
-    <button class="google-btn">
-      <img src="https://img.icons8.com/small/16/000000/google-logo.png">
-      <span> Sign in with Google! </span> 
-    </button>
-  </div>
-  
+  </body>
 </div>

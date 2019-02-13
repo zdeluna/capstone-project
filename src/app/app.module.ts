@@ -10,6 +10,7 @@ import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { MenuBarComponent } from './menu-bar/menu-bar.component';
 import { CreateChallengeComponent } from './challenges/create-challenge/create-challenge.component';
+import { ProfileComponent } from './profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { CreateChallengeComponent } from './challenges/create-challenge/create-c
     HomeComponent,
     CreateChallengeComponent,
     MenuBarComponent,
-    LoginComponent
+    LoginComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,

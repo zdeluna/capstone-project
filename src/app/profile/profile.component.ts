@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {User} from '../models/user.model';
 
 @Component({
   selector: 'app-profile',
@@ -10,6 +11,7 @@ export class ProfileComponent implements OnInit {
   constructor() { }
 
   sports: Object = []
+  user: User = new User
   // public successClass = "text-success";
   // public hasError = false;
   // public isSpecial = true;
