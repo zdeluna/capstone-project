@@ -1,11 +1,12 @@
 
 export class User {
-    uid: string;
+    id: string;
     email: string;
     firstName: string;
     lastName: string;
-    displayName?: string = "";
+    username?: string = "";
     photoURL?: string = "";
     friends?: string[] = [];
-    // activities?: Activity[] = []
+    location?: string;
+    dateOfBirth?: Date;
   }
