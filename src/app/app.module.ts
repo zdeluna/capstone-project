@@ -8,7 +8,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
-import { MenuBarComponent } from './menu-bar/menu-bar.component';
 import { CreateChallengeComponent } from './challenges/create-challenge/create-challenge.component';
 import { ProfileComponent } from './profile/profile.component';
 
@@ -17,7 +16,6 @@ import { ProfileComponent } from './profile/profile.component';
     AppComponent,
     HomeComponent,
     CreateChallengeComponent,
-    MenuBarComponent,
     LoginComponent,
     ProfileComponent
   ],
