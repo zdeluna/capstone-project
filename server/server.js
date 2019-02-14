@@ -17,7 +17,11 @@ app.enable("trust proxy");
 startMongo();
 
 require("./config/passport");
+
+// App can parse x-www urlencoded form data when making POST requests
 app.use(bodyParser.urlencoded({ extended: false }));
+// App can parse json in http requests
+app.use(bodyParser.json());
 
 app.use(passport.initialize());
 
