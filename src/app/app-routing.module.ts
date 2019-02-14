@@ -6,8 +6,8 @@ import { LoginComponent } from './login/login.component';
 import { ProfileComponent } from './profile/profile.component';
 
 const routes: Routes = [
-  {path: '', component: HomeComponent},
-  {path: 'login', component: LoginComponent},
+  {path: '', component: LoginComponent},
+  {path: 'home', component: HomeComponent},
   {path: 'profile', component: ProfileComponent},
   {path: 'challenges/create', component: CreateChallengeComponent}
 ];
