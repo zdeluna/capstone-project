@@ -7,7 +7,7 @@ let User = require("../models/user");
 let JWTstrategy = require("passport-jwt").Strategy;
 let ExtractJWT = require("passport-jwt").ExtractJwt;
 let googleStrategy = require("passport-google-oauth20").Strategy;
-let bcrypt = require("bcrypt");
+let bcrypt = require("bcryptjs");
 
 passport.use(
   "signup",

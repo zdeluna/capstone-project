@@ -3,9 +3,9 @@ import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { Challenge } from '../../models/challenge.model';
 import { DatabaseService } from '../../services/database.service';
-import { DurationService } from 'src/app/services/duration.service';
-import { User } from 'src/app/models/user.model';
-import { SortService } from 'src/app/services/sort.service';
+import { DurationService } from '../../services/duration.service';
+import { User } from '../../models/user.model';
+import { SortService } from '../../services/sort.service';
 
 export interface Leaderboard {
   user: User;

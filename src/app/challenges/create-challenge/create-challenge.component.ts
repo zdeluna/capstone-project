@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { FormGroup, FormControl } from '@angular/forms';
-import { Challenge } from 'src/app/models/challenge.model';
-import { DatabaseService } from 'src/app/services/database.service';
-import { User } from 'src/app/models/user.model';
+import { Challenge } from '../../models/challenge.model';
+import { DatabaseService } from '../../services/database.service';
+import { User } from '../../models/user.model';
 
 export interface Measurement {
   view: string;
@@ -33,6 +33,7 @@ export class CreateChallengeComponent implements OnInit {
     }
   ]
 
+  search = ''
   noMatch = false
   searchMatches: User[] = []
   invitedFriends: User[] = []
