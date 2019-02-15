@@ -1,6 +1,7 @@
 const express = require("express");
 const passport = require("passport");
 const bodyParser = require("body-parser");
+const cors = require("cors");
 require("dotenv").config();
 
 const user = require("./routes/user");
@@ -22,6 +23,8 @@ require("./config/passport");
 app.use(bodyParser.urlencoded({ extended: false }));
 // App can parse json in http requests
 app.use(bodyParser.json());
+
+app.use(cors());
 
 app.use(passport.initialize());
 
