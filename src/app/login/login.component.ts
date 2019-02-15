@@ -47,6 +47,7 @@ export class LoginComponent implements OnInit {
     .subscribe(
       data => {
         console.log('Login success', data);
+        this.dbService.setToken(data['token'])
         this.router.navigate(['/home']);
       },
       error => console.log('Error on login!', error)

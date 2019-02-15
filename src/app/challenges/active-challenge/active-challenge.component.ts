@@ -54,10 +54,10 @@ export class ActiveChallengeComponent implements OnInit {
       this.dbService.getUser(participant['user_id']).subscribe(res => {
         let user: User = {
           id: res['_id'],
-          email: res['username'],
           username: res['username'],
           firstName: 'Chris',
-          lastName: 'Piemonte'
+          lastName: 'Piemonte',
+          password: 'pw'
         }
 
         let p: Leaderboard = {

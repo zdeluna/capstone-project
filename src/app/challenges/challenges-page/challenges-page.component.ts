@@ -22,7 +22,6 @@ export class ChallengesPageComponent implements OnInit {
     this.dbService.getExampleChallenge().subscribe(res => {
       this.challengeId = res['_id']
       this.options[0] = {value: `${this.challengeId}`, location: "assets/flat-icons/magnifier.svg", view: "View Challenge"}
-      console.log(res)
     })
   }
 

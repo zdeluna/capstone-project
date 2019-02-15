@@ -22,17 +22,17 @@ export class CreateChallengeComponent implements OnInit {
 
   tempFriends: User[] = [{
       id: "123456",
-      email: 'test@gmail.com',
       username: "testUser1",
       firstName: "Test",
-      lastName: "User"
+      lastName: "User",
+      password: 'pw'
     },
     {
       id: "654321",
-      email: 'piemo@gmail.com',
       username: "cpie19",
       firstName: "Chris",
-      lastName: "Piemonte"
+      lastName: "Piemonte",
+      password: 'pw'
     }
   ]
 

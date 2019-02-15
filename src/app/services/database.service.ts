@@ -57,29 +57,34 @@ export class DatabaseService {
 
   setID(_id : string) {
     this.user.id = _id;
+  }
+
+  setToken(token: string) {
+    this.token = token
+  }
 
   getUserHardCoded(id: string): User {
     let user = new User
     let users: User[] = [{
       id: "123456",
-      email: 'test@gmail.com',
       username: "testUser1",
       firstName: "Test",
-      lastName: "User"
+      lastName: "User",
+      password: 'pw'
     },
     {
       id: "654321",
-      email: 'piemo@gmail.com',
       username: "cpie19",
       firstName: "Chris",
-      lastName: "Piemonte"
+      lastName: "Piemonte",
+      password: 'pw'
     },
     {
       id: "987654",
-      email: 'thehawk@gmail.com',
       username: "thehawk",
       firstName: "Steve",
-      lastName: "Hawking"
+      lastName: "Hawking",
+      password: 'pw'
     }]
 
     users.forEach(u => {
