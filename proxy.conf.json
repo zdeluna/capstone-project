@@ -1,0 +1,11 @@
+{
+  "/api/*": {
+    "target": "https://capstone-wazn.appspot.com/api/",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/api/": ""
+    }
+  }
+}

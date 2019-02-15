@@ -1,18 +1,35 @@
 import { Injectable } from '@angular/core';
 import { Challenge } from '../models/challenge.model';
 import { User } from '../models/user.model';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DatabaseService {
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
-  addChallenge(challenge: Challenge) { 
-    console.log(challenge)
+  token:number // = grab token
+  httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type':  'application/json',
+      'Authorization': 'Bearer ' + this.token
+    })
+  };
+
+  addChallenge(challenge: Challenge) {
+    let c = {
+      name: challenge.name,
+      activity: challenge.activity,
+      duration: challenge.duration,
+      measurement: challenge.measurement,
+      start_date: `0${(challenge.startDate.getMonth() + 1)}-${challenge.startDate.getDate()}-${challenge.startDate.getFullYear()}`
+    }
+    return this.http.post('/api/challenges', c, this.httpOptions)
   }
 
+  //ids: 5c6602291ac2320005d2f15a, 5c65fffc1ac2320005d2f158
   getChallenge(id: string): Challenge {
     let c: Challenge = {
       id: id,

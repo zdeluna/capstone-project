@@ -35,7 +35,7 @@ export class CreateChallengeComponent implements OnInit {
 
   noMatch = false
   searchMatches: User[] = []
-  invitedFriends: User[] = []
+  invitedFriends: string[] = []
   minDate = new Date();
   measurements: Measurement[] = [
     {view: 'Steps', activities: ['walking']},
@@ -73,12 +73,15 @@ export class CreateChallengeComponent implements OnInit {
 
   submitForm(): void {
     let challenge = new Challenge()
+    challenge.name = 'Bike Mile Challenge'
     challenge.activity = this.form.value.activity
     challenge.measurement = this.form.value.measurement
     challenge.duration = this.form.value.duration
     challenge.startDate = this.form.value.startDate
     challenge.invitees = this.form.value.invitees
-    this.dbService.addChallenge(challenge)
+    this.dbService.addChallenge(challenge).subscribe(res => {
+      console.log(res)
+    })
     /* TODO:
       * call formIsValid() (security for presentation-level attack)
       ** if valid, call addChallenge from dbService
@@ -86,7 +89,6 @@ export class CreateChallengeComponent implements OnInit {
       ** if not valid, do nothing (should only happen under attack)
     */
   }
-
   validMeasurementForActivity(activity: String, measurement: []): Boolean {
     let valid = false
     if(activity) {
@@ -145,14 +147,13 @@ export class CreateChallengeComponent implements OnInit {
   }
 
   inviteFriend(id: string) {
-    let invitee = this.dbService.getUser(id)
-    this.invitedFriends.push(invitee)
+    this.invitedFriends.push(id)
     this.form.controls.invitees.setValue(this.invitedFriends)
   }
 
   removeFriend(id: string) {
     this.invitedFriends.forEach(friend => {
-      if(friend.id == id) {
+      if(friend == id) {
         this.invitedFriends.splice(this.invitedFriends.indexOf(friend), 1)
       }
     })
