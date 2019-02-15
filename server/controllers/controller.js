@@ -31,8 +31,6 @@ exports.getAllEntitiesFromDB = async model => {
       }
 
       if (!entities) {
-        console.log("NOOOOOOO");
-
         reject({
           statusCode: 404,
           msg:
@@ -47,7 +45,7 @@ exports.getAllEntitiesFromDB = async model => {
 exports.deleteEntityFromDB = async (model, id) => {
   var objectId = new ObjectId(id);
   return new Promise((resolve, reject) => {
-    model.deleteOne({ _id: objectId }, function(error) {
+    model.findOneAndDelete({ _id: objectId }, function(error) {
       if (error) reject({ statusCode: 422, msg: error.message });
       else resolve();
     });
@@ -82,14 +80,14 @@ exports.updateEntityFromDB = async (model, id, data) => {
 };
 
 exports.sendErrorResponse = (res, error) => {
-  console.log("sTATUS code : " + error.statusCode);
   res.status(error.statusCode).json({ errors: { msg: error.msg } });
 };
 
+// Check if the user's credients give them access to update the resource
 exports.checkIfUserIsAuthorized = async (id_of_user_to_update, req) => {
   return new Promise((resolve, reject) => {
     if (id_of_user_to_update !== req.user._id) {
-      reject({ statusCode: 401, msg: "USER_IS_NOT_AUTHORIZED" });
+      reject({ statusCode: 403, msg: "USER_IS_NOT_AUTHORIZED" });
     }
     resolve();
   });

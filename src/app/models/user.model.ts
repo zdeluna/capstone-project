@@ -1,9 +1,11 @@
 export class User {
-  id: string;
-  username: string;
-  firstName: string;
-  lastName: string;
-  friends?: string[];
-  location?: string;
-  dateOfBirth?: Date;
-}
+    id: string;
+    email: string;
+    firstName: string;
+    lastName: string;
+    username?: string = "";
+    photoURL?: string = "";
+    friends?: string[] = [];
+    location?: string;
+    dateOfBirth?: Date;
+  }

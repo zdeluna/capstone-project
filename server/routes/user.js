@@ -4,6 +4,7 @@ const passport = require("passport");
 const validator = require("../controllers/user.validation");
 
 const authenticateUser = passport.authenticate("jwt", { session: false });
+//const authenticateUser = passport.authenticate("google");
 const controller = require("../controllers/user");
 
 router.get("/:id", controller.getUser);

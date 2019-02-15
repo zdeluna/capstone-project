@@ -13,6 +13,25 @@ const {
   checkIfUserIsAuthorized
 } = require("./controller.js");
 
+const checkIfUserIsParticipantOfChallenge = async (challenge_id, user_id) => {
+  return new Promise((reolve, reject) => {
+    let userIsParticipant = false;
+    challengeModel.findOne({ _id: challenge_id }, function(error, challenge) {
+      for (i = 0; i < challenge.participants.length; i++) {
+        if (challenge.participants[i].user_d == user_id) {
+          userIsParticipant = true;
+        }
+      }
+      if (userIsParticipant != true) {
+        reject({
+          statusCode: 403,
+          msg: "USER_MUST_BE_A_PARTICIPANT_IN_CHALLENGE_IN_ORDER_TO_DELETE"
+        });
+      } else resolve();
+    });
+  });
+};
+
 const updateActivityInDB = async (challengeID, userID, total) => {
   try {
     return await challengeModel.findOneAndUpdate(
@@ -22,7 +41,6 @@ const updateActivityInDB = async (challengeID, userID, total) => {
       },
       { $inc: { "participants.$.total": 10 } },
       { new: true }
-      // { $set: { participants: updatedParticipants } }
     );
   } catch (error) {
     return error;
@@ -241,13 +259,27 @@ exports.updateActivity = async (req, res) => {
       $set: matchedData(req, { includeOptionals: false })
     };
 
-    console.log(2);
     let updatedChallenge = await updateActivityInDB(
       challengeID,
       participantID,
       10
     );
     res.status(200).json(updatedChallenge);
+  } catch (error) {
+    sendErrorResponse(res, error);
+  }
+};
+
+exports.deleteChallenge = async (req, res) => {
+  try {
+    let challenge_id = req.params.id;
+    let user_id = req.user._id;
+    await checkIfUserIsParticipantOfChallenge(challenge_id, user_id);
+
+    await getEntityFromDB(challengeModel, challenge_id);
+
+    await deleteEntityFromDB(challengeModel, challenge_id);
+    res.status(204).end();
   } catch (error) {
     sendErrorResponse(res, error);
   }

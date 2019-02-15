@@ -1,4 +1,6 @@
 let express = require("express");
+const userModel = require("../models/user.js");
+
 let router = express.Router();
 let passport = require("passport");
 let controller = require("../controllers/auth.js");
@@ -6,14 +8,19 @@ let jwt = require("jsonwebtoken");
 require("dotenv").config();
 let validator = require("../controllers/auth.validation");
 
-router.get("/login/google", controller.googleLogin);
+router.get("/login/google", passport.authenticate("google"));
 
-router.get("/google/callback", passport.authenticate("google"), function(
+router.get("/google/callback/", passport.authenticate("google"), function(
   req,
   res
 ) {
-  res.status(200).json({ token: req.user.accessToken });
+  const body = { _id: req.user._id };
+  console.log(body);
+  const token = jwt.sign({ user: body }, process.env.JWT_SECRET);
+  return res.status(200).json({ token });
 });
+
+//res.status(200).json({ token: req.user.accessToken, _id: req.user._id });
 
 router.post("/signup", validator.signup, controller.signup);
 

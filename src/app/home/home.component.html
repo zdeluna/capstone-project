@@ -1,39 +1,28 @@
-<app-menu-bar>
-
-</app-menu-bar>
-
-<div class='main-container'>
-
-  <div class="title-container">
-    <div class='title'>
-      <h1>
-        Challenge yourself.<br>
-        Challenge anyone.
-      </h1>
-    </div>
-    <div class='title-brief'>
-      <h5>
-       Create your own free account to track <br />
-       your fitness and challenge your friends!! 
-      </h5>
-    </div>
+<body>
+  
+  <div class ="jumbotron">
+      <h1 *ngIf="user" class='profile-name'>Welcome, {{ user.firstName }}</h1>
+      <p> {{date}} </p>
   </div>
 
-  <div class='form-container'>
-    <form class='signup-form' action="">
-      <input type="text" value='Email'> <br>
-      <input type="text" value='Password'> <p></p>
-      <input type="submit" value="Create Account!"> 
-    </form>
+  <div class="row-6" id='challenges'>
+    <h3>Challenges snapshot:</h3>
+    <ul>
+      <li>No current challenges</li>
+      <li>No upcoming challenges</li>
+    </ul>
   </div>
 
-  <div class="btn-container">
-    <button class="google-btn">
-      <img src="https://img.icons8.com/small/16/000000/google-logo.png">
-      <span> Sign in with Google! </span> 
-    </button>
+  <div class ="row">
+    <div *ngFor="let category of categories" class="col-6 decision-button">
+        <a
+         [routerLink]="category.value">
+         <img class="decision-button-svg" [src]="category.location" [alt]="category.view"/>
+        </a>
+        <p>{{ category.view }}</p>
+    </div>
   </div>
   
-</div>
+</body>
 
-<router-outlet></router-outlet>
+

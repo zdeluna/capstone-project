@@ -8,17 +8,19 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
-import { MenuBarComponent } from './menu-bar/menu-bar.component';
+import { LoginComponent } from './login/login.component';
 import { CreateChallengeComponent } from './challenges/create-challenge/create-challenge.component';
 import { ActiveChallengeComponent } from './challenges/active-challenge/active-challenge.component';
+import { ProfileComponent } from './profile/profile.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     CreateChallengeComponent,
-    MenuBarComponent,
-    ActiveChallengeComponent
+    ActiveChallengeComponent,
+    LoginComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,

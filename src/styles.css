@@ -4,6 +4,7 @@
   width: 100%;
   margin: 5px;
 }
+
 .form-element {
   margin-bottom: 20px;
 }
@@ -26,6 +27,12 @@
   justify-content: space-between;
   align-items: center;
 }
+.header-col {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+}
 .mat-card {
   margin-top: 1%;
   margin-bottom: 1%;
@@ -39,8 +46,13 @@
   flex-direction: row;
   justify-content: space-between;
 }
+.radio-buttons-left {
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
+}
 .row {
-  margin-top: 20px;
+  margin-top: 20px; 
   margin-bottom: 20px;
 }
 .search {
@@ -49,3 +61,28 @@
   justify-content: space-between;
   align-items: center;
 }
+
+.decision-button-svg {
+  height: 8em; 
+  width: auto;
+}
+
+.profile-name {
+  font-size: 5em;
+}
+
+.col-lg-6 {
+  padding: 5px;
+}
+
+.decision-button {
+  height: 75%;
+  width: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
