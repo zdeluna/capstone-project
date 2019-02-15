@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Challenge } from 'src/app/models/challenge.model';
+import { DatabaseService } from 'src/app/services/database.service';
+import { User } from 'src/app/models/user.model';
+import { Router } from '@angular/router';
 
 export interface Measurement {
   view: string;
@@ -15,14 +18,34 @@ export interface Measurement {
 })
 export class CreateChallengeComponent implements OnInit {
 
-  constructor(private location: Location) { }
+  constructor(private location: Location, private dbService: DatabaseService, private router: Router) { }
 
+  tempFriends: User[] = [{
+      id: "123456",
+      email: 'test@gmail.com',
+      username: "testUser1",
+      firstName: "Test",
+      lastName: "User"
+    },
+    {
+      id: "654321",
+      email: 'piemo@gmail.com',
+      username: "cpie19",
+      firstName: "Chris",
+      lastName: "Piemonte"
+    }
+  ]
+
+  search = ''
+  noMatch = false
+  searchMatches: User[] = []
+  invitedFriends: User[] = []
   minDate = new Date();
   measurements: Measurement[] = [
-    {view: 'Steps', activities: ['walking']},
-    {view: 'Time', activities: ['walking', 'running', 'biking', 'swimming']},
-    {view: 'Miles', activities: ['walking', 'running', 'biking']},
-    {view: 'Weight', activities: ['weight']}
+    {view: 'Steps', activities: ['Walking']},
+    {view: 'Time', activities: ['Walking', 'Running', 'Biking', 'Swimming']},
+    {view: 'Miles', activities: ['Walking', 'Running', 'Biking']},
+    {view: 'Lifting', activities: ['Weight']}
   ]
 
   form = new FormGroup({
@@ -31,6 +54,10 @@ export class CreateChallengeComponent implements OnInit {
     duration: new FormControl({value: '', disabled: true}),
     startDate: new FormControl({value: '', disabled: true}),
     invitees: new FormControl('')
+  })
+
+  friendSearch = new FormGroup({
+    name: new FormControl('')
   })
 
   ngOnInit() {
@@ -50,12 +77,16 @@ export class CreateChallengeComponent implements OnInit {
 
   submitForm(): void {
     let challenge = new Challenge()
+    challenge.name = `${this.form.value.activity} ${this.form.value.measurement} Challenge`
     challenge.activity = this.form.value.activity
     challenge.measurement = this.form.value.measurement
     challenge.duration = this.form.value.duration
     challenge.startDate = this.form.value.startDate
     challenge.invitees = this.form.value.invitees
-    console.log(challenge)
+    this.dbService.addChallenge(challenge).subscribe(res => {
+      console.log(res)
+      this.router.navigate([`/challenges/${res['_id']}`])
+    })
     /* TODO:
       * call formIsValid() (security for presentation-level attack)
       ** if valid, call addChallenge from dbService
@@ -63,7 +94,6 @@ export class CreateChallengeComponent implements OnInit {
       ** if not valid, do nothing (should only happen under attack)
     */
   }
-
   validMeasurementForActivity(activity: String, measurement: []): Boolean {
     let valid = false
     if(activity) {
@@ -94,10 +124,44 @@ export class CreateChallengeComponent implements OnInit {
 
   formIsEmpty(): Boolean {
     if(this.form.value.activity || this.form.value.measurement || this.form.value.duration || this.form.value.invitees || this.form.value.startDate) {
-      return this.form.value.activity.length < 1 && this.form.value.measurement.length < 1 && this.form.value.duration.length < 1 && this.form.value.invitees.length < 1 && this.form.value.startDate.length < 1
+      return this.form.value.activity == undefined && this.form.value.measurement == undefined && this.form.value.duration == undefined && this.form.value.invitees == undefined && this.form.value.startDate == undefined
     } else {
       return true
     }
+
+    return false
+  }
+
+  submitSearch() {
+    this.noMatch = false
+    this.searchMatches = []
+    this.tempFriends.forEach(friend => {
+      if(friend.firstName === this.friendSearch.value.name) {
+        this.searchMatches.push(friend)
+      }
+    })
+    if(this.searchMatches.length === 0) {
+      this.noMatch = true
+    }
+  }
+
+  clearSearch() {
+    this.friendSearch.controls.name.setValue('')
+    this.searchMatches = []
+    this.noMatch = false
+  }
+
+  inviteFriend(id: string) {
+    this.invitedFriends.push(this.dbService.getUserHardCoded(id))
+    this.form.controls.invitees.setValue(this.invitedFriends)
+  }
+
+  removeFriend(id: string) {
+    this.invitedFriends.forEach(friend => {
+      if(friend.id == id) {
+        this.invitedFriends.splice(this.invitedFriends.indexOf(friend), 1)
+      }
+    })
   }
 
   myFilter = (d: Date): boolean => {
@@ -108,7 +172,12 @@ export class CreateChallengeComponent implements OnInit {
 
   clear(): void {
     this.form.reset()
+    this.invitedFriends = []
+    this.searchMatches = []
+    this.friendSearch.controls.name.setValue('')
     this.form.controls.measurement.disable()
+    this.form.controls.duration.disable()
+    this.form.controls.startDate.disable()
   }
 
   goBack(): void {

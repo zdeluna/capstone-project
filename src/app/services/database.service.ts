@@ -12,6 +12,8 @@ export class DatabaseService {
 
   uri = 'https://capstone-wazn.appspot.com/api'
   user: User = new User()
+
+
   token:string = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjVjNjVmNDMzMWFjMjMyMDAwNWQyZjE1NiJ9LCJpYXQiOjE1NTAyNDA3NjF9.Yfm7JLxGPTszFNEpHrh57y-WKakXqa0ZeUpdE67GS8c"
   httpOptions = {
     headers: new HttpHeaders({
@@ -48,44 +50,44 @@ export class DatabaseService {
     return this.http.get(`${this.uri}/users/${id}`, this.httpOptions)
   }
 
+
   getID() {
     return this.user.id;
   }
 
   setID(_id : string) {
     this.user.id = _id;
+
+  getUserHardCoded(id: string): User {
+    let user = new User
+    let users: User[] = [{
+      id: "123456",
+      email: 'test@gmail.com',
+      username: "testUser1",
+      firstName: "Test",
+      lastName: "User"
+    },
+    {
+      id: "654321",
+      email: 'piemo@gmail.com',
+      username: "cpie19",
+      firstName: "Chris",
+      lastName: "Piemonte"
+    },
+    {
+      id: "987654",
+      email: 'thehawk@gmail.com',
+      username: "thehawk",
+      firstName: "Steve",
+      lastName: "Hawking"
+    }]
+
+    users.forEach(u => {
+      if(u.id === id) {
+        user = u
+      }
+    })
+    
+    return user
   }
-
-  // getUserHardCoded(id: string): User {
-  //   let user = new User
-  //   let users: User[] = [{
-  //     id: "123456",
-  //     email: 'test@gmail.com',
-  //     username: "testUser1",
-  //     firstName: "Test",
-  //     lastName: "User"
-  //   },
-  //   {
-  //     id: "654321",
-  //     email: 'piemo@gmail.com',
-  //     username: "cpie19",
-  //     firstName: "Chris",
-  //     lastName: "Piemonte"
-  //   },
-  //   {
-  //     id: "987654",
-  //     email: 'thehawk@gmail.com',
-  //     username: "thehawk",
-  //     firstName: "Steve",
-  //     lastName: "Hawking"
-  //   }]
-
-  //   users.forEach(u => {
-  //     if(u.id === id) {
-  //       user = u
-  //     }
-  //   })
-
-  //   return user
-  // }
 }

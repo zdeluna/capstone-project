@@ -7,17 +7,17 @@
 
 <div class="row">
   <div class="col-12">
-    <mat-card>
-      <mat-card-content>
-        <form [formGroup]="form" (ngSubmit)="submitForm()">
+    <form [formGroup]="form" (ngSubmit)="submitForm()">
+      <mat-card>
+        <mat-card-content>
           <div class="form-element">
             <h3 class="form-element-header">Activity</h3>
             <mat-radio-group (change)="checkForActivity()" class="radio-buttons" formControlName="activity">
-              <mat-radio-button value="walking">Walking</mat-radio-button>
-              <mat-radio-button value="running">Running</mat-radio-button>
-              <mat-radio-button value="biking">Biking</mat-radio-button>
-              <mat-radio-button value="swimming">Swimming</mat-radio-button>
-              <mat-radio-button value="weight">Weight</mat-radio-button>
+              <mat-radio-button value="Walking">Walking</mat-radio-button>
+              <mat-radio-button value="Running">Running</mat-radio-button>
+              <mat-radio-button value="Biking">Biking</mat-radio-button>
+              <mat-radio-button value="Swimming">Swimming</mat-radio-button>
+              <mat-radio-button value="Weight">Weight</mat-radio-button>
             </mat-radio-group>
           </div>
           <div class="form-element">
@@ -42,22 +42,45 @@
           </div>
           <div class="form-element">
             <h3 class="form-element-header">Start Date</h3>
-            <mat-form-field>
-              <input matInput [matDatepickerFilter]="myFilter" [min]="minDate" [matDatepicker]="picker" formControlName="startDate" placeholder="Choose a date">
+            <mat-form-field class="full-width">
+              <input matInput [matDatepickerFilter]="myFilter" [min]="minDate" [matDatepicker]="picker" formControlName="startDate" placeholder="Choose a date" autocomplete="off">
               <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
               <mat-datepicker #picker></mat-datepicker>
             </mat-form-field>
           </div>
           <div class="form-element">
-            <h3 class="form-element-header">Invite Participants</h3>
-            <mat-form-field class="full-width">
-              <input matInput placeholder="Search for users" type="text" formControlName="invitees">
-            </mat-form-field>
+            <h3 class="form-element-header">Invite Friends</h3>
+            <form class="search" [formGroup]="friendSearch" (ngSubmit)="submitSearch()">
+              <mat-form-field class="add-entry" style="padding-right: 5px">
+                <input matInput placeholder="Search friends by first name" type="text" formControlName="name" [(ngModel)]="search" autocomplete="off">
+              </mat-form-field>
+              <button mat-stroked-button style="margin-right: 5px" class="btn btn-primary" type="Submit" [disabled]="!form.valid"> Search </button>
+              <button class="btn btn-light" type="button" [disabled]="friendSearch.value.name === undefined || friendSearch.value.name === ''" (click)="clearSearch()">Clear</button>
+            </form>
+            
+            <div *ngIf="searchMatches.length > 0">
+              <div *ngFor="let match of searchMatches" class="col-12 friends-row">
+                <p>{{ match.firstName }} {{ match.lastName }}</p>
+                <p>{{ match.username }}</p>
+                <button class="btn btn-light" type="button" (click)="inviteFriend(match.id)">Invite</button>
+              </div>
+            </div>
+            <div class="col-12" [hidden]="!noMatch">Sorry, no matches for this search</div>
           </div>
-          <button mat-stroked-button style="margin-right: 5px" class="btn btn-success" type="Submit" [disabled]="!form.valid"> Create </button>
-          <button mat-stroked-button class="btn btn-light" [disabled]="formIsEmpty()" (click)="clear()"> Clear </button>
-        </form>
-      </mat-card-content>
-    </mat-card>
+          <div>
+            <h3 class="form-element-header">Invited</h3>
+            <div *ngFor="let friend of invitedFriends" class="col-12 friends-row">
+                <p>{{ friend.firstName }} {{ friend.lastName }}</p>
+                <p>{{ friend.username }}</p>
+              <button class="btn btn-light" type="button" (click)="removeFriend(friend.id)">Remove</button>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+      <div class="header">
+        <button mat-stroked-button style="margin-right: 5px" class="btn btn-success" type="Submit" [disabled]="!form.valid"> Create </button>
+        <button mat-stroked-button class="btn btn-light" [disabled]="formIsEmpty()" type="button" (click)="clear()"> Clear </button>
+      </div>
+    </form>
   </div>
 </div>

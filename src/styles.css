@@ -1,12 +1,22 @@
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 
-
+.add-entry {
+  width: 100%;
+  margin: 5px;
+}
 
 .form-element {
   margin-bottom: 20px;
 }
 .form-element-header {
   margin-bottom: 15px;
+}
+.friends-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 5px;
 }
 .full-width {
   width: 100%;
@@ -44,6 +54,12 @@
 .row {
   margin-top: 20px; 
   margin-bottom: 20px;
+}
+.search {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .decision-button-svg {
