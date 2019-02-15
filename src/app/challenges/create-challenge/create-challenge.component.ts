@@ -36,6 +36,7 @@ export class CreateChallengeComponent implements OnInit {
     }
   ]
 
+  search = ''
   noMatch = false
   searchMatches: User[] = []
   invitedFriends: User[] = []

@@ -4,6 +4,8 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule, MatFormFieldModule, MatInputModule, MatOptionModule, MatSelectModule, MatListModule, MatRadioModule, MatSliderModule, MatCardModule, MatDatepickerModule, MatNativeDateModule, MatProgressBarModule } from '@angular/material';
 import { HttpClientModule } from '@angular/common/http';
+import { AngularFireModule } from '@angular/fire';  
+import { environment } from '../environments/environment'; 
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -28,6 +30,7 @@ import { ChallengesPageComponent } from './challenges/challenges-page/challenges
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
+    AngularFireModule.initializeApp(environment.firebase),
     FormsModule,
     MatButtonModule,
     MatFormFieldModule,

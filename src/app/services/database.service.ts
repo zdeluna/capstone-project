@@ -10,6 +10,7 @@ export class DatabaseService {
 
   constructor(private http: HttpClient) { }
 
+  uri = 'https://capstone-wazn.appspot.com/api'
   token:string = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjVjNjVmNDMzMWFjMjMyMDAwNWQyZjE1NiJ9LCJpYXQiOjE1NTAyNDA3NjF9.Yfm7JLxGPTszFNEpHrh57y-WKakXqa0ZeUpdE67GS8c"
   httpOptions = {
     headers: new HttpHeaders({
@@ -26,16 +27,16 @@ export class DatabaseService {
       measurement: challenge.measurement,
       start_date: `0${(challenge.startDate.getMonth() + 1)}-${challenge.startDate.getDate()}-${challenge.startDate.getFullYear()}`
     }
-    return this.http.post('/api/challenges', c, this.httpOptions)
+    return this.http.post(`${this.uri}/challenges`, c, this.httpOptions)
   }
 
   //ids: 5c6602291ac2320005d2f15a, 5c65fffc1ac2320005d2f158
   getChallenge(id: string) {
-    return this.http.get(`api/challenges/${id}`, this.httpOptions)
+    return this.http.get(`${this.uri}/challenges/${id}`, this.httpOptions)
   }
 
   getExampleChallenge() {
-    return this.http.get('api/challenges/5c6602291ac2320005d2f15a', this.httpOptions)
+    return this.http.get(`${this.uri}/challenges/5c6602291ac2320005d2f15a`, this.httpOptions)
   }
 
   getExerciseByUserDateAndActivity(userId: string, startDate: Date, activity: string) {
@@ -43,7 +44,7 @@ export class DatabaseService {
   }
 
   getUser(id: string) {
-    return this.http.get(`api/users/${id}`, this.httpOptions)
+    return this.http.get(`${this.uri}/users/${id}`, this.httpOptions)
   }
 
   getUserHardCoded(id: string): User {
