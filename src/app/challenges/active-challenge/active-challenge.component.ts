@@ -31,25 +31,42 @@ export class ActiveChallengeComponent implements OnInit {
 
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
-      this. challenge = this.dbService.getChallenge(params.get('id'))
-      //All of these must come after subscription
-      this.getParticipants(this.challenge.participants)
-      this.currentDays = this.durationService.getCurrentDays(this.challenge.startDate)
-      this.totalDays = this.durationService.getTotalDays(this.challenge.startDate, this.challenge.duration)
-      this.progress = this.getProgress(this.currentDays, this.totalDays)
-      this.endDate = this.durationService.getEndDate(this.challenge.startDate, this.challenge.duration)
-      // -----------------------------------------
+      this.dbService.getChallenge(params.get('id')).subscribe(res => {
+        this.challenge.name = res['name']
+        this.challenge.activity = res['activity']
+        this.challenge.duration = res['duration']
+        this.challenge.measurement = res['measurement']
+        this.challenge.participants = res['participants']
+        this.challenge.invitees = res['pending_participants']
+        this.challenge.startDate = new Date(res['start_date'])
+        
+        this.getParticipants(this.challenge.participants)
+        this.currentDays = this.durationService.getCurrentDays(this.challenge.startDate)
+        this.totalDays = this.durationService.getTotalDays(this.challenge.startDate, this.challenge.duration)
+        this.progress = this.getProgress(this.currentDays, this.totalDays)
+        this.endDate = this.durationService.getEndDate(this.challenge.startDate, this.challenge.duration)
+      })
     })
   }
 
-  getParticipants(ids: string[]) {
-    ids.forEach(id => {
-      let p: Leaderboard = {
-        user: this.dbService.getUser(id),
-        activityTotal: Math.ceil(Math.random() * (150 - 0))
-      }
-      this.participants.push(p)
-      this.sortedParticipants = this.sortService.sortByActivityTotal(this.participants)
+  getParticipants(participants: Object[]) {
+    participants.forEach(participant => {
+      this.dbService.getUser(participant['user_id']).subscribe(res => {
+        let user: User = {
+          id: res['_id'],
+          email: res['username'],
+          username: res['username'],
+          firstName: 'Chris',
+          lastName: 'Piemonte'
+        }
+
+        let p: Leaderboard = {
+          user: user,
+          activityTotal: Math.ceil(Math.random() * (150 - 0))
+        }
+        this.participants.push(p)
+        this.sortedParticipants = this.sortService.sortByActivityTotal(this.participants)
+      })
     })
   }
 

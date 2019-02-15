@@ -9,7 +9,7 @@
   <div class="col-12">
     <mat-card>
       <mat-card-content>
-        <h2>Duration: {{ challenge.startDate.getMonth() + 1}}/{{ challenge.startDate.getDate() }} - {{ endDate.getMonth() + 1}}/{{ endDate.getDate() }}</h2>
+        <h2 *ngIf="challenge.startDate">Duration: {{ challenge.startDate.getMonth() + 1}}/{{ challenge.startDate.getDate() }} - {{ endDate.getMonth() + 1}}/{{ endDate.getDate() }}</h2>
         <br/>
         <h5>{{ currentDays }} of {{ totalDays }} Days - {{ totalDays - currentDays }} Remaining!</h5>
         <mat-progress-bar mode="determinate" [(value)]="progress"></mat-progress-bar>

@@ -12,13 +12,18 @@ export class ChallengesPageComponent implements OnInit {
 
   constructor(private location: Location, private dbService: DatabaseService) { }
 
-  challenge: Challenge
+  challengeId: Challenge
   options = [
-    {value: "", location: "assets/flat-icons/magnifier.svg", view: "View Challenge"},
+    {value: `${this.challengeId}`, location: "assets/flat-icons/magnifier.svg", view: "View Challenge"},
     {value: "create", location: "assets/flat-icons/add.svg", view: "Create Challenge"}
   ]
 
   ngOnInit() {
+    this.dbService.getExampleChallenge().subscribe(res => {
+      this.challengeId = res['_id']
+      this.options[0] = {value: `${this.challengeId}`, location: "assets/flat-icons/magnifier.svg", view: "View Challenge"}
+      console.log(res)
+    })
   }
 
   goBack(): void {

@@ -30,25 +30,23 @@ export class DatabaseService {
   }
 
   //ids: 5c6602291ac2320005d2f15a, 5c65fffc1ac2320005d2f158
-  getChallenge(id: string): Challenge {
-    let c: Challenge = {
-      id: id,
-      name: "Bike Mile Challenge",
-      participants: ["123456", "654321", "987654"],
-      startDate: new Date(2019, 1, 1), //Feb 1 - 0 indexed
-      activity: "bike",
-      measurement: "miles",
-      duration: "month",
-      invitees: ["123456", "654321", "987654"]
-    }
-    return c
+  getChallenge(id: string) {
+    return this.http.get(`api/challenges/${id}`, this.httpOptions)
+  }
+
+  getExampleChallenge() {
+    return this.http.get('api/challenges/5c6602291ac2320005d2f15a', this.httpOptions)
   }
 
   getExerciseByUserDateAndActivity(userId: string, startDate: Date, activity: string) {
     //search db where user = userId startDate date >= startDate activity = activity
   }
 
-  getUser(id: string): User {
+  getUser(id: string) {
+    return this.http.get(`api/users/${id}`, this.httpOptions)
+  }
+
+  getUserHardCoded(id: string): User {
     let user = new User
     let users: User[] = [{
       id: "123456",

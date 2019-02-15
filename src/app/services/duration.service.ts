@@ -50,6 +50,11 @@ export class DurationService {
   }
 
   getCurrentDays(startDate: Date): number {
-    return new Date().getDate() - startDate.getDate()
+    let currentDays = new Date().getDate() - startDate.getDate()
+    if(currentDays < 0) {
+      return 0
+    } else {
+      return currentDays
+    }
   }
 }
