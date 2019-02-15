@@ -21,12 +21,14 @@ export class CreateChallengeComponent implements OnInit {
 
   tempFriends: User[] = [{
       id: "123456",
+      email: 'test@gmail.com',
       username: "testUser1",
       firstName: "Test",
       lastName: "User"
     },
     {
       id: "654321",
+      email: 'piemo@gmail.com',
       username: "cpie19",
       firstName: "Chris",
       lastName: "Piemonte"
@@ -35,7 +37,7 @@ export class CreateChallengeComponent implements OnInit {
 
   noMatch = false
   searchMatches: User[] = []
-  invitedFriends: string[] = []
+  invitedFriends: User[] = []
   minDate = new Date();
   measurements: Measurement[] = [
     {view: 'Steps', activities: ['walking']},
@@ -147,13 +149,13 @@ export class CreateChallengeComponent implements OnInit {
   }
 
   inviteFriend(id: string) {
-    this.invitedFriends.push(id)
+    this.invitedFriends.push(this.dbService.getUser(id))
     this.form.controls.invitees.setValue(this.invitedFriends)
   }
 
   removeFriend(id: string) {
     this.invitedFriends.forEach(friend => {
-      if(friend == id) {
+      if(friend.id == id) {
         this.invitedFriends.splice(this.invitedFriends.indexOf(friend), 1)
       }
     })

@@ -5,11 +5,13 @@ import { CreateChallengeComponent } from './challenges/create-challenge/create-c
 import { LoginComponent } from './login/login.component';
 import { ProfileComponent } from './profile/profile.component';
 import { ActiveChallengeComponent } from './challenges/active-challenge/active-challenge.component';
+import { ChallengesPageComponent } from './challenges/challenges-page/challenges-page.component';
 
 const routes: Routes = [
   {path: '', component: LoginComponent},
   {path: 'home', component: HomeComponent},
   {path: 'profile', component: ProfileComponent},
+  {path: 'challenges', component: ChallengesPageComponent},
   {path: 'challenges/create', component: CreateChallengeComponent},
   {path: 'challenges/:id', component: ActiveChallengeComponent}
 ];

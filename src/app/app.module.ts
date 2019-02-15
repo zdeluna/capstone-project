@@ -12,6 +12,7 @@ import { LoginComponent } from './login/login.component';
 import { CreateChallengeComponent } from './challenges/create-challenge/create-challenge.component';
 import { ActiveChallengeComponent } from './challenges/active-challenge/active-challenge.component';
 import { ProfileComponent } from './profile/profile.component';
+import { ChallengesPageComponent } from './challenges/challenges-page/challenges-page.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { ProfileComponent } from './profile/profile.component';
     CreateChallengeComponent,
     ActiveChallengeComponent,
     LoginComponent,
-    ProfileComponent
+    ProfileComponent,
+    ChallengesPageComponent
   ],
   imports: [
     BrowserModule,
