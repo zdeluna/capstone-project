@@ -14,7 +14,9 @@ import { LoginComponent } from './login/login.component';
 import { CreateChallengeComponent } from './challenges/create-challenge/create-challenge.component';
 import { ActiveChallengeComponent } from './challenges/active-challenge/active-challenge.component';
 import { ProfileComponent } from './profile/profile.component';
+import { HttpClientModule } from '@angular/common/http';
 import { ChallengesPageComponent } from './challenges/challenges-page/challenges-page.component';
+
 
 @NgModule({
   declarations: [
