@@ -1,0 +1,13 @@
+<div class ="row">
+  <div class="col-lg-12 header">
+    <h1 style="display: inline">Challenges</h1>
+    <button mat-stroked-button (click)="goBack()"> Back </button>
+  </div>
+</div>
+
+<div class ="row">
+  <div *ngFor="let option of options" class="col-6 decision-button">
+    <a [routerLink]="option.value"><img class="decision-button-svg" [src]="option.location" [alt]="option.value"/></a>
+    <p>{{ option.view }}</p>
+  </div>
+</div>

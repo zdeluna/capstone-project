@@ -2,9 +2,9 @@ export class Challenge {
   id: string;
   name: string;
   participants: string[];
-  startDate: Date;
+  startDate: Date
   activity: string;
   measurement: string;
-  duration: number;
+  duration: string;
   invitees: string[];
 }
