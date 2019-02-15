@@ -4,6 +4,7 @@ import { FormGroup, FormControl } from '@angular/forms';
 import { Challenge } from 'src/app/models/challenge.model';
 import { DatabaseService } from 'src/app/services/database.service';
 import { User } from 'src/app/models/user.model';
+import { Router } from '@angular/router';
 
 export interface Measurement {
   view: string;
@@ -17,7 +18,7 @@ export interface Measurement {
 })
 export class CreateChallengeComponent implements OnInit {
 
-  constructor(private location: Location, private dbService: DatabaseService) { }
+  constructor(private location: Location, private dbService: DatabaseService, private router: Router) { }
 
   tempFriends: User[] = [{
       id: "123456",
@@ -40,10 +41,10 @@ export class CreateChallengeComponent implements OnInit {
   invitedFriends: User[] = []
   minDate = new Date();
   measurements: Measurement[] = [
-    {view: 'Steps', activities: ['walking']},
-    {view: 'Time', activities: ['walking', 'running', 'biking', 'swimming']},
-    {view: 'Miles', activities: ['walking', 'running', 'biking']},
-    {view: 'Weight', activities: ['weight']}
+    {view: 'Steps', activities: ['Walking']},
+    {view: 'Time', activities: ['Walking', 'Running', 'Biking', 'Swimming']},
+    {view: 'Miles', activities: ['Walking', 'Running', 'Biking']},
+    {view: 'Lifting', activities: ['Weight']}
   ]
 
   form = new FormGroup({
@@ -75,7 +76,7 @@ export class CreateChallengeComponent implements OnInit {
 
   submitForm(): void {
     let challenge = new Challenge()
-    challenge.name = 'Bike Mile Challenge'
+    challenge.name = `${this.form.value.activity} ${this.form.value.measurement} Challenge`
     challenge.activity = this.form.value.activity
     challenge.measurement = this.form.value.measurement
     challenge.duration = this.form.value.duration
@@ -83,6 +84,7 @@ export class CreateChallengeComponent implements OnInit {
     challenge.invitees = this.form.value.invitees
     this.dbService.addChallenge(challenge).subscribe(res => {
       console.log(res)
+      this.router.navigate([`/challenges/${res['_id']}`])
     })
     /* TODO:
       * call formIsValid() (security for presentation-level attack)
