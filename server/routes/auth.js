@@ -17,7 +17,7 @@ router.get("/google/callback/", passport.authenticate("google"), function(
   const body = { _id: req.user._id };
   console.log(body);
   const token = jwt.sign({ user: body }, process.env.JWT_SECRET);
-  return res.status(200).json({ token });
+  return res.status(200).json({ token: token, user_id: req.user._id });
 });
 
 //res.status(200).json({ token: req.user.accessToken, _id: req.user._id });
