@@ -39,7 +39,7 @@ export class DatabaseService {
   }
 
   getExampleChallenge() {
-    return this.http.get(`${this.uri}/challenges/5c68680257e75f0005adb718`, this.httpOptions)
+    return this.http.get(`${this.uri}/challenges/5c686d1315a6850006405ab1`, this.httpOptions)
   }
 
   getExerciseByUserDateAndActivity(userId: string, startDate: Date, activity: string) {

@@ -1,10 +1,13 @@
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
+@import "~@fortawesome/fontawesome-free/css/all.css";
 
 .add-entry {
   width: 100%;
   margin: 5px;
 }
-
+.drop-down {
+  font-size: 2em
+}
 .form-element {
   margin-bottom: 20px;
 }
@@ -66,7 +69,9 @@
   height: 8em; 
   width: auto;
 }
-
+.post-date {
+  font-size: .75em;
+}
 .profile-name {
   font-size: 5em;
 }
