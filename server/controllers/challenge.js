@@ -25,7 +25,7 @@ const checkIfUserIsParticipantOfChallenge = async (challenge_id, user_id) => {
       if (userIsParticipant != true) {
         reject({
           statusCode: 403,
-          msg: "USER_MUST_BE_A_PARTICIPANT_IN_CHALLENGE_IN_ORDER_TO_DELETE"
+          msg: "USER_MUST_BE_A_PARTICIPANT_IN_CHALLENGE"
         });
       } else resolve();
     });
@@ -221,6 +221,9 @@ exports.createMessage = async (req, res) => {
   let userID = new ObjectId(req.user._id);
 
   try {
+    // Only allow participant of challenge to send message
+    await checkIfUserIsParticipantOfChallenge(challenge_id, user_id);
+
     // Check if user is a participant in the challenge
     let validatedFields = matchedData(req, { includeOptionals: false });
     createMessageInDB(challengeID, validatedFields, userID);
@@ -233,11 +236,15 @@ exports.createMessage = async (req, res) => {
 exports.updateChallenge = async (req, res) => {
   try {
     let challengeID = req.params.challengeID;
+    let user_id = new ObjectId(req.user._id);
 
     // Use the matched data function of validator to return data that was validated thru express-validaotr. Optional data will be included
     let validatedFields = {
       $set: matchedData(req, { includeOptionals: false })
     };
+
+    // Only allow participant of challenge to update the challenge
+    await checkIfUserIsParticipantOfChallenge(challenge_id, user_id);
 
     let updatedChallenge = await updateEntityFromDB(
       challengeModel,
@@ -254,6 +261,7 @@ exports.updateActivity = async (req, res) => {
   try {
     let challengeID = req.params.challengeID;
     let participantID = req.params.participantID;
+
     // Use the matched data function of validator to return data that was validated thru express-validaotr. Optional data will be included
     let validatedFields = {
       $set: matchedData(req, { includeOptionals: false })
@@ -274,6 +282,7 @@ exports.deleteChallenge = async (req, res) => {
   try {
     let challenge_id = req.params.id;
     let user_id = req.user._id;
+    // Only allow participant of challenge to delete the challenge
     await checkIfUserIsParticipantOfChallenge(challenge_id, user_id);
 
     await getEntityFromDB(challengeModel, challenge_id);
