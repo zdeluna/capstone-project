@@ -14,7 +14,7 @@ export class DatabaseService {
   user: User = new User()
 
 
-  token:string = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjVjNjVmNDMzMWFjMjMyMDAwNWQyZjE1NiJ9LCJpYXQiOjE1NTAyNDA3NjF9.Yfm7JLxGPTszFNEpHrh57y-WKakXqa0ZeUpdE67GS8c"
+  token:string = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjVjNjg2NzYyNTdlNzVmMDAwNWFkYjcxNyJ9LCJpYXQiOjE1NTAzNDYwOTV9.WRGZo4LB21jxoJr98X6zwtxgEia8ASk69TYhn5aVGeg"
   httpOptions = {
     headers: new HttpHeaders({
       'Content-Type':  'application/json',
@@ -39,7 +39,7 @@ export class DatabaseService {
   }
 
   getExampleChallenge() {
-    return this.http.get(`${this.uri}/challenges/5c6602291ac2320005d2f15a`, this.httpOptions)
+    return this.http.get(`${this.uri}/challenges/5c68680257e75f0005adb718`, this.httpOptions)
   }
 
   getExerciseByUserDateAndActivity(userId: string, startDate: Date, activity: string) {
