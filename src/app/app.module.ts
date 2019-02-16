@@ -16,6 +16,7 @@ import { ActiveChallengeComponent } from './challenges/active-challenge/active-c
 import { ProfileComponent } from './profile/profile.component';
 import { ChallengesPageComponent } from './challenges/challenges-page/challenges-page.component';
 import { MessageBoardComponent } from './challenges/message-board/message-board.component';
+import { MessageBoardReplyComponent } from './challenges/message-board/message-board-reply/message-board-reply.component';
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import { MessageBoardComponent } from './challenges/message-board/message-board.
     LoginComponent,
     ProfileComponent,
     ChallengesPageComponent,
-    MessageBoardComponent
+    MessageBoardComponent,
+    MessageBoardReplyComponent
   ],
   imports: [
     BrowserModule,

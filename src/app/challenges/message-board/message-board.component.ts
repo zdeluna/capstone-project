@@ -3,6 +3,8 @@ import { Challenge } from 'src/app/models/challenge.model';
 import { FormGroup, FormControl } from '@angular/forms';
 
 export interface Post {
+  id: string;
+  parent?: string;
   message: string;
   date: Date;
   replies: Post[];
@@ -18,10 +20,12 @@ export class MessageBoardComponent implements OnInit {
   constructor() { }
 
   @Input() challenge: Challenge
-
-  posts: Post[] = []
+  @Input() posts: Post[] = []
 
   form = new FormGroup({
+    message: new FormControl('')
+  })
+  formReply = new FormGroup({
     message: new FormControl('')
   })
 
@@ -29,10 +33,23 @@ export class MessageBoardComponent implements OnInit {
   }
 
   submitNewPost() {
-
+    this.posts.push({
+      id: (new Date()).getTime().toString(),
+      message: this.form.value.message,
+      date: new Date(),
+      replies: []
+    })
+    this.form.reset()
   }
 
-  submitReply() {
-    
+  submitReply(post: Post) {
+    post.replies.push({
+      id: (new Date()).getTime().toString(),
+      parent: post.id,
+      message: this.formReply.value.message,
+      date: new Date(),
+      replies: []
+    })
+    this.formReply.reset()
   }
 }

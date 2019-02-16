@@ -1,0 +1,19 @@
+<mat-card>
+  <mat-card-content>
+    <div>{{ post.message }}</div>
+    <div class="friends-row">
+      <span class="post-date">{{ post.date.getMonth() + 1 }}/{{ post.date.getDate() }} {{ post.date.getHours()}}:{{post.date.getMinutes() }}</span>
+    </div>
+    <div *ngIf="post.replies">
+      <div *ngFor="let reply of post.replies">
+        <app-message-board-reply [parent]="post" [post]="reply"></app-message-board-reply>
+      </div>
+    </div>
+    <form [formGroup]="formReply" (ngSubmit)="submitReply(post)">
+      <mat-form-field class="full-width">
+        <textarea matInput placeholder="Reply to post" formControlName="message"></textarea>
+      </mat-form-field>
+      <button mat-stroked-button> Reply </button>
+    </form>
+  </mat-card-content>
+</mat-card>
