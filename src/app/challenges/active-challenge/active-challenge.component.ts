@@ -21,6 +21,7 @@ export class ActiveChallengeComponent implements OnInit {
 
   constructor(private location: Location, private route: ActivatedRoute, private dbService: DatabaseService, private durationService: DurationService, private sortService: SortService) { }
 
+  user: User = new User
   challenge = new Challenge
   currentDays: number
   totalDays: number
@@ -46,6 +47,13 @@ export class ActiveChallengeComponent implements OnInit {
         this.progress = this.getProgress(this.currentDays, this.totalDays)
         this.endDate = this.durationService.getEndDate(this.challenge.startDate, this.challenge.duration)
       })
+    })
+    this.dbService.getCurrentUser().subscribe(res => {
+      this.user.id = this.dbService.getID()
+      this.user.username = res['username']
+      this.user.firstName = res['first_name']
+      this.user.lastName = res['last_name']
+      this.user.password = res['password']
     })
   }
 
