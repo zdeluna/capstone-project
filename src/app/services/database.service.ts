@@ -54,7 +54,8 @@ export class DatabaseService {
   }
 
   getID() {
-    return '5c68676257e75f0005adb717' //this.user.id;
+    // return '5c68676257e75f0005adb717'
+    return  this.user.id;
   }
 
   setID(_id : string) {
