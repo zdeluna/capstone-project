@@ -6,7 +6,7 @@ import { MatButtonModule, MatFormFieldModule, MatInputModule, MatOptionModule, M
 import { HttpClientModule } from '@angular/common/http';
 import { AngularFireModule } from '@angular/fire';  
 import { environment } from '../environments/environment'; 
-
+import { RegistrationComponent } from './registration/registration.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
@@ -25,6 +25,7 @@ import { MessageBoardReplyComponent } from './challenges/message-board/message-b
     HomeComponent,
     CreateChallengeComponent,
     ActiveChallengeComponent,
+    RegistrationComponent,
     LoginComponent,
     ProfileComponent,
     ChallengesPageComponent,

@@ -6,9 +6,12 @@ import { LoginComponent } from './login/login.component';
 import { ProfileComponent } from './profile/profile.component';
 import { ActiveChallengeComponent } from './challenges/active-challenge/active-challenge.component';
 import { ChallengesPageComponent } from './challenges/challenges-page/challenges-page.component';
+import { RegistrationComponent } from './registration/registration.component';
 
 const routes: Routes = [
-  {path: '', component: LoginComponent},
+  {path: '', component: RegistrationComponent},
+  {path: 'login', component: LoginComponent},
+  // {path: 'logout', component: LogoutComponent},
   {path: 'home', component: HomeComponent},
   {path: 'profile', component: ProfileComponent},
   {path: 'challenges', component: ChallengesPageComponent},
