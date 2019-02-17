@@ -25,6 +25,8 @@ export class MessageBoardComponent implements OnInit {
   @Input() user: User
   @Input() posts: Post[] = []
 
+  shouldBeGray: Boolean = false
+
   form = new FormGroup({
     message: new FormControl('')
   })

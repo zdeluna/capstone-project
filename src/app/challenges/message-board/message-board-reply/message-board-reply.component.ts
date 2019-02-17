@@ -15,6 +15,7 @@ export class MessageBoardReplyComponent implements OnInit {
   @Input() parent: Post
   @Input() user: User
   @Input() post: Post[] = []
+  @Input() shouldBeGray: Boolean
 
   formReply = new FormGroup({
     message: new FormControl('')
