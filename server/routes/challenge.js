@@ -30,6 +30,7 @@ router.get("/:challengeID", controller.getChallenge);
 
 router.patch(
   "/:challengeID",
+  authenticateUser,
   validator.updateChallenge,
   controller.updateChallenge
 );

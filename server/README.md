@@ -179,6 +179,38 @@ Response 200 OK
 
 Example:
 
+```
+{
+    "pending_participants": [],
+    "_id": "5c697086cc4db848f636433a",
+    "name": "Work Challenge",
+    "start_date": "2019-02-17T05:00:00.000Z",
+    "activity": "WALK",
+    "measurement": "KM",
+    "duration": "2",
+    "participants": [
+        {
+            "_id": "5c697086cc4db848f636433b",
+            "user_id": "5c69704bcc4db848f6364338",
+            "total": 0
+        },
+        {
+            "_id": "5c69708fcc4db848f636433c",
+            "user_id": "5c69704ecc4db848f6364339",
+            "total": 0
+        }
+    ],
+    "messages": [
+        {
+            "_id": "5c697098cc4db848f636433d",
+            "content": "I am going to win",
+            "sender": "5c69704bcc4db848f6364338"
+        }
+    ],
+    "__v": 0
+}
+```
+
 ## Post a new challenge
 
 ### POST /challenges/

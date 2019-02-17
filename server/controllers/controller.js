@@ -3,6 +3,13 @@ const friendshipModel = require("../models/friendship.js");
 const challengeModel = require("../models/challenge.js");
 var ObjectId = require("mongodb").ObjectId;
 
+/**
+ * Get an entity from the
+ * @param {Model} model
+ * @param {string} id
+ * @returns Promise containing entity
+ */
+
 exports.getEntityFromDB = async (model, id) => {
   let objectId = new ObjectId(id);
   return new Promise((resolve, reject) => {
@@ -23,6 +30,12 @@ exports.getEntityFromDB = async (model, id) => {
   });
 };
 
+/**
+ * Get all entities of a collection
+ * @param {Model} model
+ * @returns Promise containing entities
+ */
+
 exports.getAllEntitiesFromDB = async model => {
   return new Promise((resolve, reject) => {
     model.find({}, function(error, entities) {
@@ -42,6 +55,13 @@ exports.getAllEntitiesFromDB = async model => {
   });
 };
 
+/**
+ * Delete an entity from the collection
+ * @param {Model} model
+ * @param {string} id
+ * @returns Promise
+ */
+
 exports.deleteEntityFromDB = async (model, id) => {
   var objectId = new ObjectId(id);
   return new Promise((resolve, reject) => {
@@ -52,6 +72,13 @@ exports.deleteEntityFromDB = async (model, id) => {
   });
 };
 
+/**
+ * Create an entity in the collection
+ * @param {Model} model
+ * @param {Object} data
+ * @returns Promise
+ */
+
 exports.createEntityInDB = async (model, data) => {
   return new Promise((resolve, reject) => {
     model.create(data, function(error, response) {
@@ -61,6 +88,14 @@ exports.createEntityInDB = async (model, data) => {
     });
   });
 };
+
+/**
+ * Create an entity in the collection
+ * @param {Model} model
+ * @param {string} id
+ * @param {Object} data
+ * @returns Promise
+ */
 
 exports.updateEntityFromDB = async (model, id, data) => {
   var objectId = new ObjectId(id);
@@ -79,11 +114,23 @@ exports.updateEntityFromDB = async (model, id, data) => {
   });
 };
 
+/**
+ * Send an error response using the status code and message of error object
+ * @param {Model} model
+ * @param {Object} errror
+ */
+
 exports.sendErrorResponse = (res, error) => {
   res.status(error.statusCode).json({ errors: { msg: error.msg } });
 };
 
-// Check if the user's credients give them access to update the resource
+/**
+ * Check if the user's credients give them access to update the resource
+ * @param {string} id_of_user_to_update
+ * @param {Object} request
+ * @returns Promise
+ */
+
 exports.checkIfUserIsAuthorized = async (id_of_user_to_update, req) => {
   return new Promise((resolve, reject) => {
     if (id_of_user_to_update !== req.user._id) {

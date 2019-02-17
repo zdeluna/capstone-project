@@ -20,8 +20,6 @@ router.get("/google/callback/", passport.authenticate("google"), function(
   return res.status(200).json({ token: token, user_id: req.user._id });
 });
 
-//res.status(200).json({ token: req.user.accessToken, _id: req.user._id });
-
 router.post("/signup", validator.signup, controller.signup);
 
 router.post("/login", controller.login);

@@ -13,12 +13,22 @@ const {
   checkIfUserIsAuthorized
 } = require("./controller.js");
 
+/**
+ * Check to see if user is a participant of a challenge, if they are not throw an error object
+ * @param {string} challengeID
+ * @param {string} user_id
+ * @returns Promise
+ */
+
 const checkIfUserIsParticipantOfChallenge = async (challenge_id, user_id) => {
-  return new Promise((reolve, reject) => {
+  return new Promise((resolve, reject) => {
     let userIsParticipant = false;
     challengeModel.findOne({ _id: challenge_id }, function(error, challenge) {
+      if (error) reject({ statusCode: 500, msg: error.message });
+
+      // Go through each of the challenge participants and determine if the passed in user_id is a participant, and set the flag variable to true
       for (i = 0; i < challenge.participants.length; i++) {
-        if (challenge.participants[i].user_d == user_id) {
+        if (challenge.participants[i].user_id == user_id) {
           userIsParticipant = true;
         }
       }
@@ -31,6 +41,14 @@ const checkIfUserIsParticipantOfChallenge = async (challenge_id, user_id) => {
     });
   });
 };
+
+/**
+ * Update the activity level of a participant in a challenge
+ * @param {string} challengeID
+ * @param {string} userID
+ * @param {number} total
+ * @return Promise
+ */
 
 const updateActivityInDB = async (challengeID, userID, total) => {
   try {
@@ -47,6 +65,14 @@ const updateActivityInDB = async (challengeID, userID, total) => {
   }
 };
 
+/**
+ * Create a message in the database
+ * @param {string} challengeID
+ * @param {Object} data
+ * @param {string} userID
+ * @return Promise
+ */
+
 const createMessageInDB = async (challengeID, data, userID) => {
   try {
     await challengeModel.findOneAndUpdate(
@@ -59,6 +85,13 @@ const createMessageInDB = async (challengeID, data, userID) => {
     return error;
   }
 };
+
+/**
+ * Accept a challenge request and update the user, challenge, and challengeRequests collections
+ * @param {string} challengeID
+ * @param {string} participant
+ * @return Promise
+ */
 
 const acceptChallengeRequest = async (challengeID, participantID) => {
   try {
@@ -85,6 +118,13 @@ const acceptChallengeRequest = async (challengeID, participantID) => {
     return error;
   }
 };
+
+/**
+ * Remove the pending challenge request and update the user, challenge, and challengeRequests collections
+ * @param {string} challengeID
+ * @param {string} participant
+ * @return Promise
+ */
 
 const removePendingChallenges = async (challengeID, participantID) => {
   try {
@@ -113,6 +153,13 @@ const removePendingChallenges = async (challengeID, participantID) => {
   }
 };
 
+/**
+ * Create the challenge request and update the user, challenge, and challengeRequests collections
+ * @param {string} challengeID
+ * @param {string} participant
+ * @return Promise
+ */
+
 const createChallengeRequest = async (challengeID, participantID) => {
   try {
     const challengeRequest = await challengeRequestModel.findOneAndUpdate(
@@ -137,6 +184,8 @@ const createChallengeRequest = async (challengeID, participantID) => {
   }
 };
 
+/********************** Functions called by Route **************************************************/
+
 exports.createChallenge = async (req, res) => {
   try {
     let validatedFields = matchedData(req, { includeOptionals: false });
@@ -155,8 +204,6 @@ exports.createChallenge = async (req, res) => {
 
 exports.addParticipant = async (req, res) => {
   try {
-    //await checkIfUserIsAuthorized(req.params.userID, req);
-
     let challengeID = new ObjectId(req.params.challengeID);
     let participantID = new ObjectId(req.params.participantID);
     let status = req.body.status;
@@ -217,12 +264,12 @@ exports.getChallenge = async (req, res) => {
 };
 
 exports.createMessage = async (req, res) => {
-  let challengeID = new ObjectId(req.params.id);
-  let userID = new ObjectId(req.user._id);
+  let challengeID = req.params.id;
+  let userID = req.user._id;
 
   try {
     // Only allow participant of challenge to send message
-    await checkIfUserIsParticipantOfChallenge(challenge_id, user_id);
+    await checkIfUserIsParticipantOfChallenge(challengeID, userID);
 
     // Check if user is a participant in the challenge
     let validatedFields = matchedData(req, { includeOptionals: false });
@@ -236,15 +283,14 @@ exports.createMessage = async (req, res) => {
 exports.updateChallenge = async (req, res) => {
   try {
     let challengeID = req.params.challengeID;
-    let user_id = new ObjectId(req.user._id);
+    let userID = req.user._id;
+    // Only allow participant of challenge to update the challenge
+    await checkIfUserIsParticipantOfChallenge(challengeID, userID);
 
     // Use the matched data function of validator to return data that was validated thru express-validaotr. Optional data will be included
     let validatedFields = {
       $set: matchedData(req, { includeOptionals: false })
     };
-
-    // Only allow participant of challenge to update the challenge
-    await checkIfUserIsParticipantOfChallenge(challenge_id, user_id);
 
     let updatedChallenge = await updateEntityFromDB(
       challengeModel,
@@ -261,6 +307,8 @@ exports.updateActivity = async (req, res) => {
   try {
     let challengeID = req.params.challengeID;
     let participantID = req.params.participantID;
+
+    await checkIfUserIsAuthorized(participantID, req);
 
     // Use the matched data function of validator to return data that was validated thru express-validaotr. Optional data will be included
     let validatedFields = {
@@ -280,14 +328,14 @@ exports.updateActivity = async (req, res) => {
 
 exports.deleteChallenge = async (req, res) => {
   try {
-    let challenge_id = req.params.id;
-    let user_id = req.user._id;
+    let challengeID = req.params.id;
+    let userID = req.user._id;
     // Only allow participant of challenge to delete the challenge
-    await checkIfUserIsParticipantOfChallenge(challenge_id, user_id);
+    await checkIfUserIsParticipantOfChallenge(challengeID, userID);
 
-    await getEntityFromDB(challengeModel, challenge_id);
+    await getEntityFromDB(challengeModel, challengeID);
 
-    await deleteEntityFromDB(challengeModel, challenge_id);
+    await deleteEntityFromDB(challengeModel, challengeID);
     res.status(204).end();
   } catch (error) {
     sendErrorResponse(res, error);
