@@ -33,8 +33,8 @@ export class LoginComponent implements OnInit {
     .subscribe(
       data => {
         console.log('Login success', data);
-        this.dbService.setToken(data['token'])
-        // this.dbService.setID(data.user._id);
+        this.dbService.setToken(data['token']);
+        this.dbService.setID(data['user_id']);
         this.router.navigate(['/home']);
       },
       error => console.log('Error on login!', error)
