@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Challenge } from 'src/app/models/challenge.model';
 import { FormGroup, FormControl } from '@angular/forms';
+import { User } from 'src/app/models/user.model';
 
 export interface Post {
   id: string;
@@ -8,6 +9,7 @@ export interface Post {
   message: string;
   date: Date;
   replies: Post[];
+  user;
 }
 
 @Component({
@@ -20,6 +22,7 @@ export class MessageBoardComponent implements OnInit {
   constructor() { }
 
   @Input() challenge: Challenge
+  @Input() user: User
   @Input() posts: Post[] = []
 
   form = new FormGroup({
@@ -37,7 +40,8 @@ export class MessageBoardComponent implements OnInit {
       id: (new Date()).getTime().toString(),
       message: this.form.value.message,
       date: new Date(),
-      replies: []
+      replies: [],
+      user: this.user.username
     })
     this.form.reset()
   }
@@ -48,8 +52,42 @@ export class MessageBoardComponent implements OnInit {
       parent: post.id,
       message: this.formReply.value.message,
       date: new Date(),
-      replies: []
+      replies: [],
+      user: this.user.username
     })
     this.formReply.reset()
+  }
+
+  getPlaceholder(message: string): string {
+    if(message.length > 20) {
+      return `Reply to "${message.substring(0, 20)}..."`
+    } else {
+      return `Reply to "${message.substring(0, 20)}"`
+    }
+  }
+
+  formatDate(date: Date): string {
+    let mins: string
+    let amPm: string
+    let hours: string
+
+    if(date.getHours() > 12) {
+      hours = (date.getHours() - 12).toString()
+      amPm = 'PM'
+    } else if(date.getHours() == 0) {
+      hours = '12'
+      amPm = 'AM'
+    } else {
+      hours = date.getHours().toString()
+      amPm = 'AM'
+    }
+
+    if(date.getMinutes() < 10) {
+      mins = `0${date.getMinutes()}`
+    } else {
+      mins = date.getMinutes().toString()
+    }
+
+    return `${date.getMonth() + 1}/${date.getDate()} at ${hours}:${mins} ${amPm}`
   }
 }

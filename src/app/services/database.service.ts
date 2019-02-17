@@ -13,7 +13,6 @@ export class DatabaseService {
   uri = 'https://capstone-wazn.appspot.com/api'
   user: User = new User()
 
-
   token:string = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjVjNjg2NzYyNTdlNzVmMDAwNWFkYjcxNyJ9LCJpYXQiOjE1NTAzNDYwOTV9.WRGZo4LB21jxoJr98X6zwtxgEia8ASk69TYhn5aVGeg"
   httpOptions = {
     headers: new HttpHeaders({
@@ -50,9 +49,12 @@ export class DatabaseService {
     return this.http.get(`${this.uri}/users/${id}`, this.httpOptions)
   }
 
+  getCurrentUser() {
+    return this.getUser(this.getID())
+  }
 
   getID() {
-    return this.user.id;
+    return '5c68676257e75f0005adb717' //this.user.id;
   }
 
   setID(_id : string) {
