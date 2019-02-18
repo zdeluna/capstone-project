@@ -1,17 +1,17 @@
-<mat-card>
+<mat-card [style.background-color]="shouldBeGray ? '#f9f9f9' : 'white'">
   <mat-card-content>
     <div>{{ post.message }}</div>
     <div class="friends-row">
-      <span class="post-date">{{ post.date.getMonth() + 1 }}/{{ post.date.getDate() }} {{ post.date.getHours()}}:{{post.date.getMinutes() }}</span>
+      <span class="post-date">{{ formatDate(post.date) }} by {{ post.user }}</span>
     </div>
     <div *ngIf="post.replies">
       <div *ngFor="let reply of post.replies">
-        <app-message-board-reply [parent]="post" [post]="reply"></app-message-board-reply>
+        <app-message-board-reply [parent]="post" [post]="reply" [user]="user" [shouldBeGray]="!shouldBeGray"></app-message-board-reply>
       </div>
     </div>
     <form [formGroup]="formReply" (ngSubmit)="submitReply(post)">
       <mat-form-field class="full-width">
-        <textarea matInput placeholder="Reply to post" formControlName="message"></textarea>
+        <textarea matInput [placeholder]="getPlaceholder(post.message)" formControlName="message"></textarea>
       </mat-form-field>
       <button mat-stroked-button> Reply </button>
     </form>
