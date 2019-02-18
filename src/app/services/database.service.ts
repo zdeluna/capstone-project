@@ -2,13 +2,17 @@ import { Injectable } from '@angular/core';
 import { Challenge } from '../models/challenge.model';
 import { User } from '../models/user.model';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { UserService } from './user.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DatabaseService {
 
-  constructor(private http: HttpClient) { }
+  constructor (
+    private http: HttpClient, 
+    private userService: UserService
+    ) { }
 
   uri = 'https://capstone-wazn.appspot.com/api'
   user: User = new User()
@@ -50,7 +54,7 @@ export class DatabaseService {
   }
 
   getCurrentUser() {
-    return this.getUser(this.getID())
+    return this.getUser(this.userService.getCurrentUser())
   }
 
   setToken(token: string) {
