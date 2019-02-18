@@ -53,15 +53,6 @@ export class DatabaseService {
     return this.getUser(this.getID())
   }
 
-  getID() {
-    // return '5c68676257e75f0005adb717'
-    return  this.user.id;
-  }
-
-  setID(_id : string) {
-    this.user.id = _id;
-  }
-
   setToken(token: string) {
     this.token = token
   }

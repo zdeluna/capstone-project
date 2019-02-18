@@ -4,6 +4,7 @@ import { SignupService } from '../services/signup.service';
 import { LoginService } from '../services/login.service';
 import { Router} from '@angular/router';
 import { DatabaseService } from '../services/database.service';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-registration',
@@ -16,7 +17,8 @@ export class RegistrationComponent implements OnInit {
     private _SignupService: SignupService,
     private _LoginService: LoginService,
     private router: Router,
-    private dbService : DatabaseService
+    private dbService : DatabaseService,
+    private userService: UserService
   ) { }
 
   user: User = new User;
@@ -35,7 +37,7 @@ export class RegistrationComponent implements OnInit {
     .subscribe(
       data => {
         console.log('Signup success', data.user._id);
-        this.dbService.setID(data.user._id);
+        this.userService.setCurrentUser(data.user._id);
         this.login();
       },
       error => console.log('Error on signup!', error)
@@ -48,6 +50,7 @@ export class RegistrationComponent implements OnInit {
       data => {
         console.log('Login success', data);
         this.dbService.setToken(data['token'])
+        this._LoginService.setLoggedIn();
         this.router.navigate(['/home']);
       },
       error => console.log('Error on login!', error)

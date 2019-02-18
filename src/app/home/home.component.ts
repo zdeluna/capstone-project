@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from '../models/user.model';
-import { ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { DatabaseService } from '../services/database.service';
+import { ProfileComponent } from '../profile/profile.component';
+import { UserService } from '../services/user.service';
+import { LoginService } from '../services/login.service';
 
 @Component({
   selector: 'app-home',
@@ -11,8 +14,10 @@ import { DatabaseService } from '../services/database.service';
 export class HomeComponent implements OnInit {
 
   constructor(
-    private route: ActivatedRoute, 
-    private dbService: DatabaseService
+    private router: Router, 
+    private dbService: DatabaseService,
+    private userService: UserService,
+    private loginService: LoginService
     ) {}
 
   categories: Object = []
@@ -21,19 +26,23 @@ export class HomeComponent implements OnInit {
   date = new Date();
   
   ngOnInit() {
-    this.dbService.getUser(this.dbService.getID())
+    if(this.loginService.isLoggedIn()) {
+    this.dbService.getUser(this.userService.getCurrentUser())
     .subscribe(
       res => {
         this.user.username = res['username'];
       }
     );
     this.categories = [
-    {value: "profile", location: "assets/flat-icons/user.svg", view: 'Profile'},
+    {value: "profile", location: "assets/flat-icons/user.svg", component: ProfileComponent, view: 'Profile'},
     {value: "search",  location: "assets/flat-icons/magnifier.svg", view: 'Search'},
-    {value: "challenges/create", location: "assets/flat-icons/podium.svg", view: 'Challenges'},
+    {value: "challenges", location: "assets/flat-icons/podium.svg", view: 'Challenges'},
     {value: "activity-minutes", location: "assets/flat-icons/check-list.svg", view: 'Enter Activity Minutes'}
     ];
   }
-  
+  else {
+    this.router.navigate(['/login']);
+  }
+  }
 
 }
