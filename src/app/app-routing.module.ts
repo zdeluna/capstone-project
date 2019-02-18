@@ -11,7 +11,6 @@ import { RegistrationComponent } from './registration/registration.component';
 const routes: Routes = [
   {path: '', component: RegistrationComponent},
   {path: 'login', component: LoginComponent},
-  // {path: 'logout', component: LogoutComponent},
   {path: 'home', component: HomeComponent},
   {path: 'profile', component: ProfileComponent},
   {path: 'challenges', component: ChallengesPageComponent},

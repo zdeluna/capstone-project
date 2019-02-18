@@ -51,14 +51,6 @@ export class DatabaseService {
   }
 
 
-  getID() {
-    return this.user.id;
-  }
-
-  setID(_id : string) {
-    this.user.id = _id;
-  }
-
   setToken(token: string) {
     this.token = token
   }

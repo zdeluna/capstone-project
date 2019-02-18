@@ -3,6 +3,7 @@ import { User } from '../models/user.model';
 import { LoginService } from '../services/login.service';
 import { Router} from '@angular/router';
 import { DatabaseService } from '../services/database.service';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-login',
@@ -14,7 +15,8 @@ export class LoginComponent implements OnInit {
   constructor (
     private _LoginService: LoginService,
     private router: Router,
-    private dbService : DatabaseService
+    private dbService : DatabaseService,
+    private userService: UserService
   ) { }
 
   user: User = new User;
@@ -34,7 +36,8 @@ export class LoginComponent implements OnInit {
       data => {
         console.log('Login success', data);
         this.dbService.setToken(data['token']);
-        this.dbService.setID(data['user_id']);
+        this.userService.setCurrentUser(data['user_id']);
+        this._LoginService.setLoggedIn();
         this.router.navigate(['/home']);
       },
       error => console.log('Error on login!', error)

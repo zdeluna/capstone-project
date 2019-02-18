@@ -16,7 +16,7 @@
   <div class ="row">
     <div *ngFor="let category of categories" class="col-6 decision-button">
         <a
-         [routerLink]="category.value">
+         routerLink="/{{category.value}}">
          <img class="decision-button-svg" [src]="category.location" [alt]="category.view"/>
         </a>
         <p>{{ category.view }}</p>
