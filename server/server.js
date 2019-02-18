@@ -7,6 +7,7 @@ require("dotenv").config();
 const user = require("./routes/user");
 const auth = require("./routes/auth");
 const challenge = require("./routes/challenge");
+const conversation = require("./routes/conversation");
 
 const User = require("./models/user");
 const startMongo = require("./config/mongo");
@@ -39,6 +40,7 @@ passport.deserializeUser(function(obj, callBack) {
 app.use("/api/auth", auth);
 app.use("/api/users", user);
 app.use("/api/challenges", challenge);
+app.use("/api/conversations", conversation);
 app.use("/api", auth);
 
 app.use(function(err, req, res, next) {
