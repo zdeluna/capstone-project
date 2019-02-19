@@ -6,18 +6,13 @@ import {User} from '../models/user.model';
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.css']
 })
+
 export class ProfileComponent implements OnInit {
 
   constructor() { }
 
   sports: Object = []
   user: User = new User
-  // public successClass = "text-success";
-  // public hasError = false;
-  // public isSpecial = true;
-  // public messageClasses = {
-  //   Running: 'blue'
-  // }
 
   ngOnInit() {
     this.sports = [
