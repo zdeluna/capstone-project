@@ -57,7 +57,7 @@ const updateActivityInDB = async (challengeID, userID, total) => {
         _id: challengeID,
         "participants.user_id": userID
       },
-      { $inc: { "participants.$.total": 10 } },
+      { $inc: { "participants.$.total": total } },
       { new: true }
     );
   } catch (error) {
@@ -318,7 +318,7 @@ exports.updateActivity = async (req, res) => {
     let updatedChallenge = await updateActivityInDB(
       challengeID,
       participantID,
-      10
+      validatedFields.total
     );
     res.status(200).json(updatedChallenge);
   } catch (error) {

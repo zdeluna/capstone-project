@@ -9,6 +9,12 @@ let conversationSchema = new Schema({
       type: Schema.Types.ObjectId,
       ref: "Message"
     }
+  ],
+  participants: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "User"
+    }
   ]
 });
 
