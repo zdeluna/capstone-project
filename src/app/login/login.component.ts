@@ -13,7 +13,7 @@ import { UserService } from '../services/user.service';
 export class LoginComponent implements OnInit {
 
   constructor (
-    private _LoginService: LoginService,
+    private loginService: LoginService,
     private router: Router,
     private dbService : DatabaseService,
     private userService: UserService
@@ -21,26 +21,16 @@ export class LoginComponent implements OnInit {
 
   user: User = new User;
   submitted = false;
+  rememberUser = false;
 
   ngOnInit() {
+    this.loginService.checkUserSession();
   }
 
   onSubmit() {
     this.submitted = true;
-    this.login();
+    this.loginService.setRememberMe(this.rememberUser);
+    this.loginService.login(this.user); 
   };
 
-  login() {
-    this._LoginService.login(this.user)
-    .subscribe(
-      data => {
-        console.log('Login success', data);
-        this.dbService.setToken(data['token']);
-        this.userService.setCurrentUser(data['user_id']);
-        this._LoginService.setLoggedIn();
-        this.router.navigate(['/home']);
-      },
-      error => console.log('Error on login!', error)
-    );
-  }
 }
