@@ -29,12 +29,12 @@
       
       <div class="checkbox mb-3">
         <label>
-          <input type="checkbox" value="remember-me"> 
+          <input [(ngModel)]='rememberUser' name='rememberUser' type="checkbox" value="remember-me"> 
           Remember me
         </label>
       </div>
 
-      <button id='sign-in-btn' class="btn btn-lg btn-primary btn-block border: 1px solid aqua;
+      <button *ngIf='!submitted' id='sign-in-btn' class="btn btn-lg btn-primary btn-block border: 1px solid aqua;
       border-color: #00fff0;" type="submit">
         Log In 
       </button>

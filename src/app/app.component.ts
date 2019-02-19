@@ -8,28 +8,29 @@ import { Router } from '@angular/router';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  constructor(private _LoginService: LoginService,
-              private Router: Router) {}
+
+  constructor(
+    private loginService: LoginService,
+    private Router: Router
+    ) {}
+
   loggedIn: boolean = false;
-  // login_toggled: boolean = false;
   title = 'capstone-project';
 
   logout() {
     console.log('logging out!');
-    
-    this._LoginService.setLoggedOut();
+    this.loginService.setLoggedIn(false);
+    localStorage.clear();
   }
 
   isLoggedIn() {
-    return this._LoginService.isLoggedIn();
+    return this.loginService.isLoggedIn();
   } 
   
   isLoginRoute() {
     if(this.Router.url.includes('login')) {
-     
       return true;
     }
-    return false;
   }
 
 }
