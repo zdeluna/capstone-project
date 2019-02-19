@@ -9,17 +9,18 @@ import { Router} from '@angular/router';
   templateUrl: './registration.component.html',
   styleUrls: ['./registration.component.css']
 })
+
 export class RegistrationComponent implements OnInit {
 
   constructor (
-    private _SignupService: SignupService,
+    private signupService: SignupService,
     private loginService: LoginService,
     private router: Router
   ) { }
 
   user: User = new User;
   shouldLogIn: boolean = false;
-  submitted = false;
+  submitted: boolean = false;
 
   ngOnInit() {
     this.loginService.checkUserSession();
@@ -27,8 +28,8 @@ export class RegistrationComponent implements OnInit {
 
   onSubmit() {
     this.submitted = true;
-    this.loginService.rememberMe = this.shouldLogIn;
-    this._SignupService.signup(this.user)
+    this.loginService.setRememberMe(true); //will remember user
+    this.signupService.signup(this.user)
     .subscribe(
       data => {
         console.log('Signup success', data.user._id);

@@ -70,7 +70,7 @@ export class LoginService {
     }
   }
 
-  setRememberMe( val ) {
+  setRememberMe( val : boolean ) {
     this.rememberMe = val;
   }
 

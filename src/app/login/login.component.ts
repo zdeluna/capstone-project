@@ -1,9 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from '../models/user.model';
 import { LoginService } from '../services/login.service';
-import { Router} from '@angular/router';
-import { DatabaseService } from '../services/database.service';
-import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-login',
@@ -13,15 +10,12 @@ import { UserService } from '../services/user.service';
 export class LoginComponent implements OnInit {
 
   constructor (
-    private loginService: LoginService,
-    private router: Router,
-    private dbService : DatabaseService,
-    private userService: UserService
+    private loginService: LoginService
   ) { }
 
   user: User = new User;
-  submitted = false;
-  rememberUser = false;
+  submitted: boolean = false;
+  rememberUser: boolean = false;
 
   ngOnInit() {
     this.loginService.checkUserSession();
