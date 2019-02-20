@@ -35,7 +35,7 @@ export class LoginComponent implements OnInit {
   }
 
   //logs in user in with email and password
-  manualLogin() {
+  login() {
 
     //user hit submit btn
     this.submitted = true;
@@ -47,7 +47,6 @@ export class LoginComponent implements OnInit {
     this.authService.login(this.user);
   };
 
-  //logs in with google //todo
-  googleLogin() {}
+  //google login?
 
 }

@@ -30,8 +30,8 @@ export class RegistrationComponent implements OnInit {
     this.authService.loadRememberedUser();
   }
 
-  //submits signup form
-  signup() {
+  //submits signup form 
+  manualRegistration() {
     this.submitted = true;
     this.authService.setRememberMe(true); //will remember user
     this.authService.signup(this.user)
@@ -39,13 +39,13 @@ export class RegistrationComponent implements OnInit {
       data => {
         console.log('Signup success', data.user._id);
         if(this.shouldLogIn)
-        { console.log('hi');
-         
-          this.authService.login(this.user); }
-        else
-          this.router.navigate(['/login']);
+          this.authService.login(this.user); 
+        this.router.navigate(['/login']);
       },
       error => console.log('Error on signup!', error)
     );
   };
+
+  //sign up with google //todo
+  googleRegistration() {}
 }
