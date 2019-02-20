@@ -1,3 +1,9 @@
+/*****************************
+ * Description: This is the login component file.
+ * This file contains all the logic controlling the
+ * /login route view. 
+*****************************/
+
 import { Component, OnInit } from '@angular/core';
 import { User } from '../models/user.model';
 import { LoginService } from '../services/login.service';
@@ -17,10 +23,12 @@ export class LoginComponent implements OnInit {
   submitted: boolean = false;
   rememberUser: boolean = false;
 
+  //
   ngOnInit() {
-    this.loginService.checkUserSession();
+    this.loginService.loadRememberedUser();
   }
 
+  //
   onSubmit() {
     this.submitted = true;
     this.loginService.setRememberMe(this.rememberUser);

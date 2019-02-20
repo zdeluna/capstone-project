@@ -6,6 +6,7 @@ import { DatabaseService } from '../../services/database.service';
 import { DurationService } from 'src/app/services/duration.service';
 import { User } from 'src/app/models/user.model';
 import { SortService } from 'src/app/services/sort.service';
+import { UserService } from 'src/app/services/user.service';
 
 export interface Leaderboard {
   user: User;
@@ -19,7 +20,14 @@ export interface Leaderboard {
 })
 export class ActiveChallengeComponent implements OnInit {
 
-  constructor(private location: Location, private route: ActivatedRoute, private dbService: DatabaseService, private durationService: DurationService, private sortService: SortService) { }
+  constructor(
+    private location: Location, 
+    private route: ActivatedRoute, 
+    private dbService: DatabaseService, 
+    private durationService: DurationService, 
+    private sortService: SortService,
+    private userService: UserService
+    ) { }
 
   user: User = new User
   challenge = new Challenge
@@ -49,7 +57,7 @@ export class ActiveChallengeComponent implements OnInit {
       })
     })
     this.dbService.getCurrentUser().subscribe(res => {
-      this.user.id = this.dbService.getID()
+      this.user.id = this.userService.getCurrentUser()
       this.user.username = res['username']
       this.user.firstName = res['first_name']
       this.user.lastName = res['last_name']
