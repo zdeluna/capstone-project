@@ -1,15 +1,14 @@
 <body >
-    <form class="form-signin" #userForm="ngForm" (ngSubmit)='login()' novalidate>
+    <form class="form-signin" [formGroup]='loginForm' (ngSubmit)='login()'>
 
       <div class='img-circle text-center'>
         <img src="assets/logo/fitness_tracker_logo2.png" alt="logo">
       </div>
 
-      <!-- this will show the form values and user object
-        details on the login screen as they are typed in to check input 
-      {{userForm.value | json}}
+      <!-- this will show the form values on the login screen as they are typed in to check input  -->
+      login form values: {{loginForm.value | json }}
+
       <hr>
-      {{user | json}} -->
       
       <h1 class='text-center font-weight-bold'>
         Log in to your account
@@ -22,21 +21,28 @@
       <label for="inputEmail" class="sr-only">
         Email 
       </label>
-      <input [(ngModel)]='user.username' name='username' id="inputEmail" class="form-control"  placeholder="Email" ngModel required autofocus>
       
+      <input formControlName='email' name='username' id="inputEmail" class="form-control"  placeholder="Email" required autofocus>
+      <mat-error *ngIf="email.invalid && email.touched">
+        Email must have an @ sign
+      </mat-error>
+
       <label for="inputPassword" class="sr-only">
         Password
       </label>
-      <input [(ngModel)]='user.password' name='password' type="password" id="inputPassword" class="form-control" placeholder="Password" ngModel required>
-      
+      <input formControlName='password' name='password' type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+      <mat-error *ngIf="password.invalid && password.touched">
+        Password must be six characters long
+      </mat-error>
+
       <div class="checkbox mb-3">
         <label>
-          <input [(ngModel)]='rememberUser' name='rememberUser' type="checkbox" value="remember-me"> 
+          <input formControlName='rememberUser' name='rememberUser' type="checkbox" value="remember-me"> 
           Remember me
         </label>
       </div>
 
-      <button *ngIf='!submitted' id='sign-in-btn' class="btn btn-lg btn-primary btn-block border: 1px solid aqua;
+      <button [disabled]='loginForm.invalid' *ngIf='!submitted' id='sign-in-btn' class="btn btn-lg btn-primary btn-block border: 1px solid aqua;
       border-color: #00fff0;" type="submit">
         Log In 
       </button>
