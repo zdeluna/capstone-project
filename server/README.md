@@ -296,3 +296,29 @@ id - The id of the challenge
 Response 204 No Content
 
 ---
+
+### Create a new conversation
+
+### POST /conversations/
+
+#### Body Parameters:
+
+recipient - The id of the recipent
+
+content - message content
+
+## Get a conversation
+
+### GET /conversations/:id
+
+#### Parameters:
+
+id - The id of the conversation
+
+Response 200 OK
+
+Example:
+
+```
+
+```

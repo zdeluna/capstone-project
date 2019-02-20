@@ -13,4 +13,6 @@ router.post(
   controller.createConversation
 );
 
+router.get("/:conversationID", authenticateUser, controller.getConversation);
+
 module.exports = router;

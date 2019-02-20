@@ -13,16 +13,47 @@ const {
   checkIfUserIsAuthorized
 } = require("./controller.js");
 
-const createConversationInDB = async () => {};
+/**
+ * Format the message field of conversation to list sender and message contents
+ * @param {Object} conversation
+ * @return Conversation object
+ */
 
-exports.createConversation = async (req, res) => {
+const formatMessageContentsinConversation = async conversation => {
   try {
-    let userID = req.user._id;
+    let messageArray = [];
 
-    let validatedFields = matchedData(req, { includeOptionals: false });
-    //createConversationInDB(challengeID, validatedFields, userID);
-    let recipientID = validatedFields.recipient;
-    let messageFields = { sender: userID, content: validatedFields.content };
+    conversation = JSON.parse(JSON.stringify(conversation));
+
+    // Show the content of the messages instead of the reference to the message
+    for (let i = 0; i < conversation.messages.length; i++) {
+      let message = await getEntityFromDB(
+        messageModel,
+        conversation.messages[i]
+      );
+
+      messageArray[i] = { sender: message.sender, content: message.content };
+    }
+
+    conversation.messages = messageArray;
+
+    return conversation;
+  } catch (error) {
+    return error;
+  }
+};
+
+/**
+ * Create a new conversation and add the message contents to the conversation
+ * @param {string} userID
+ * @param {Object} data <- contains validated fields
+ * @return Conversation object
+ */
+
+const createConversationInDB = async (userID, data) => {
+  try {
+    let recipientID = data.recipient;
+    let messageFields = { sender: userID, content: data.content };
 
     // Add the message to the message collection
     let message = await createEntityInDB(messageModel, messageFields);
@@ -54,7 +85,38 @@ exports.createConversation = async (req, res) => {
       { $push: { conversations: conversation._id } }
     );
 
-    res.status(200).end();
+    return conversation;
+  } catch (error) {
+    return error;
+  }
+};
+
+exports.createConversation = async (req, res) => {
+  try {
+    let userID = req.user._id;
+    let validatedFields = matchedData(req, { includeOptionals: false });
+    let conversation = await createConversationInDB(userID, validatedFields);
+    let formattedConversation = await formatMessageContentsinConversation(
+      conversation
+    );
+
+    res.status(200).send(formattedConversation);
+  } catch (error) {
+    sendErrorResponse(res, error);
+  }
+};
+
+exports.getConversation = async (req, res) => {
+  try {
+    let conversationID = req.params.conversationID;
+    let conversation = await getEntityFromDB(conversationModel, conversationID);
+    let messageArray = [];
+
+    let formattedConversation = await formatMessageContentsinConversation(
+      conversation
+    );
+
+    res.status(200).json(formattedConversation);
   } catch (error) {
     sendErrorResponse(res, error);
   }
