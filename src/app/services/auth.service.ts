@@ -45,6 +45,9 @@ export class AuthService {
     return this._http.post<any>(this.login_url, user)
     .subscribe (
       data => {
+        //this logic is here and not in login.component
+        //because logging in directly did not work
+        //from registration that way, does with it here
         console.log('Login success', data);
         this.dbService.setToken(data['token']);
         this.userService.setCurrentUser(data['user_id']);
@@ -55,6 +58,7 @@ export class AuthService {
         }
         this.router.navigate(['/home']);
       },
+       //TODO: show errors on screen instead of console
       error => console.log('Error on login!', error)
     );
   }
