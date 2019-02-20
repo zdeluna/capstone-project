@@ -1,10 +1,16 @@
+/*****************************
+ * Description: This is the home component file.
+ * This file contains all the logic controlling
+ * the /home view.
+*****************************/
+
 import { Component, OnInit } from '@angular/core';
 import { User } from '../models/user.model';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 import { DatabaseService } from '../services/database.service';
 import { ProfileComponent } from '../profile/profile.component';
 import { UserService } from '../services/user.service';
-import { LoginService } from '../services/login.service';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-home',
@@ -18,7 +24,7 @@ export class HomeComponent implements OnInit {
     private router: Router, 
     private dbService: DatabaseService,
     private userService: UserService,
-    private loginService: LoginService
+    private authService: AuthService
     ) {}
 
   categories: Object = []
@@ -26,7 +32,9 @@ export class HomeComponent implements OnInit {
   date = new Date();
   
   ngOnInit() {
-    if(this.loginService.isLoggedIn()) {
+
+    //if logged in then load the user details from the user service
+    if(this.authService.isLoggedIn()) {
       this.dbService.getUser(this.userService.getCurrentUser())
       .subscribe(
         res => {
@@ -34,15 +42,20 @@ export class HomeComponent implements OnInit {
         }
       );
 
+      //routes icons link to in home page below greeting and date
       this.categories = [
-      {value: "profile", location: "assets/flat-icons/user.svg", component: ProfileComponent, view: 'Profile'},
-      {value: "search",  location: "assets/flat-icons/magnifier.svg", view: 'Search'},
-      {value: "challenges", location: "assets/flat-icons/podium.svg", view: 'Challenges'},
-      {value: "activity-minutes", location: "assets/flat-icons/check-list.svg", view: 'Enter Activity Minutes'}
+        {value: "profile", location: "assets/flat-icons/user.svg", component: ProfileComponent, view: 'Profile'},
+        {value: "search",  location: "assets/flat-icons/magnifier.svg", view: 'Search'},
+        {value: "challenges", location: "assets/flat-icons/podium.svg", view: 'Challenges'},
+        {value: "activity-minutes", location: "assets/flat-icons/check-list.svg", view: 'Enter Activity Minutes'}
       ];
     }
 
-    else {
+    //if user somehow here but not logged in,
+    //call logout which sets flags and clears local storage,
+    //then link back to login page
+    else { 
+      this.authService.logout();
       this.router.navigate(['/login']);
     }
   }

@@ -6,7 +6,10 @@
 
 import { Component, OnInit } from '@angular/core';
 import { User } from '../models/user.model';
-import { LoginService } from '../services/login.service';
+import { AuthService } from '../services/auth.service';
+import { DatabaseService } from '../services/database.service';
+import { UserService } from '../services/user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -16,23 +19,35 @@ import { LoginService } from '../services/login.service';
 export class LoginComponent implements OnInit {
 
   constructor (
-    private loginService: LoginService
+    private authService: AuthService,
+    private dbService: DatabaseService,
+    private userService: UserService,
+    private router: Router
   ) { }
 
   user: User = new User;
   submitted: boolean = false;
   rememberUser: boolean = false;
 
-  //
+  //runs when component loads
   ngOnInit() {
-    this.loginService.loadRememberedUser();
+    this.authService.loadRememberedUser();
   }
 
-  //
-  onSubmit() {
+  //logs in user in with email and password
+  manualLogin() {
+
+    //user hit submit btn
     this.submitted = true;
-    this.loginService.setRememberMe(this.rememberUser);
-    this.loginService.login(this.user); 
+
+    //sets remember me in auth service
+    this.authService.setRememberMe(this.rememberUser);
+
+    //logs user in
+    this.authService.login(this.user);
   };
+
+  //logs in with google //todo
+  googleLogin() {}
 
 }

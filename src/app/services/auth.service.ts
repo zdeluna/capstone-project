@@ -15,9 +15,10 @@ import { DatabaseService } from './database.service';
   providedIn: 'root'
 })
 
-export class LoginService {
+export class AuthService {
 
-  _url = 'https://capstone-wazn.appspot.com/api/login';
+  login_url = 'https://capstone-wazn.appspot.com/api/login';
+  signup_url = 'https://capstone-wazn.appspot.com/api/signup';
   
   constructor(
     private _http: HttpClient,
@@ -30,26 +31,32 @@ export class LoginService {
   loggedIn: boolean = JSON.parse(this.localStatus || 'false');
   rememberMe: boolean = false;
 
-  //logs user into application by posting to /api/login
+  //signs user up if no user account by posting 
+  //to api/signup. Subscriber logic in registration component.
+  signup(user: User) {
+    return this._http.post<any>(this.signup_url, user);
+  }
+
+  //logs user into application by posting to /api/login.
   //when data returns, route to home or log error. If
-  //user hit remember me checkbox then data will be stored 
-  //to local storage
+  //user hits remember me checkbox then data will be stored 
+  //to browser local storage
   login(user: User) {
-    return this._http.post<any>(this._url, user)
-      .subscribe (
-        data => {
-          console.log('Login success', data);
-          this.dbService.setToken(data['token']);
-          this.userService.setCurrentUser(data['user_id']);
-          this.setLoggedIn(true); 
-          if(this.rememberMe) {
-            localStorage.setItem('loggedIn', 
-            JSON.stringify({ val: 'true', id: data['user_id']}));
-          }
-          this.router.navigate(['/home']);
-        },
-        error => console.log('Error on login!', error)
-      );
+    return this._http.post<any>(this.login_url, user)
+    .subscribe (
+      data => {
+        console.log('Login success', data);
+        this.dbService.setToken(data['token']);
+        this.userService.setCurrentUser(data['user_id']);
+        this.setLoggedIn(true); 
+        if(this.rememberMe) {
+          localStorage.setItem('loggedIn', 
+          JSON.stringify({ val: 'true', id: data['user_id']}));
+        }
+        this.router.navigate(['/home']);
+      },
+      error => console.log('Error on login!', error)
+    );
   }
 
   //sets user logged in status
@@ -89,5 +96,12 @@ export class LoginService {
   //should be saved to memory
   setRememberMe(val : boolean) {
     this.rememberMe = val;
+  }
+
+  //logs out of the application
+  logout(): void {
+    console.log('logging out!');
+    this.setLoggedIn(false);
+    localStorage.clear();
   }
 }

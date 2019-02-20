@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { LoginService } from './services/login.service';
+import { AuthService } from './services/auth.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 export class AppComponent {
 
   constructor(
-    private loginService: LoginService,
+    private authService: AuthService,
     private Router: Router
     ) {}
 
@@ -18,13 +18,11 @@ export class AppComponent {
   title = 'capstone-project';
 
   logout() {
-    console.log('logging out!');
-    this.loginService.setLoggedIn(false);
-    localStorage.clear();
+    this.authService.logout();
   }
 
   isLoggedIn() {
-    return this.loginService.isLoggedIn();
+    return this.authService.isLoggedIn();
   } 
   
   isLoginRoute() {
