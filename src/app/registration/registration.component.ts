@@ -1,7 +1,12 @@
+/*****************************
+ * Description: This is the registration component file.
+ * This file contains all the methods related
+ * to signing-up a user to the application.
+*****************************/
+
 import { Component, OnInit } from '@angular/core';
 import { User } from '../models/user.model';
-import { SignupService } from '../services/signup.service';
-import { LoginService } from '../services/login.service';
+import { AuthService } from '../services/auth.service';
 import { Router} from '@angular/router';
 
 @Component({
@@ -13,8 +18,7 @@ import { Router} from '@angular/router';
 export class RegistrationComponent implements OnInit {
 
   constructor (
-    private signupService: SignupService,
-    private loginService: LoginService,
+    private authService: AuthService,
     private router: Router
   ) { }
 
@@ -23,19 +27,23 @@ export class RegistrationComponent implements OnInit {
   submitted: boolean = false;
 
   ngOnInit() {
-    this.loginService.loadRememberedUser();
+    this.authService.loadRememberedUser();
   }
 
-  onSubmit() {
+  //submits signup form
+  signup() {
     this.submitted = true;
-    this.loginService.setRememberMe(true); //will remember user
-    this.signupService.signup(this.user)
+    this.authService.setRememberMe(true); //will remember user
+    this.authService.signup(this.user)
     .subscribe(
       data => {
         console.log('Signup success', data.user._id);
         if(this.shouldLogIn)
-        {  this.loginService.login(this.user); }
-        this.router.navigate(['/login']);
+        { console.log('hi');
+         
+          this.authService.login(this.user); }
+        else
+          this.router.navigate(['/login']);
       },
       error => console.log('Error on signup!', error)
     );

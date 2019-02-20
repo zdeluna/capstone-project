@@ -1,11 +1,13 @@
 <body >
-    <form class="form-signin" #userForm="ngForm" (ngSubmit)='onSubmit()' novalidate>
+    <form class="form-signin" #userForm="ngForm" (ngSubmit)='manualLogin()' novalidate>
 
       <div class='img-circle text-center'>
         <img src="assets/logo/fitness_tracker_logo2.png" alt="logo">
       </div>
 
-      <!-- {{userForm.value | json}}
+      <!-- this will show the form values and user object
+        details on the login screen as they are typed in to check input 
+      {{userForm.value | json}}
       <hr>
       {{user | json}} -->
       
