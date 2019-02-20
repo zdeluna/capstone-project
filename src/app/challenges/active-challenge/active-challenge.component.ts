@@ -54,7 +54,7 @@ export class ActiveChallengeComponent implements OnInit {
         this.currentDays = this.durationService.getCurrentDays(this.challenge.startDate)
         this.totalDays = this.durationService.getTotalDays(this.challenge.startDate, this.challenge.duration)
         this.progress = this.getProgress(this.currentDays, this.totalDays)
-        this.endDate = this.durationService.getEndDate(this.challenge.startDate, this.challenge.duration)
+        this.endDate = new Date('2019-02-18') //this.durationService.getEndDate(this.challenge.startDate, this.challenge.duration)
         this.challengeIsOver = this.checkIfChallengeIsOver()
         console.log(this.challengeIsOver)
       })

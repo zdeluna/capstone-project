@@ -10,9 +10,9 @@
     <mat-card>
       <mat-card-content>
         <h2 *ngIf="challenge.startDate">Duration: {{ challenge.startDate.getMonth() + 1}}/{{ challenge.startDate.getDate() }} - {{ endDate.getMonth() + 1}}/{{ endDate.getDate() }}</h2>
-        <br/>
-        <h5>{{ currentDays }} of {{ totalDays }} Days - {{ totalDays - currentDays }} Remaining!</h5>
-        <mat-progress-bar mode="determinate" [(value)]="progress"></mat-progress-bar>
+        <br [hidden]="challengeIsOver"/>
+        <h5 [hidden]="challengeIsOver">{{ currentDays }} of {{ totalDays }} Days - {{ totalDays - currentDays }} Remaining!</h5>
+        <mat-progress-bar mode="determinate" [(value)]="progress" [hidden]="challengeIsOver"></mat-progress-bar>
       </mat-card-content>
     </mat-card>
   </div>
@@ -70,12 +70,14 @@
             <tr>
               <th mat-header-cell> Name </th>
               <th mat-header-cell> Username </th>
+              <th mat-header-cell> Total </th>
               <th mat-header-cell> </th>
             </tr>
           
             <tr *ngFor="let p of participants">
               <td mat-cell>{{ p.user.firstName }} {{ p.user.lastName }}</td>
               <td mat-cell>{{ p.user.username }}</td>
+              <td mat-cell>{{ p.activityTotal }}</td>
               <td mat-cell style="text-align: right"><button mat-stroked-button> Visit Profile </button></td>
             </tr>
           </table>
