@@ -23,7 +23,7 @@ export class RegistrationComponent implements OnInit {
   submitted: boolean = false;
 
   ngOnInit() {
-    this.loginService.checkUserSession();
+    this.loginService.loadRememberedUser();
   }
 
   onSubmit() {
