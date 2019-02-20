@@ -22,6 +22,7 @@ export class MessageBoardComponent implements OnInit {
   constructor() { }
 
   @Input() challenge: Challenge
+  @Input() challengeIsOver: Boolean
   @Input() user: User
   @Input() posts: Post[] = []
 

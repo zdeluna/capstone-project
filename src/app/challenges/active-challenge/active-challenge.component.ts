@@ -29,6 +29,7 @@ export class ActiveChallengeComponent implements OnInit {
     private userService: UserService
     ) { }
 
+  challengeIsOver = false
   user: User = new User
   challenge = new Challenge
   currentDays: number
@@ -54,6 +55,8 @@ export class ActiveChallengeComponent implements OnInit {
         this.totalDays = this.durationService.getTotalDays(this.challenge.startDate, this.challenge.duration)
         this.progress = this.getProgress(this.currentDays, this.totalDays)
         this.endDate = this.durationService.getEndDate(this.challenge.startDate, this.challenge.duration)
+        this.challengeIsOver = this.checkIfChallengeIsOver()
+        console.log(this.challengeIsOver)
       })
     })
     this.dbService.getCurrentUser().subscribe(res => {
@@ -92,5 +95,9 @@ export class ActiveChallengeComponent implements OnInit {
 
   goBack(): void {
     this.location.back()
+  }
+
+  checkIfChallengeIsOver() {
+    return new Date() > this.endDate
   }
 }

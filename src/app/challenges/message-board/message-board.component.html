@@ -8,10 +8,10 @@
         </div>
         <div *ngIf="post.replies">
           <div *ngFor="let reply of post.replies">
-            <app-message-board-reply [parent]="post" [post]="reply" [user]="user" [shouldBeGray]="!shouldBeGray"></app-message-board-reply>
+            <app-message-board-reply [parent]="post" [post]="reply" [user]="user" [shouldBeGray]="!shouldBeGray" [challengeIsOver]="challengeIsOver"></app-message-board-reply>
           </div>
         </div>
-        <form [formGroup]="formReply" (ngSubmit)="submitReply(post)">
+        <form [formGroup]="formReply" (ngSubmit)="submitReply(post)" [hidden]="challengeIsOver">
           <mat-form-field class="full-width">
             <textarea matInput [placeholder]="getPlaceholder(post.message)" formControlName="message"></textarea>
           </mat-form-field>
@@ -22,7 +22,7 @@
   </div>
 </div>
 
-<div class="row">
+<div class="row" [hidden]="challengeIsOver">
   <div class="col-12">
     <h3>Create New Post</h3>
     <mat-card>
