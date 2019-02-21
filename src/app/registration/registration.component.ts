@@ -29,6 +29,7 @@ export class RegistrationComponent implements OnInit {
   user: User = new User;
   shouldLogIn: boolean = false;
   submitted: boolean = false;
+  error: boolean = false;
 
   ngOnInit() {
     this.authService.loadRememberedUser();
@@ -41,7 +42,7 @@ export class RegistrationComponent implements OnInit {
         Validators.required,
         Validators.minLength(6)
       ]],
-      shouldLogIn: [false, [
+      shouldLogIn: [true, [
         Validators.requiredTrue
       ]]
     });
@@ -71,13 +72,18 @@ export class RegistrationComponent implements OnInit {
     .subscribe(
       data => {
         console.log('Signup success', data.user._id);
+        // this.error = false;
         if(this.shouldLogIn)
           this.authService.login(this.user); 
         this.router.navigate(['/login']);
       }, 
 
       //TODO: show errors on screen instead of console
-      error => console.log('Error on signup!', error)
+      error => { 
+        console.log('Error on signup!', error)
+        this.error = true;
+        this.submitted = false;
+      }
     );
   };
 
