@@ -7,6 +7,16 @@
 
 <div class="row">
   <div class="col-12">
+    <mat-card [hidden]="!challengeIsOver">
+      <mat-card-content>
+        <app-completed-challenge [sortedParticipants]="sortedParticipants"></app-completed-challenge>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-12">
     <mat-card>
       <mat-card-content>
         <h2 *ngIf="challenge.startDate">Duration: {{ challenge.startDate.getMonth() + 1}}/{{ challenge.startDate.getDate() }} - {{ endDate.getMonth() + 1}}/{{ endDate.getDate() }}</h2>

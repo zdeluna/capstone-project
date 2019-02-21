@@ -17,6 +17,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { ChallengesPageComponent } from './challenges/challenges-page/challenges-page.component';
 import { MessageBoardComponent } from './challenges/message-board/message-board.component';
 import { MessageBoardReplyComponent } from './challenges/message-board/message-board-reply/message-board-reply.component';
+import { CompletedChallengeComponent } from './challenges/completed-challenge/completed-challenge.component';
 
 
 @NgModule({
@@ -30,7 +31,8 @@ import { MessageBoardReplyComponent } from './challenges/message-board/message-b
     ProfileComponent,
     ChallengesPageComponent,
     MessageBoardComponent,
-    MessageBoardReplyComponent
+    MessageBoardReplyComponent,
+    CompletedChallengeComponent
   ],
   imports: [
     BrowserModule,
