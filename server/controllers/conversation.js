@@ -53,6 +53,7 @@ const formatMessageContentsinConversation = async conversation => {
 const createConversationInDB = async (userID, data) => {
   try {
     let recipientID = data.recipient;
+    console.log("in private function: " + recipientID[0]);
     let messageFields = { sender: userID, content: data.content };
 
     // Add the message to the message collection
@@ -68,20 +69,26 @@ const createConversationInDB = async (userID, data) => {
       conversationFields
     );
 
-    await conversationModel.findOneAndUpdate(
-      { _id: conversation._id },
-      { $push: { participants: recipientID } }
-    );
+    for (i = 0; i < recipientID.length; i++) {
+      let objectID = recipientID[i];
 
-    // Update each user's collection
+      // Update each conversation collection to include each participant
+      conversation = await conversationModel.findOneAndUpdate(
+        { _id: conversation._id },
+        { $push: { participants: objectID } },
+        { new: true }
+      );
+
+      // Update each user's collection
+      await userModel.findOneAndUpdate(
+        { _id: recipientID[i] },
+        { $push: { conversations: conversation._id } }
+      );
+    }
+
+    // Update the sender's user collection
     await userModel.findOneAndUpdate(
       { _id: userID },
-      { $push: { conversations: conversation._id } }
-    );
-
-    // Update each user's collection
-    await userModel.findOneAndUpdate(
-      { _id: recipientID },
       { $push: { conversations: conversation._id } }
     );
 
@@ -95,6 +102,7 @@ exports.createConversation = async (req, res) => {
   try {
     let userID = req.user._id;
     let validatedFields = matchedData(req, { includeOptionals: false });
+    console.log("in create: " + validatedFields.recipient);
     let conversation = await createConversationInDB(userID, validatedFields);
     let formattedConversation = await formatMessageContentsinConversation(
       conversation
