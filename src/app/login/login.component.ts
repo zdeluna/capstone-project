@@ -59,7 +59,7 @@ export class LoginComponent implements OnInit {
         Validators.required,
         Validators.minLength(6)
       ]],
-      rememberUser: [false, [
+      rememberUser: [true, [
         Validators.requiredTrue
       ]]
     });

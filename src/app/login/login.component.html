@@ -5,18 +5,14 @@
         <img src="assets/logo/fitness_tracker_logo2.png" alt="logo">
       </div>
 
-      <!-- this will show the form values on the login screen as they are typed in to check input  -->
-      login form values: {{loginForm.value | json }}
-
-      <hr>
+      <!-- this will show the form values on the 
+      login screen as they are typed in to check input -->
+      <!-- login form values: {{loginForm.value | json }}
+      <hr> -->
       
       <h1 class='text-center font-weight-bold'>
         Log in to your account
       </h1>
-
-      <!-- <p class="text-sm-left">
-        Create your own free account to track your fitness and challenge your friends!!
-      </p> -->
 
       <label for="inputEmail" class="sr-only">
         Email 
@@ -42,7 +38,7 @@
         </label>
       </div>
 
-      <button [disabled]='loginForm.invalid' *ngIf='!submitted' id='sign-in-btn' class="btn btn-lg btn-primary btn-block border: 1px solid aqua;
+      <button [disabled]='email.invalid || password.invalid' *ngIf='!submitted' id='sign-in-btn' class="btn btn-lg btn-primary btn-block border: 1px solid aqua;
       border-color: #00fff0;" type="submit">
         Log In 
       </button>
