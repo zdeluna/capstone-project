@@ -17,7 +17,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { ChallengesPageComponent } from './challenges/challenges-page/challenges-page.component';
 import { MessageBoardComponent } from './challenges/message-board/message-board.component';
 import { MessageBoardReplyComponent } from './challenges/message-board/message-board-reply/message-board-reply.component';
-
+import { AuthGuard } from './auth.guard';
 
 @NgModule({
   declarations: [
@@ -51,9 +51,9 @@ import { MessageBoardReplyComponent } from './challenges/message-board/message-b
     MatDatepickerModule,
     MatNativeDateModule,
     MatProgressBarModule,
-    HttpClientModule
+    HttpClientModule,
   ],
-  providers: [],
+  providers: [AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
