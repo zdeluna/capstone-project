@@ -30,6 +30,10 @@
       <mat-error *ngIf="password.invalid && password.touched">
         Password must be six characters long
       </mat-error>
+      <mat-error *ngIf='error'>
+        <br> Email or username incorrect!! <br>
+        Please try a different login!
+      </mat-error>
 
       <div class="checkbox mb-3">
         <label>

@@ -54,7 +54,7 @@ export class DatabaseService {
   }
 
   getCurrentUser() {
-    return this.getUser(this.userService.getCurrentUser())
+    return this.getUser(this.userService.getCurrentUserId())
   }
 
   setToken(token: string) {
