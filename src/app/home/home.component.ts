@@ -6,9 +6,7 @@
 
 import { Component, OnInit } from '@angular/core';
 import { User } from '../models/user.model';
-import { Router } from '@angular/router';
 import { UserService } from '../services/user.service';
-import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-home',
@@ -18,10 +16,8 @@ import { AuthService } from '../services/auth.service';
 
 export class HomeComponent implements OnInit {
 
-  constructor(
-    private router: Router, 
+  constructor( 
     private userService: UserService,
-    private authService: AuthService
     ) {}
 
   categories: Object = []
@@ -30,26 +26,33 @@ export class HomeComponent implements OnInit {
   
   ngOnInit() {
 
-    //if logged in then load the user details from the user service
-    if(this.authService.isLoggedIn()) {
-      this.user = this.userService.user;
+    //if logged in then load the user details 
+    //from the user service
+    this.user = this.userService.user;
 
-      //routes icons link to in home page below greeting and date
-      this.categories = [
-        {value: 'profile', location: "assets/flat-icons/user.svg", view: 'Profile'},
-        {value: "search",  location: "assets/flat-icons/magnifier.svg", view: 'Search'},
-        {value: "challenges", location: "assets/flat-icons/podium.svg", view: 'Challenges'},
-        {value: "activity-minutes", location: "assets/flat-icons/check-list.svg", view: 'Enter Activity Minutes'}
-      ];
+    //routes that icons link to in home page 
+    //below greeting and date
+    this.categories = [
+    {
+      value: 'profile', 
+      location: "assets/flat-icons/user.svg", 
+      view: 'Profile'
+    },
+    {
+      value: "search",  
+      location: "assets/flat-icons/magnifier.svg", 
+      view: 'Search'
+    },
+    {
+      value: "challenges", 
+      location: "assets/flat-icons/podium.svg", 
+      view: 'Challenges'
+    },
+    {
+      value: "activity-minutes", 
+      location: "assets/flat-icons/check-list.svg", 
+      view: 'Enter Activity Minutes'
     }
-
-    //if user somehow here but not logged in,
-    //call logout which sets flags and clears local storage,
-    //then link back to login page
-    else { 
-      this.authService.logout();
-      this.router.navigate(['/login']);
-    }
+    ];
   }
-
 }

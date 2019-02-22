@@ -7,15 +7,42 @@ import { ProfileComponent } from './profile/profile.component';
 import { ActiveChallengeComponent } from './challenges/active-challenge/active-challenge.component';
 import { ChallengesPageComponent } from './challenges/challenges-page/challenges-page.component';
 import { RegistrationComponent } from './registration/registration.component';
+import { AuthGuard } from './auth.guard';
 
 const routes: Routes = [
-  {path: '', component: RegistrationComponent},
-  {path: 'login', component: LoginComponent},
-  {path: 'home', component: HomeComponent},
-  {path: 'profile', component: ProfileComponent},
-  {path: 'challenges', component: ChallengesPageComponent},
-  {path: 'challenges/create', component: CreateChallengeComponent},
-  {path: 'challenges/:id', component: ActiveChallengeComponent}
+  {
+    path: '', 
+    component: RegistrationComponent,
+  },
+  {
+    path: 'login', 
+    component: LoginComponent
+  },
+  {
+    path: 'home', 
+    component: HomeComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'profile', 
+    component: ProfileComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'challenges', 
+    component: ChallengesPageComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'challenges/create', 
+    component: CreateChallengeComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'challenges/:id', 
+    component: ActiveChallengeComponent,
+    canActivate: [AuthGuard]
+  }
 ];
 
 @NgModule({
