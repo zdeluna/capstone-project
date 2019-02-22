@@ -7,8 +7,6 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from '../models/user.model';
 import { Router } from '@angular/router';
-import { DatabaseService } from '../services/database.service';
-import { ProfileComponent } from '../profile/profile.component';
 import { UserService } from '../services/user.service';
 import { AuthService } from '../services/auth.service';
 
@@ -22,7 +20,6 @@ export class HomeComponent implements OnInit {
 
   constructor(
     private router: Router, 
-    private dbService: DatabaseService,
     private userService: UserService,
     private authService: AuthService
     ) {}
@@ -35,16 +32,11 @@ export class HomeComponent implements OnInit {
 
     //if logged in then load the user details from the user service
     if(this.authService.isLoggedIn()) {
-      this.dbService.getUser(this.userService.getCurrentUser())
-      .subscribe(
-        res => {
-          this.user.username = res['username']; //fill user details here
-        }
-      );
+      this.user = this.userService.user;
 
       //routes icons link to in home page below greeting and date
       this.categories = [
-        {value: "profile", location: "assets/flat-icons/user.svg", component: ProfileComponent, view: 'Profile'},
+        {value: 'profile', location: "assets/flat-icons/user.svg", view: 'Profile'},
         {value: "search",  location: "assets/flat-icons/magnifier.svg", view: 'Search'},
         {value: "challenges", location: "assets/flat-icons/podium.svg", view: 'Challenges'},
         {value: "activity-minutes", location: "assets/flat-icons/check-list.svg", view: 'Enter Activity Minutes'}

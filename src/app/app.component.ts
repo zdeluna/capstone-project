@@ -17,14 +17,19 @@ export class AppComponent {
   loggedIn: boolean = false;
   title = 'capstone-project';
 
+  //if user hits logout in navbar when logged in
   logout() {
     this.authService.logout();
   }
 
+  //to hide navbar items that are not meant to
+  //be seen until user logs in
   isLoggedIn() {
     return this.authService.isLoggedIn();
   } 
   
+  //returns true if the user visited the /login route
+  //used to toggle login/register in nav
   isLoginRoute() {
     if(this.Router.url.includes('login')) {
       return true;

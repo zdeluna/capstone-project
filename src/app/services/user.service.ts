@@ -1,8 +1,8 @@
 /*****************************
  * Description: This is the user service file.
- * This file contains the get and set current user 
- * methods that help pass the current usr object 
- * to different components in the app
+ * This file contains the user methods that 
+ * help pass the current usr object to different 
+ * components in the app.
 *****************************/
 
 import { Injectable } from '@angular/core';
@@ -11,17 +11,23 @@ import { User } from '../models/user.model';
 @Injectable({
   providedIn: 'root'
 })
-export class UserService { //token?
+export class UserService { 
 
-  constructor() { }
+  constructor(
+  ) { }
 
   user: User = new User()
 
-  getCurrentUser() {
+  setUserDetails(form: any) {
+    this.user.username = form.value.email;
+    this.user.password = form.value.password;
+  }
+
+  getCurrentUserId() {
     return this.user.id;
   }
 
-  setCurrentUser(_id : string) {
+  setCurrentUserId(_id : string) {
     this.user.id = _id;
   }
 }

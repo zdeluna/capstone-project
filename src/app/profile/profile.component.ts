@@ -15,6 +15,8 @@ export class ProfileComponent implements OnInit {
   user: User = new User
 
   ngOnInit() {
+    //these values should come from the user object
+    //in the user service
     this.sports = [
       {name: 'Running', miles: 55},
       {name: 'Biking', miles: 103},

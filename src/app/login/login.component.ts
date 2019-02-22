@@ -7,9 +7,7 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from '../models/user.model';
 import { AuthService } from '../services/auth.service';
-import { DatabaseService } from '../services/database.service';
 import { UserService } from '../services/user.service';
-import { Router } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule, MatInputModule, MatProgressBarModule } from '@angular/material';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -22,26 +20,22 @@ import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angula
 
 export class LoginComponent implements OnInit {
 
-  loginForm: FormGroup;
-
   constructor (
     private authService: AuthService,
-    private dbService: DatabaseService,
     private userService: UserService,
-    private router: Router,
     private browserAnimationModule: BrowserAnimationsModule,
     private matbuttonModule: MatButtonModule,
     private matInputModule: MatInputModule,
     private reactiveFormsModule: ReactiveFormsModule,
     private matProgressBarModule: MatProgressBarModule,
     private fb: FormBuilder,
-    // private validators: Validators
-    // private fg: FormGroup
   ) { }
 
+  loginForm: FormGroup;
   user: User = new User;
   submitted: boolean = false;
   rememberUser: boolean = false;
+  error: boolean = false;
 
   //runs when component loads
   ngOnInit() {
@@ -83,18 +77,30 @@ export class LoginComponent implements OnInit {
     this.submitted = true;
 
     //fill user object based on form values and remember me
-    this.user.username = this.loginForm.value.email;
-    this.user.password = this.loginForm.value.password;
+    this.userService.setUserDetails(this.loginForm);
     this.rememberUser =  this.loginForm.value.rememberUser;
-    // console.log(this.user);
 
     //sets remember me in auth service
     this.authService.setRememberMe(this.rememberUser);
 
     //logs user in
-    this.authService.login(this.user);
+    //calls /login api
+    this.authService.login()
+    .subscribe (
+      data => {
+        this.authService.userLoggedIn(data);
+      },
+       //user typed in incorrect email or password
+      error => {
+        console.log('Error on login!', error);
+        this.error=true;
+        this.submitted =false;
+      }
+    );
+  
   };
 
+  
   //google login?
 
 }
