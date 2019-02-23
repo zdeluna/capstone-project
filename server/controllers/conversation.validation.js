@@ -19,3 +19,18 @@ exports.createConversation = [
     }
   }
 ];
+
+exports.updateConversation = [
+  check("recipient").optional(),
+  check("content").optional(),
+  // Determine if there were errors in the request and then store them in the errors object
+  // Consulted https://express-validator.github.io/docs/
+  (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(422).json({ errors: errors.array() });
+    } else {
+      return next();
+    }
+  }
+];
