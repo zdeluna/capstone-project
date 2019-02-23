@@ -8,9 +8,9 @@ import { Component, OnInit } from '@angular/core';
 import { User } from '../models/user.model';
 import { AuthService } from '../services/auth.service';
 import { UserService } from '../services/user.service';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatButtonModule, MatInputModule, MatProgressBarModule } from '@angular/material';
-import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
+//import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+//import { MatProgressSpinnerModule} from '@angular/material';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 
 @Component({
@@ -24,11 +24,6 @@ export class LoginComponent implements OnInit {
   constructor (
     private authService: AuthService,
     private userService: UserService,
-    private browserAnimationModule: BrowserAnimationsModule,
-    private matbuttonModule: MatButtonModule,
-    private matInputModule: MatInputModule,
-    private reactiveFormsModule: ReactiveFormsModule,
-    private matProgressBarModule: MatProgressBarModule,
     private fb: FormBuilder,
   ) { }
 
@@ -37,6 +32,7 @@ export class LoginComponent implements OnInit {
   submitted: boolean = false;
   rememberUser: boolean = false;
   error: boolean = false;
+
 
   //runs when component loads
   ngOnInit() {

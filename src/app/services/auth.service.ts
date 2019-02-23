@@ -73,7 +73,7 @@ export class AuthService {
   loadRememberedUser(): void {
     let remembered: string = localStorage.getItem('loggedIn');
     if(this.isLoggedIn() && remembered) { 
-      this.userService.setCurrentUserId(
+      this.userService.setCurrentUserId( //this needs to instead call the api getUser and fill the user in the user service
         JSON.parse(remembered).id
       );
       this.router.navigate(['/home']);
