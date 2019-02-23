@@ -10,7 +10,7 @@ import { AuthService } from '../services/auth.service';
 import { Router} from '@angular/router';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { UserService } from '../services/user.service';
-
+//import {MatProgressSpinnerModule} from '@angular/material';
 
 
 @Component({

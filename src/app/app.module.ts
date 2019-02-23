@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatButtonModule, MatFormFieldModule, MatInputModule, MatOptionModule, MatSelectModule, MatListModule, MatRadioModule, MatSliderModule, MatCardModule, MatDatepickerModule, MatNativeDateModule, MatProgressBarModule } from '@angular/material';
+import { MatButtonModule, MatFormFieldModule, MatInputModule, MatOptionModule, MatSelectModule, MatListModule, MatRadioModule, MatSliderModule, MatCardModule, MatDatepickerModule, MatNativeDateModule, MatProgressBarModule, MatProgressSpinnerModule } from '@angular/material';
 import { HttpClientModule } from '@angular/common/http';
 import { AngularFireModule } from '@angular/fire';  
 import { environment } from '../environments/environment'; 
@@ -51,6 +51,7 @@ import { AuthGuard } from './auth.guard';
     MatDatepickerModule,
     MatNativeDateModule,
     MatProgressBarModule,
+    MatProgressSpinnerModule,
     HttpClientModule,
   ],
   providers: [AuthGuard],
