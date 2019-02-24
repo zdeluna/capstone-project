@@ -17,6 +17,11 @@ export class AppComponent {
   loggedIn: boolean = false;
   title = 'capstone-project';
 
+
+  ngOnInit() {
+    this.authService.loadRememberedUser();
+  }
+
   //if user hits logout in navbar when logged in
   logout() {
     this.authService.logout();
