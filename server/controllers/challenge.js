@@ -330,6 +330,7 @@ exports.deleteChallenge = async (req, res) => {
   try {
     let challengeID = req.params.id;
     let userID = req.user._id;
+
     // Only allow participant of challenge to delete the challenge
     await checkIfUserIsParticipantOfChallenge(challengeID, userID);
 

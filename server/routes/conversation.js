@@ -6,6 +6,12 @@ const validator = require("../controllers/conversation.validation");
 const authenticateUser = passport.authenticate("jwt", { session: false });
 const controller = require("../controllers/conversation.js");
 
+router.delete(
+  "/:conversationID/messages/:messageID",
+  authenticateUser,
+  controller.deleteMessage
+);
+
 router.get("/:conversationID", authenticateUser, controller.getConversation);
 
 router.patch(

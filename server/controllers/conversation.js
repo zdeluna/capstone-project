@@ -9,6 +9,7 @@ const {
   createEntityInDB,
   deleteEntityFromDB,
   updateEntityFromDB,
+  removeFromFieldArray,
   sendErrorResponse,
   checkIfUserIsAuthorized
 } = require("./controller.js");
@@ -98,7 +99,13 @@ const formatMessageContentsinConversation = async conversation => {
         conversation.messages[i]
       );
 
-      messageArray[i] = { sender: message.sender, content: message.content };
+      messageArray[i] = {
+        _id: message._id,
+        sender: message.sender,
+        content: message.content,
+        createdAt: message.createdAt,
+        updatedAt: message.updatedAt
+      };
     }
 
     conversation.messages = messageArray;
@@ -202,7 +209,6 @@ exports.getConversation = async (req, res) => {
 
 exports.updateConversation = async (req, res) => {
   try {
-    console.log("in update");
     let conversationID = req.params.conversationID;
     let userID = req.user._id;
     // Only allow participant of challenge to update the challenge
@@ -226,6 +232,31 @@ exports.updateConversation = async (req, res) => {
     );
 
     res.status(200).json(formattedConversation);
+  } catch (error) {
+    sendErrorResponse(res, error);
+  }
+};
+
+exports.deleteMessage = async (req, res) => {
+  try {
+    let messageID = req.params.messageID;
+    let conversationID = req.params.conversationID;
+    let userID = req.user._id;
+
+    await getEntityFromDB(messageModel, messageID);
+    await getEntityFromDB(conversationModel, conversationID);
+
+    // Delete the reference in the conversations model
+    let conversation = await removeFromFieldArray(
+      conversationModel,
+      "messages",
+      conversationID,
+      messageID
+    );
+
+    await deleteEntityFromDB(messageModel, messageID);
+
+    res.status(204).end();
   } catch (error) {
     sendErrorResponse(res, error);
   }

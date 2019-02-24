@@ -1,6 +1,9 @@
 const userModel = require("../models/user.js");
 const friendshipModel = require("../models/friendship.js");
 const challengeModel = require("../models/challenge.js");
+const messageModel = require("../models/message.js");
+const conversationModel = require("../models/conversation.js");
+
 var ObjectId = require("mongodb").ObjectId;
 
 /**
@@ -110,6 +113,34 @@ exports.updateEntityFromDB = async (model, id, data) => {
         });
 
       resolve(entity);
+    });
+  });
+};
+
+/**
+ * Remove an id (foreignkeyID )in an array in model in a collection with id
+ * primaryID
+ * @param {Model} model
+ * @param {string} fieldName
+ * @param {string} primaryID,
+ * @param {string} foreignkeyID
+ * @returns Promise
+ */
+
+exports.removeFromFieldArray = async (
+  model,
+  fieldName,
+  primaryID,
+  foreignkeyID
+) => {
+  return new Promise((resolve, reject) => {
+    let query = { [fieldName]: foreignkeyID };
+    model.findOneAndUpdate({ _id: primaryID }, { $pull: query }, function(
+      error,
+      entity
+    ) {
+      if (error) reject({ statusCode: 422, msg: error.message });
+      else resolve(entity);
     });
   });
 };
