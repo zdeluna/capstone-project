@@ -11,6 +11,7 @@ import { UserService } from '../services/user.service';
 //import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 //import { MatProgressSpinnerModule} from '@angular/material';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -24,6 +25,7 @@ export class LoginComponent implements OnInit {
   constructor (
     private authService: AuthService,
     private userService: UserService,
+    private router: Router,
     private fb: FormBuilder,
   ) { }
 
@@ -36,9 +38,11 @@ export class LoginComponent implements OnInit {
 
   //runs when component loads
   ngOnInit() {
-    //if user hit remember me on last session at login,
-    //loads user and navigates to home page skipping login
-    this.authService.loadRememberedUser();
+
+    // this.authService.loadRememberedUser();
+    if(this.authService.isLoggedIn()) {
+      this.router.navigate(['/home'])
+    }
 
     //form group controls form fields
     this.loginForm = this.fb.group({

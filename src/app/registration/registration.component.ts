@@ -35,7 +35,10 @@ export class RegistrationComponent implements OnInit {
   error: boolean = false;
 
   ngOnInit() {
-    this.authService.loadRememberedUser(); //checks for prior session
+    // this.authService.loadRememberedUser(); //checks for prior session
+    if(this.authService.isLoggedIn()) {
+      this.router.navigate(['/home'])
+    }
     this.registrationForm = this.fb.group({
       email: ['', [
         Validators.required,
@@ -75,31 +78,29 @@ export class RegistrationComponent implements OnInit {
     .subscribe(
       data => {
         console.log('Signup success', data.user._id);
-
         //if user chose to log in directly after signup
         if(this.shouldLogIn) {
-          this.authService.login().subscribe( //calls api/login
-            data => {
-              this.authService.setRememberMe(true); 
-              this.authService.userLoggedIn(data); //routes to home
-            },
-            //error logging in automatically after signing up 
-            //if this happens probably something 
-            //wrong with server at  api/login
-            //TODO: bring user to an error page
-            error => {
-              console.log('Error on login! Weird!!!', error);
-              // this.error=true;
-              // this.submitted =false;
-            }
-          );
-         }
-
+          this.authService.login()
+            .subscribe( //calls api/login
+              data => {
+                this.authService.setRememberMe(true); 
+                this.authService.userLoggedIn(data); //routes to home
+              },
+              //error logging in automatically after signing up 
+              //if this happens probably something 
+              //wrong with server at  api/login
+              //TODO: bring user to an error page
+              error => {
+                console.log('Error on login! Weird!!!', error);
+                // this.error=true;
+                // this.submitted =false;
+              }
+            );
+          }
         //else user chose to login manually
         //so route to login page
         this.router.navigate(['/login']);
       }, 
-
       //error registring user, prob email alrady used
       error => { 
         console.log('Error on signup!', error)

@@ -26,6 +26,8 @@ export class AuthService {
     private dbService: DatabaseService,
     ) { }
 
+    //not sure these are needed
+    //I think setting to false is what to do
   localStatus: string = localStorage.getItem('loggedIn');
   loggedIn: boolean = JSON.parse(this.localStatus || 'false');
   rememberMe: boolean = false;
@@ -54,6 +56,8 @@ export class AuthService {
   }
 
   //returns if user is logged in
+  //cuurently checking in local storage 
+  //if nothing there then return local variable
   isLoggedIn(): boolean {
     let localStatus: string = JSON.parse(
       localStorage.getItem('loggedIn')
@@ -71,12 +75,22 @@ export class AuthService {
   //if user hit remember me, sets current user
   //and goes to home page skipping login
   loadRememberedUser(): void {
+    console.log('Checking to see if user was remembered!!');
+    
     let remembered: string = localStorage.getItem('loggedIn');
     if(this.isLoggedIn() && remembered) { 
-      this.userService.setCurrentUserId( //this needs to instead call the api getUser and fill the user in the user service
-        JSON.parse(remembered).id
-      );
-      this.router.navigate(['/home']);
+      this.dbService.getUser(JSON.parse(remembered).id)
+      .subscribe(
+        data => {
+          //here you would fill the user with more details
+          this.userService.user.username = data['username'];
+        },
+        error => {
+          console.log(error);
+          this.logout();
+          this.router.navigate(['/login']);
+        }
+      )
     }
   }
 
