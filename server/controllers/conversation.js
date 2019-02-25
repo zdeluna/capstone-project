@@ -14,6 +14,13 @@ const {
   checkIfUserIsAuthorized
 } = require("./controller.js");
 
+/**
+ * Create a new message by creating a new message collection and adding the message id to the messages array in coversation
+ * @param {Object} messageFields
+ * @param {string} conversationID
+ * @return Conversation object
+ */
+
 const createNewMessage = async (messageFields, conversationID) => {
   try {
     let message = await createEntityInDB(messageModel, messageFields);
@@ -28,9 +35,16 @@ const createNewMessage = async (messageFields, conversationID) => {
   }
 };
 
+/**
+ * Add participants to a conversation by updating conversation model and including participant's id and updating user model to include
+ * conversation id in coversation field
+ * @param {Array} participants
+ * @param {string} conversationID
+ * @return Conversation object
+ */
+
 const addParticipantsToConversation = async (participants, conversationID) => {
   try {
-    //let conversation;
     for (i = 0; i < participants.length; i++) {
       let participantID = participants[i];
 
@@ -140,11 +154,6 @@ const createConversationInDB = async (userID, data) => {
       conversationModel,
       conversationFields
     );
-    /*
-    conversation = await addParticipantsToConversation(
-      recipientID,
-      conversation._id
-	);*/
 
     for (i = 0; i < recipientID.length; i++) {
       let objectID = recipientID[i];
@@ -257,6 +266,52 @@ exports.deleteMessage = async (req, res) => {
     await deleteEntityFromDB(messageModel, messageID);
 
     res.status(204).end();
+  } catch (error) {
+    sendErrorResponse(res, error);
+  }
+};
+
+exports.updateMessage = async (req, res) => {
+  try {
+    let messageID = req.params.messageID;
+    let conversationID = req.params.conversationID;
+    let userID = req.user._id;
+    let updatedContent = { content: req.body.content };
+
+    await updateEntityFromDB(messageModel, messageID, updatedContent);
+    let conversation = await getEntityFromDB(conversationModel, conversationID);
+    let formattedConversation = await formatMessageContentsinConversation(
+      conversation
+    );
+
+    res.status(200).json(formattedConversation);
+  } catch (error) {
+    sendErrorResponse(res, error);
+  }
+};
+
+exports.leaveConversation = async (req, res) => {
+  try {
+    let conversationID = req.params.conversationID;
+    let userID = req.user._id;
+
+    // Remove the user id from participants in conversation
+    await removeFromFieldArray(
+      conversationModel,
+      "participants",
+      conversationID,
+      userID
+    );
+
+    // Remove the conversation id from the user's model
+    await removeFromFieldArray(
+      userModel,
+      "conversations",
+      userID,
+      conversationID
+    );
+
+    res.status(200).end();
   } catch (error) {
     sendErrorResponse(res, error);
   }

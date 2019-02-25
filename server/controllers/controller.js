@@ -103,17 +103,23 @@ exports.createEntityInDB = async (model, data) => {
 exports.updateEntityFromDB = async (model, id, data) => {
   var objectId = new ObjectId(id);
   return new Promise((resolve, reject) => {
-    model.findByIdAndUpdate(objectId, data, { new: true }, (error, entity) => {
-      if (error) reject({ statusCode: 422, msg: error.message });
-      if (!entity)
-        reject({
-          statusCode: 404,
-          msg:
-            "DOES_NOT_EXIST_IN_" + model.collection.collectionName.toUpperCase()
-        });
+    model.findOneAndUpdate(
+      { _id: objectId },
+      data,
+      { new: true },
+      (error, entity) => {
+        if (error) reject({ statusCode: 422, msg: error.message });
+        if (!entity)
+          reject({
+            statusCode: 404,
+            msg:
+              "DOES_NOT_EXIST_IN_" +
+              model.collection.collectionName.toUpperCase()
+          });
 
-      resolve(entity);
-    });
+        resolve(entity);
+      }
+    );
   });
 };
 

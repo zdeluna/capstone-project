@@ -12,6 +12,18 @@ router.delete(
   controller.deleteMessage
 );
 
+router.patch(
+  "/:conversationID/messages/:messageID",
+  authenticateUser,
+  controller.updateMessage
+);
+
+router.delete(
+  "/:conversationID/participants",
+  authenticateUser,
+  controller.leaveConversation
+);
+
 router.get("/:conversationID", authenticateUser, controller.getConversation);
 
 router.patch(

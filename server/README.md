@@ -322,3 +322,13 @@ Example:
 ```
 
 ```
+
+### Delete a message
+
+### DELETE /conversations/:conversationID/messages/:messageID
+
+#### Parameters
+
+conversationID - The id of the conversation
+
+messageID - The id of the message
