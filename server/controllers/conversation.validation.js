@@ -34,3 +34,20 @@ exports.updateConversation = [
     }
   }
 ];
+
+exports.updateMessage = [
+  check("content")
+    .exists()
+    .withMessage("CONTENT_MUST_NOT_BE_EMPTY"),
+
+  // Determine if there were errors in the request and then store them in the errors object
+  // Consulted https://express-validator.github.io/docs/
+  (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(422).json({ errors: errors.array() });
+    } else {
+      return next();
+    }
+  }
+];

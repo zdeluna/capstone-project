@@ -15,6 +15,7 @@ router.delete(
 router.patch(
   "/:conversationID/messages/:messageID",
   authenticateUser,
+  validator.updateMessage,
   controller.updateMessage
 );
 

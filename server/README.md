@@ -297,7 +297,7 @@ Response 204 No Content
 
 ---
 
-### Create a new conversation
+## Create a new conversation
 
 ### POST /conversations/
 
@@ -320,10 +320,35 @@ Response 200 OK
 Example:
 
 ```
-
+{
+    "messages": [
+        {
+            "_id": "5c75aa392d946207839fc980",
+            "sender": "5c75aa022d946207839fc97d",
+            "content": "Hi, how are you",
+            "createdAt": "2019-02-26T21:06:01.273Z",
+            "updatedAt": "2019-02-26T21:06:01.273Z"
+        },
+        {
+            "_id": "5c75aa3e2d946207839fc982",
+            "sender": "5c75aa0a2d946207839fc97e",
+            "content": "I am doing well, how are you user 3",
+            "createdAt": "2019-02-26T21:06:06.854Z",
+            "updatedAt": "2019-02-26T21:06:06.854Z"
+        }
+    ],
+    "participants": [
+        "5c75aa022d946207839fc97d",
+        "5c75aa0a2d946207839fc97e",
+        "5c75646c75fd4b046dc77b31",
+        "5c75aa0d2d946207839fc97f"
+    ],
+    "_id": "5c75aa392d946207839fc981",
+    "__v": 0
+}
 ```
 
-### Delete a message
+## Delete a message
 
 ### DELETE /conversations/:conversationID/messages/:messageID
 
@@ -332,3 +357,40 @@ Example:
 conversationID - The id of the conversation
 
 messageID - The id of the message
+
+## Update a message
+
+### PATCH /conversations/:conversationID/messages/:messageID
+
+#### Parameters
+
+conversationID - The id of the conversation
+
+messageID - The id of the message
+
+Response: 200 OK
+
+#### Body Parameters
+
+content - The updated message
+
+## Leave a conversation
+
+### DELETE /conversations/:conversationID/participants
+
+conversationID - The id of the conversation
+
+Response: 200 OK
+
+## Delete a message
+
+### DELETE /conversations/:conversationID/messages/:messageID
+
+#### Parameters
+
+conversationID - The id of the conversation
+messageID = The id of the message
+
+Response 200 OK
+
+---
