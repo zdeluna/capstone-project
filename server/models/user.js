@@ -53,6 +53,13 @@ let UserSchema = new Schema(
       }
     ],
 
+    conversations: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Conversation"
+      }
+    ],
+
     pending_challenges: [
       {
         type: Schema.Types.ObjectId,
