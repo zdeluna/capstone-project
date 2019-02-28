@@ -1,0 +1,43 @@
+/* div {
+    border: 1px dashed black;
+} */
+
+/* mat-grid-list, mat-grid-tile {
+    border: 1px dashed black;
+} */
+
+.activity {
+    text-align: center;
+    margin: 10px;
+    /* padding: 5px; */
+} 
+
+.activity > h6 {
+    float: left;
+    padding: 10px;
+}
+
+/* mat-grid-tile {
+    background-color: whitesmoke;
+}
+
+mat-grid-tile:hover {
+    background-color: whitesmoke;
+} */
+
+.row {
+    margin: 20px;
+    padding: 5px;
+}
+
+.btn-lg {
+    padding: 10px;
+}
+
+.btn-info {
+    margin: 5px;
+}
+
+.sub-btn {
+    margin: 20px;
+}

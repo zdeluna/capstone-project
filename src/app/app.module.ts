@@ -3,6 +3,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule, MatFormFieldModule, MatInputModule, MatOptionModule, MatSelectModule, MatListModule, MatRadioModule, MatSliderModule, MatCardModule, MatDatepickerModule, MatNativeDateModule, MatProgressBarModule, MatProgressSpinnerModule } from '@angular/material';
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
+import {MatGridListModule} from '@angular/material/grid-list';
 import { HttpClientModule } from '@angular/common/http';
 import { AngularFireModule } from '@angular/fire';  
 import { environment } from '../environments/environment'; 
@@ -18,6 +20,8 @@ import { ChallengesPageComponent } from './challenges/challenges-page/challenges
 import { MessageBoardComponent } from './challenges/message-board/message-board.component';
 import { MessageBoardReplyComponent } from './challenges/message-board/message-board-reply/message-board-reply.component';
 import { AuthGuard } from './auth.guard';
+import { ActivityComponent } from './activity/activity.component';
+
 
 @NgModule({
   declarations: [
@@ -30,7 +34,8 @@ import { AuthGuard } from './auth.guard';
     ProfileComponent,
     ChallengesPageComponent,
     MessageBoardComponent,
-    MessageBoardReplyComponent
+    MessageBoardReplyComponent,
+    ActivityComponent
   ],
   imports: [
     BrowserModule,
@@ -52,6 +57,8 @@ import { AuthGuard } from './auth.guard';
     MatNativeDateModule,
     MatProgressBarModule,
     MatProgressSpinnerModule,
+    MatButtonToggleModule,
+    MatGridListModule,
     HttpClientModule,
   ],
   providers: [AuthGuard],

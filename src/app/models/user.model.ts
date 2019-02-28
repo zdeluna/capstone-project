@@ -1,11 +1,30 @@
 export class User {
     id: string;
-    firstName: string;
-    lastName: string;
     username: string;
     password: string;
+    firstName: string;
+    lastName: string;
     photoURL?: string = "";
     friends?: string[] = [];
+    pending_friends?: string[] = [];
+    challenges?: string[] = [];
+    pending_challenges?: string[] = [];
     location?: string;
     dateOfBirth?: Date;
+    bikeMin?: number = 0;
+    bikeMile?: number = 0;
+    rowerMin?: number = 0;
+    rowerMile?: number = 0;
+    runningMin?: number = 0;
+    runningMile?: number = 0;
+    ellipticalMin?: number = 0;
+    ellipticalMile?: number = 0;
+    bikeMinGoal?: number = 0;
+    bikeMileGoal?: number = 0;
+    rowerMinGoal?: number = 0;
+    rowerStrokeGoal?: number = 0;
+    runningMinGoal?: number = 0;
+    runningMileGoal?: number = 0;
+    ellipticalMinGoal?: number = 0;
+    ellipticalStrideGoal?: number = 0;
   }

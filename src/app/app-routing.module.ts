@@ -7,6 +7,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { ActiveChallengeComponent } from './challenges/active-challenge/active-challenge.component';
 import { ChallengesPageComponent } from './challenges/challenges-page/challenges-page.component';
 import { RegistrationComponent } from './registration/registration.component';
+import { ActivityComponent } from './activity/activity.component';
 import { AuthGuard } from './auth.guard';
 
 const routes: Routes = [
@@ -41,6 +42,11 @@ const routes: Routes = [
   {
     path: 'challenges/:id', 
     component: ActiveChallengeComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'activity', 
+    component: ActivityComponent,
     canActivate: [AuthGuard]
   }
 ];
