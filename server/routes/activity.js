@@ -20,4 +20,6 @@ router.patch(
   controller.updateActivity
 );
 
+router.delete("/:id", authenticateUser, controller.deleteActivity);
+
 module.exports = router;
