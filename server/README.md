@@ -388,7 +388,7 @@ Response: 200 OK
 
 #### Parameters
 
-conversationID - The id of the conversation
+conversationID - The id of the conversation  
 messageID = The id of the message
 
 Response 200 OK
