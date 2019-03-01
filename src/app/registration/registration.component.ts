@@ -9,6 +9,8 @@ import { User } from '../models/user.model';
 import { AuthService } from '../services/auth.service';
 import { Router} from '@angular/router';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
+import { UserService } from '../services/user.service';
+//import {MatProgressSpinnerModule} from '@angular/material';
 
 
 @Component({
@@ -21,6 +23,7 @@ export class RegistrationComponent implements OnInit {
 
   constructor (
     private authService: AuthService,
+    private userService: UserService,
     private router: Router,
     private fb: FormBuilder,
   ) { }
@@ -29,9 +32,13 @@ export class RegistrationComponent implements OnInit {
   user: User = new User;
   shouldLogIn: boolean = false;
   submitted: boolean = false;
+  error: boolean = false;
 
   ngOnInit() {
-    this.authService.loadRememberedUser();
+    // this.authService.loadRememberedUser(); //checks for prior session
+    if(this.authService.isLoggedIn()) {
+      this.router.navigate(['/home'])
+    }
     this.registrationForm = this.fb.group({
       email: ['', [
         Validators.required,
@@ -41,7 +48,7 @@ export class RegistrationComponent implements OnInit {
         Validators.required,
         Validators.minLength(6)
       ]],
-      shouldLogIn: [false, [
+      shouldLogIn: [true, [
         Validators.requiredTrue
       ]]
     });
@@ -60,24 +67,46 @@ export class RegistrationComponent implements OnInit {
   //submits signup form 
   manualRegistration() {
     this.submitted = true; //disabled signup btn's
-    this.authService.setRememberMe(true); //??will remember user
     
-    //fill user object based on form controls and remember me
-    this.user.username = this.registrationForm.value.email;
-    this.user.password = this.registrationForm.value.password;
+    //fill user service object with what user 
+    //typed into form
+    this.userService.setUserDetails(this.registrationForm);
     this.shouldLogIn =  this.registrationForm.value.shouldLogIn;
     
-    this.authService.signup(this.user)
+    //calls api/signup
+    this.authService.signup()
     .subscribe(
       data => {
         console.log('Signup success', data.user._id);
-        if(this.shouldLogIn)
-          this.authService.login(this.user); 
+        //if user chose to log in directly after signup
+        if(this.shouldLogIn) {
+          this.authService.login()
+            .subscribe( //calls api/login
+              data => {
+                this.authService.setRememberMe(true); 
+                this.authService.userLoggedIn(data); //routes to home
+              },
+              //error logging in automatically after signing up 
+              //if this happens probably something 
+              //wrong with server at  api/login
+              //TODO: bring user to an error page
+              error => {
+                console.log('Error on login! Weird!!!', error);
+                // this.error=true;
+                // this.submitted =false;
+              }
+            );
+          }
+        //else user chose to login manually
+        //so route to login page
         this.router.navigate(['/login']);
       }, 
-
-      //TODO: show errors on screen instead of console
-      error => console.log('Error on signup!', error)
+      //error registring user, prob email alrady used
+      error => { 
+        console.log('Error on signup!', error)
+        this.error = true;
+        this.submitted = false;
+      }
     );
   };
 

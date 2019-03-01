@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatButtonModule, MatFormFieldModule, MatInputModule, MatOptionModule, MatSelectModule, MatListModule, MatRadioModule, MatSliderModule, MatCardModule, MatDatepickerModule, MatNativeDateModule, MatProgressBarModule } from '@angular/material';
+import { MatButtonModule, MatFormFieldModule, MatInputModule, MatOptionModule, MatSelectModule, MatListModule, MatRadioModule, MatSliderModule, MatCardModule, MatDatepickerModule, MatNativeDateModule, MatProgressBarModule, MatProgressSpinnerModule } from '@angular/material';
 import { HttpClientModule } from '@angular/common/http';
 import { AngularFireModule } from '@angular/fire';  
 import { environment } from '../environments/environment'; 
@@ -19,6 +19,7 @@ import { MessageBoardComponent } from './challenges/message-board/message-board.
 import { MessageBoardReplyComponent } from './challenges/message-board/message-board-reply/message-board-reply.component';
 import { CompletedChallengeComponent } from './challenges/completed-challenge/completed-challenge.component';
 
+import { AuthGuard } from './auth.guard';
 
 @NgModule({
   declarations: [
@@ -53,9 +54,10 @@ import { CompletedChallengeComponent } from './challenges/completed-challenge/co
     MatDatepickerModule,
     MatNativeDateModule,
     MatProgressBarModule,
-    HttpClientModule
+    MatProgressSpinnerModule,
+    HttpClientModule,
   ],
-  providers: [],
+  providers: [AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -6,7 +6,6 @@
 
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { User } from '../models/user.model';
 import { UserService } from './user.service';
 import { Router } from '@angular/router';
 import { DatabaseService } from './database.service';
@@ -24,43 +23,31 @@ export class AuthService {
     private _http: HttpClient,
     private userService: UserService,
     private router: Router,
-    private dbService: DatabaseService
+    private dbService: DatabaseService,
     ) { }
 
+    //not sure these are needed
+    //I think setting to false is what to do
   localStatus: string = localStorage.getItem('loggedIn');
   loggedIn: boolean = JSON.parse(this.localStatus || 'false');
   rememberMe: boolean = false;
 
-  //signs user up if no user account by posting 
-  //to api/signup. Subscriber logic in registration component.
-  signup(user: User) {
-    return this._http.post<any>(this.signup_url, user);
+  //signs user up if no account by posting to api/signup
+  //subscriber logic in registration component
+  signup() {
+    return this._http.post<any>(
+      this.signup_url, 
+      this.userService.user
+      );
   }
 
-  //logs user into application by posting to /api/login.
-  //when data returns, route to home or log error. If
-  //user hits remember me checkbox then data will be stored 
-  //to browser local storage
-  login(user: User) {
-    return this._http.post<any>(this.login_url, user)
-    .subscribe (
-      data => {
-        //this logic is here and not in login.component
-        //because logging in directly did not work
-        //from registration that way, does with it here
-        console.log('Login success', data);
-        this.dbService.setToken(data['token']);
-        this.userService.setCurrentUser(data['user_id']);
-        this.setLoggedIn(true); 
-        if(this.rememberMe) {
-          localStorage.setItem('loggedIn', 
-          JSON.stringify({ val: 'true', id: data['user_id']}));
-        }
-        this.router.navigate(['/home']);
-      },
-       //TODO: show errors on screen instead of console
-      error => console.log('Error on login!', error)
-    );
+  //logs user into application by posting to /api/login
+  //subscriber logic in registration and login component
+  login() {
+    console.log('loggin in!');
+    return this._http.post<any>(
+      this.login_url, this.userService.user
+      );
   }
 
   //sets user logged in status
@@ -69,14 +56,16 @@ export class AuthService {
   }
 
   //returns if user is logged in
+  //cuurently checking in local storage 
+  //if nothing there then return local variable
   isLoggedIn(): boolean {
     let localStatus: string = JSON.parse(
       localStorage.getItem('loggedIn')
     );
     let userStatus: boolean;
-    try { //cannot get val of null
+    try { 
       userStatus = JSON.parse(localStatus).val;
-    }
+    } //if localstatus null
     catch {
       userStatus = this.loggedIn;
     }
@@ -86,12 +75,22 @@ export class AuthService {
   //if user hit remember me, sets current user
   //and goes to home page skipping login
   loadRememberedUser(): void {
+    console.log('Checking to see if user was remembered!!');
+    
     let remembered: string = localStorage.getItem('loggedIn');
     if(this.isLoggedIn() && remembered) { 
-      this.userService.setCurrentUser(
-        JSON.parse(remembered).id
-      );
-      this.router.navigate(['/home']);
+      this.dbService.getUser(JSON.parse(remembered).id)
+      .subscribe(
+        data => {
+          //here you would fill the user with more details
+          this.userService.user.username = data['username'];
+        },
+        error => {
+          console.log(error);
+          this.logout();
+          this.router.navigate(['/login']);
+        }
+      )
     }
   }
 
@@ -107,5 +106,21 @@ export class AuthService {
     console.log('logging out!');
     this.setLoggedIn(false);
     localStorage.clear();
+  }
+
+  //gets app ready after user logs in
+  userLoggedIn(data: any) {
+    console.log('Login success', data);
+
+    this.dbService.setToken(data['token']);
+    this.userService.setCurrentUserId(data['user_id']);
+    this.setLoggedIn(true); 
+
+    if(this.rememberMe) {
+      localStorage.setItem('loggedIn', 
+      JSON.stringify({ val: 'true', id: data['user_id']}));
+    }
+
+    this.router.navigate(['/home']);
   }
 }

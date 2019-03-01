@@ -59,7 +59,7 @@ export class ActiveChallengeComponent implements OnInit {
       })
     })
     this.dbService.getCurrentUser().subscribe(res => {
-      this.user.id = this.userService.getCurrentUser()
+      this.user.id = this.userService.getCurrentUserId()
       this.user.username = res['username']
       this.user.firstName = res['first_name']
       this.user.lastName = res['last_name']
