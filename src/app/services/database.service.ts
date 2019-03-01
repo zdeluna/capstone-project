@@ -3,6 +3,7 @@ import { Challenge } from '../models/challenge.model';
 import { User } from '../models/user.model';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { UserService } from './user.service';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -34,6 +35,18 @@ export class DatabaseService {
       start_date: `0${(challenge.startDate.getMonth() + 1)}-${challenge.startDate.getDate()}-${challenge.startDate.getFullYear()}`
     }
     return this.http.post(`${this.uri}/challenges`, c, this.httpOptions)
+  }
+
+  inviteParticipants(id: string, participants: any[]): Observable<any> {
+    console.log(participants)
+    if (participants.length === 1) {
+      return this.http.post(`${this.uri}/challenges/${id}/participants/${participants.pop()}`, this.httpOptions)
+    } else {
+      this.http.post(`${this.uri}/challenges/${id}/participants/${participants.pop()}`, this.httpOptions)
+    }
+    if(participants.length > 0) {
+      this.inviteParticipants(id, participants)
+    }
   }
 
   //ids: 5c6602291ac2320005d2f15a, 5c65fffc1ac2320005d2f158

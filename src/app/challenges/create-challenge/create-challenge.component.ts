@@ -82,17 +82,17 @@ export class CreateChallengeComponent implements OnInit {
     challenge.measurement = this.form.value.measurement
     challenge.duration = this.form.value.duration
     challenge.startDate = this.form.value.startDate
-    challenge.invitees = this.form.value.invitees
     this.dbService.addChallenge(challenge).subscribe(res => {
+      let participants = ['5c79ac775891120006658fee', '5c79ac955891120006658fef']
       console.log(res)
-      this.router.navigate([`/challenges/${res['_id']}`])
+      if(this.form.value.invitees.length > 0) {
+        this.dbService.inviteParticipants(res['_id'], participants).subscribe(() => {
+          this.router.navigate([`/challenges/${res['_id']}`])
+        })
+      } else {
+        this.router.navigate([`/challenges/${res['_id']}`])
+      }
     })
-    /* TODO:
-      * call formIsValid() (security for presentation-level attack)
-      ** if valid, call addChallenge from dbService
-      *** redirect to challenge page
-      ** if not valid, do nothing (should only happen under attack)
-    */
   }
   validMeasurementForActivity(activity: String, measurement: []): Boolean {
     let valid = false
@@ -164,8 +164,20 @@ export class CreateChallengeComponent implements OnInit {
 
   myFilter = (d: Date): boolean => {
     const day = d.getDay();
-    // Prevent Saturday and Sunday from being selected.
-    return day !== 0 && day !== 6;
+    const date = d.getDate();
+    
+    switch(this.form.value.duration) {
+      case('weekend'):
+        return day === 6
+      case('work-week'):
+      case('full-week'):
+        return day === 1
+      case('month'):
+      case('year'):
+        return date === 1
+      default:
+        return true
+    }
   }
 
   clear(): void {
