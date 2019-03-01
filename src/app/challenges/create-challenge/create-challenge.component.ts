@@ -128,8 +128,6 @@ export class CreateChallengeComponent implements OnInit {
     } else {
       return true
     }
-
-    return false
   }
 
   submitSearch() {
