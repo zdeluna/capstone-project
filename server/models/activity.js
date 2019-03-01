@@ -2,6 +2,11 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 let Activity = new Schema({
+  user_id: {
+    type: Schema.Types.ObjectId,
+    ref: "User"
+  },
+
   // User can submit a description of the activity such as "Biked around the lkae"
   description: {
     type: String,

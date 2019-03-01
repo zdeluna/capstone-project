@@ -394,3 +394,25 @@ messageID = The id of the message
 Response 200 OK
 
 ---
+
+## Post a new activity
+
+### POST /activities/
+
+#### Body Parameters:
+
+description \*optional - A description of the activity
+
+type - The type of activity i.e. BiKING, RUNNING
+
+date - The date of the activity
+
+measurement - The unit of measurement to measure activity such as steps or time
+
+units - The units the activity is measured in
+
+value: The amount of activity
+
+Reponse: 200 OK
+
+##

@@ -39,9 +39,9 @@ exports.getEntityFromDB = async (model, id) => {
  * @returns Promise containing entities
  */
 
-exports.getAllEntitiesFromDB = async model => {
+exports.getAllEntitiesFromDB = async (model, query) => {
   return new Promise((resolve, reject) => {
-    model.find({}, function(error, entities) {
+    model.find(query, function(error, entities) {
       if (error) {
         reject({ statusCode: 422, msg: error.message });
       }

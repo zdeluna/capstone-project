@@ -6,6 +6,8 @@ const validator = require("../controllers/activity.validation");
 const authenticateUser = passport.authenticate("jwt", { session: false });
 const controller = require("../controllers/activity");
 
+router.get("/", authenticateUser, controller.getActivity);
+
 router.post(
   "/",
   authenticateUser,
