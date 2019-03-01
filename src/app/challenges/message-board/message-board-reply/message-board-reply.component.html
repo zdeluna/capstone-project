@@ -9,7 +9,7 @@
         <app-message-board-reply [parent]="post" [post]="reply" [user]="user" [shouldBeGray]="!shouldBeGray"></app-message-board-reply>
       </div>
     </div>
-    <form [formGroup]="formReply" (ngSubmit)="submitReply(post)">
+    <form [formGroup]="formReply" (ngSubmit)="submitReply(post)" [hidden]="challengeIsOver">
       <mat-form-field class="full-width">
         <textarea matInput [placeholder]="getPlaceholder(post.message)" formControlName="message"></textarea>
       </mat-form-field>
