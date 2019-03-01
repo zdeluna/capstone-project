@@ -82,15 +82,13 @@ export class CreateChallengeComponent implements OnInit {
     challenge.measurement = this.form.value.measurement
     challenge.duration = this.form.value.duration
     challenge.startDate = this.form.value.startDate
-    this.dbService.addChallenge(challenge).subscribe(res => {
-      let participants = ['5c79ac775891120006658fee', '5c79ac955891120006658fef']
-      console.log(res)
+    this.dbService.addChallenge(challenge).subscribe(challenge => {
+      let participants = ['5c79ac775891120006658fee', '5c79ac955891120006658fef'] // <---- temp REMOVE THIS
       if(this.form.value.invitees.length > 0) {
-        this.dbService.inviteParticipants(res['_id'], participants).subscribe(() => {
-          this.router.navigate([`/challenges/${res['_id']}`])
-        })
+        this.dbService.inviteParticipants(challenge['_id'], participants)
+        this.router.navigate([`/challenges/${challenge['_id']}`])
       } else {
-        this.router.navigate([`/challenges/${res['_id']}`])
+        this.router.navigate([`/challenges/${challenge['_id']}`])
       }
     })
   }

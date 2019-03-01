@@ -38,7 +38,6 @@ export class DatabaseService {
   }
 
   inviteParticipants(id: string, participants: any[]): Observable<any> {
-    console.log(participants)
     if (participants.length === 1) {
       return this.http.post(`${this.uri}/challenges/${id}/participants/${participants.pop()}`, this.httpOptions)
     } else {
