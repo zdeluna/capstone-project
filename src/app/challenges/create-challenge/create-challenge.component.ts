@@ -36,6 +36,8 @@ export class CreateChallengeComponent implements OnInit {
     }
   ]
 
+  durationMessage: string = ''
+  endDateMessage: string = ''
   search = ''
   noMatch = false
   searchMatches: User[] = []
@@ -116,7 +118,55 @@ export class CreateChallengeComponent implements OnInit {
 
   checkForDuration(): void {
     if(this.form.value.duration.length > 0) {
+      let d = this.form.value.duration
+      switch(d) {
+        case('weekend'):
+          this.durationMessage = 'Must begin on a Saturday'
+          break
+        case ('work-week'):
+          this.durationMessage = 'Must begin on a Monday'
+          break
+        case('full-week'):
+          this.durationMessage = 'Must begin on a Monday'
+          break
+        case('month'):
+          this.durationMessage = 'Must begin on the first of the month'
+          break
+        case('year'):
+          this.durationMessage = 'Must begin on the first of any month'
+          break
+        default:
+        this.durationMessage = ''
+      }
+
       this.form.controls.startDate.enable()
+    }
+  }
+
+  displayEndDate() {
+    if(this.form.value.startDate) {
+      let d = new Date(this.form.value.startDate)
+      let endDate: Date
+      switch(this.form.value.duration) {
+        case('weekend'):
+          endDate = new Date(`${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate() + 2}`)
+          break
+        case('work-week'):
+          endDate = new Date(`${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate() + 5}`)
+          break
+        case('full-week'):
+          endDate = new Date(`${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate() + 7}`)
+          break
+        case('month'):
+          endDate = new Date(`${d.getFullYear()}-${d.getMonth() + 2}-${d.getDate()}`)
+          break
+        case('year'):
+          endDate = new Date(`${d.getFullYear() + 1}-${d.getMonth() + 1}-${d.getDate()}`)
+          break
+        default:
+          endDate = new Date()
+      }
+      this.endDateMessage = `Ends on ${endDate.getMonth() + 1}/${endDate.getDate()}/${endDate.getFullYear()}`
     }
   }
 
