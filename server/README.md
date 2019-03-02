@@ -441,7 +441,7 @@ Reponse: 200 OK
 
 ## Get an activity
 
-### GET /activities/
+### GET /activities/:id
 
 #### Parameters
 
@@ -467,7 +467,7 @@ Example:
 
 ## Get all activities
 
-### GET /activities/:id
+### GET /activities/
 
 Response: 200 OK
 
