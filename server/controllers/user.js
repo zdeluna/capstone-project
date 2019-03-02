@@ -227,7 +227,6 @@ exports.deleteFriendship = async (req, res) => {
 
 exports.getAllUsers = async (req, res) => {
   try {
-    console.log("in function");
     let users = await getAllEntitiesFromDB(userModel);
 
     // Change the friendship foreign key id to the actual user id of the pending friendship

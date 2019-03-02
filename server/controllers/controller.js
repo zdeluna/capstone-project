@@ -170,7 +170,7 @@ exports.sendErrorResponse = (res, error) => {
 
 exports.checkIfUserIsAuthorized = async (id_of_user_to_update, req) => {
   return new Promise((resolve, reject) => {
-    if (id_of_user_to_update !== req.user._id) {
+    if (id_of_user_to_update != req.user._id) {
       reject({ statusCode: 403, msg: "USER_IS_NOT_AUTHORIZED" });
     }
     resolve();

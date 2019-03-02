@@ -413,6 +413,78 @@ units - The units the activity is measured in
 
 value: The amount of activity
 
+Response: 200 OK
+
+## Update an activity
+
+### PATCH /activities/:id
+
+#### Parameters
+
+id - The id of the activity you wish to update
+
+#### Body Parameters:
+
+description - A description of the activity
+
+type - The type of activity i.e. BiKING, RUNNING
+
+date - The date of the activity
+
+measurement - The unit of measurement to measure activity such as steps or time
+
+units - The units the activity is measured in
+
+value: The amount of activity
+
 Reponse: 200 OK
 
-##
+## Get an activity
+
+### GET /activities/:id
+
+#### Parameters
+
+id - The id of the activity you wish to update
+
+Response: 200 OK
+
+Example:
+
+```
+{
+    "_id": "5c7ac9654890ce1d5fe1c690",
+    "description": "Running around the lake",
+    "type": "RUNNING",
+    "date": "2019-03-01T06:00:00.000Z",
+    "measurement": "DISTANCE",
+    "units": "kilometers",
+    "value": "10",
+    "user_id": "5c7ac9324890ce1d5fe1c68f",
+    "__v": 0
+}
+```
+
+## Get all activities
+
+### GET /activities/:id
+
+Response: 200 OK
+
+## Make a query of activities
+
+### GET /activities/?user_id={{userID}}&type={{type}}&start_date={start_date}&end_date={end_date}
+
+#### Query Parameters
+
+user_id - The user id of the actitivies
+
+type - The type of activity i.e. BiKING, RUNNING
+
+start_date - the beginning date in YYYY-MM-DD
+
+end_date - the end date in YYYY-MM-DD
+
+start_date and end_date are inclusive, all activities between those two dates will be returned
+
+Response: 200 OK

@@ -36,6 +36,10 @@ exports.updateActivity = async (req, res) => {
       $set: matchedData(req, { includeOptionals: false })
     };
 
+    // Check to make sure user is only updating their own activity
+    let activity = await getEntityFromDB(activityModel, activityID);
+    await checkIfUserIsAuthorized(activity.user_id, req);
+
     let updatedActivity = await updateEntityFromDB(
       activityModel,
       activityID,
@@ -52,7 +56,9 @@ exports.deleteActivity = async (req, res) => {
     let activityID = req.params.id;
     let userID = req.user._id;
 
-    await getEntityFromDB(activityModel, activityID);
+    // Check to make sure user is only deleting their own activity
+    let activity = await getEntityFromDB(activityModel, activityID);
+    await checkIfUserIsAuthorized(activity.user_id, req);
 
     await deleteEntityFromDB(activityModel, activityID);
     res.status(204).end();
@@ -61,7 +67,7 @@ exports.deleteActivity = async (req, res) => {
   }
 };
 
-exports.getActivity = async (req, res) => {
+exports.getActivities = async (req, res) => {
   try {
     let query = {
       user_id: req.query.user_id,
@@ -80,6 +86,16 @@ exports.getActivity = async (req, res) => {
     }
     let activities = await getAllEntitiesFromDB(activityModel, query);
     res.status(200).send(activities);
+  } catch (error) {
+    sendErrorResponse(res, error);
+  }
+};
+
+exports.getActivity = async (req, res) => {
+  try {
+    let activityID = req.params.id;
+    let activity = await getEntityFromDB(activityModel, activityID);
+    res.status(200).send(activity);
   } catch (error) {
     sendErrorResponse(res, error);
   }
