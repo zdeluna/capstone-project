@@ -39,9 +39,9 @@ exports.getEntityFromDB = async (model, id) => {
  * @returns Promise containing entities
  */
 
-exports.getAllEntitiesFromDB = async model => {
+exports.getAllEntitiesFromDB = async (model, query) => {
   return new Promise((resolve, reject) => {
-    model.find({}, function(error, entities) {
+    model.find(query, function(error, entities) {
       if (error) {
         reject({ statusCode: 422, msg: error.message });
       }
@@ -170,7 +170,7 @@ exports.sendErrorResponse = (res, error) => {
 
 exports.checkIfUserIsAuthorized = async (id_of_user_to_update, req) => {
   return new Promise((resolve, reject) => {
-    if (id_of_user_to_update !== req.user._id) {
+    if (id_of_user_to_update != req.user._id) {
       reject({ statusCode: 403, msg: "USER_IS_NOT_AUTHORIZED" });
     }
     resolve();
