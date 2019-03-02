@@ -293,7 +293,7 @@ activity - The total amount of the participant in the challenge
 
 id - The id of the challenge
 
-Response 204 No Content
+Response: 204 No Content
 
 ---
 
@@ -315,7 +315,7 @@ content - message content
 
 id - The id of the conversation
 
-Response 200 OK
+Response: 200 OK
 
 Example:
 
@@ -391,7 +391,7 @@ Response: 200 OK
 conversationID - The id of the conversation  
 messageID = The id of the message
 
-Response 200 OK
+Response: 200 OK
 
 ---
 
@@ -441,7 +441,7 @@ Reponse: 200 OK
 
 ## Get an activity
 
-### GET /activities/:id
+### GET /activities/
 
 #### Parameters
 
