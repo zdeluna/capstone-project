@@ -488,3 +488,47 @@ end_date - the end date in YYYY-MM-DD
 start_date and end_date are inclusive, all activities between those two dates will be returned
 
 Response: 200 OK
+
+const formatMessageContentsinChallenge = async challenge => {
+try {
+let messageArray = [];
+
+    challenge = JSON.parse(JSON.stringify(challenge));
+
+    // Show the content of the messages instead of the reference to the message
+    for (let i = 0; i < challenge.messages.length; i++) {
+      console.log(i);
+      let message = await getEntityFromDB(messageModel, challenge.messages[i]);
+
+      messageArray[i] = {
+        _id: message._id,
+        sender: message.sender,
+        content: message.content,
+        createdAt: message.createdAt,
+        updatedAt: message.updatedAt
+      };
+    }
+
+    console.log("message array: " + messageArray);
+
+    for (let i = 0; i < challenge.pending_participants.length; i++) {
+      let challengeRequest = await getEntityFromDB(
+        challengeRequestModel,
+        challenge.pending_participants[i]
+      );
+      pending_participants[i] = {
+        user: challengeRequest.recipient,
+        status: challengeRequest.status
+      };
+    }
+    challenge.pending_participants = pending_participants;
+
+    challenge.messages = messageArray;
+    console.log(challenge);
+
+    return challenge;
+
+} catch (error) {
+return error;
+}
+};

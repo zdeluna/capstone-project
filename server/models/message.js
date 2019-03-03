@@ -10,8 +10,16 @@ let messageSchema = new Schema(
 
     content: {
       type: String
-    }
+    },
+
+    replies: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Message"
+      }
+    ]
   },
+
   {
     timestamps: true
   }

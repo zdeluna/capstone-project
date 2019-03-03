@@ -1,5 +1,6 @@
 const challengeModel = require("../models/challenge.js");
 const challengeRequestModel = require("../models/challengeRequest.js");
+const messageModel = require("../models/message.js");
 const userModel = require("../models/user.js");
 var ObjectId = require("mongodb").ObjectId;
 const { matchedData } = require("express-validator/filter");
@@ -42,6 +43,49 @@ const checkIfUserIsParticipantOfChallenge = async (challenge_id, user_id) => {
   });
 };
 
+const formatContentsinChallenge = async challenge => {
+  try {
+    let messageArray = [];
+
+    challenge = JSON.parse(JSON.stringify(challenge));
+
+    // Show the content of the messages instead of the reference to the message
+    for (let i = 0; i < challenge.messages.length; i++) {
+      let message = await getEntityFromDB(messageModel, challenge.messages[i]);
+
+      messageArray[i] = {
+        _id: message._id,
+        sender: message.sender,
+        content: message.content,
+        replies: message.replies,
+        createdAt: message.createdAt,
+        updatedAt: message.updatedAt
+      };
+    }
+
+    console.log("message array: " + messageArray);
+    /*
+    for (let i = 0; i < challenge.pending_participants.length; i++) {
+      let challengeRequest = await getEntityFromDB(
+        challengeRequestModel,
+        challenge.pending_participants[i]
+      );
+      pending_participants[i] = {
+        user: challengeRequest.recipient,
+        status: challengeRequest.status
+      };
+    }
+    challenge.pending_participants = pending_participants;
+*/
+    challenge.messages = messageArray;
+    console.log(challenge);
+
+    return challenge;
+  } catch (error) {
+    return error;
+  }
+};
+
 /**
  * Update the activity level of a participant in a challenge
  * @param {string} challengeID
@@ -75,11 +119,13 @@ const updateActivityInDB = async (challengeID, userID, total) => {
 
 const createMessageInDB = async (challengeID, data, userID) => {
   try {
+    let messageFields = { sender: userID, content: data.content };
+    let message = await createEntityInDB(messageModel, messageFields);
     await challengeModel.findOneAndUpdate(
       {
         _id: challengeID
       },
-      { $push: { messages: { content: data.content, sender: userID } } }
+      { $push: { messages: message._id } }
     );
   } catch (error) {
     return error;
@@ -196,7 +242,9 @@ exports.createChallenge = async (req, res) => {
     validatedFields.participants = participants;
 
     let challenge = await createEntityInDB(challengeModel, validatedFields);
-    res.status(200).json(challenge);
+    let formattedChallenge = await formatContentsinChallenge(challenge);
+
+    res.status(200).json(formattedChallenge);
   } catch (error) {
     sendErrorResponse(res, error);
   }
@@ -241,23 +289,11 @@ exports.getChallenge = async (req, res) => {
     /* Convert the mongodb document to a javascript object to display information about the challenge request instead of the challenge request object id number
 	https://stackoverflow.com/questions/14768132/add-a-new-attribute-to-existing-json-object-in-node-js/29131856
   */
-    var challenge = JSON.parse(
-      JSON.stringify(await getEntityFromDB(challengeModel, id))
-    );
+    let challenge = await getEntityFromDB(challengeModel, id);
 
-    for (let i = 0; i < challenge.pending_participants.length; i++) {
-      let challengeRequest = await getEntityFromDB(
-        challengeRequestModel,
-        challenge.pending_participants[i]
-      );
-      pending_participants[i] = {
-        user: challengeRequest.recipient,
-        status: challengeRequest.status
-      };
-    }
-    challenge.pending_participants = pending_participants;
+    let formattedChallenge = await formatContentsinChallenge(challenge);
 
-    res.status(200).json(challenge);
+    res.status(200).json(formattedChallenge);
   } catch (error) {
     sendErrorResponse(res, error);
   }
@@ -273,7 +309,9 @@ exports.createMessage = async (req, res) => {
 
     // Check if user is a participant in the challenge
     let validatedFields = matchedData(req, { includeOptionals: false });
-    createMessageInDB(challengeID, validatedFields, userID);
+
+    await createMessageInDB(challengeID, validatedFields, userID);
+
     res.status(200).end();
   } catch (error) {
     sendErrorResponse(res, error);
@@ -297,7 +335,9 @@ exports.updateChallenge = async (req, res) => {
       challengeID,
       validatedFields
     );
-    res.status(200).json(updatedChallenge);
+
+    let formattedChallenge = await formatContentsinChallenge(updatedChallenge);
+    res.status(200).json(formattedChallenge);
   } catch (error) {
     sendErrorResponse(res, error);
   }

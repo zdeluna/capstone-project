@@ -40,6 +40,7 @@ exports.createMessage = [
   check("content")
     .exists()
     .withMessage("MESSAGE_CONTENT_BODY_PARAMETER_MUST_NOT_BE_EMPTY"),
+  check("reply").optional(),
   (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {

@@ -29,7 +29,12 @@ let challengeSchema = new Schema({
     }
   ],
 
-  messages: [{ sender: Schema.Types.ObjectId, content: String }],
+  messages: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Message"
+    }
+  ],
 
   duration: {
     type: String
