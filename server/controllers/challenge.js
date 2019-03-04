@@ -10,7 +10,9 @@ const {
   createEntityInDB,
   deleteEntityFromDB,
   updateEntityFromDB,
+  removeFromFieldArray,
   sendErrorResponse,
+  checkIfUserIsSenderOfMessage,
   checkIfUserIsAuthorized
 } = require("./controller.js");
 
@@ -43,9 +45,16 @@ const checkIfUserIsParticipantOfChallenge = async (challenge_id, user_id) => {
   });
 };
 
+/**
+ * Format the message field of challenge to list message fields and pending participants fields
+ * @param {Object} challenge
+ * @return Challenge object
+ */
+
 const formatContentsinChallenge = async challenge => {
   try {
     let messageArray = [];
+    let pendingParticipantsArray = [];
 
     challenge = JSON.parse(JSON.stringify(challenge));
 
@@ -58,27 +67,25 @@ const formatContentsinChallenge = async challenge => {
         sender: message.sender,
         content: message.content,
         replies: message.replies,
+        reply_to: message.reply_to,
         createdAt: message.createdAt,
         updatedAt: message.updatedAt
       };
     }
 
-    console.log("message array: " + messageArray);
-    /*
     for (let i = 0; i < challenge.pending_participants.length; i++) {
       let challengeRequest = await getEntityFromDB(
         challengeRequestModel,
         challenge.pending_participants[i]
       );
-      pending_participants[i] = {
+      pendingParticipantsArray[i] = {
         user: challengeRequest.recipient,
         status: challengeRequest.status
       };
     }
-    challenge.pending_participants = pending_participants;
-*/
+    challenge.pending_participants = pendingParticipantsArray;
+
     challenge.messages = messageArray;
-    console.log(challenge);
 
     return challenge;
   } catch (error) {
@@ -119,7 +126,11 @@ const updateActivityInDB = async (challengeID, userID, total) => {
 
 const createMessageInDB = async (challengeID, data, userID) => {
   try {
-    let messageFields = { sender: userID, content: data.content };
+    let messageFields = {
+      sender: userID,
+      content: data.content,
+      reply_to: data.reply
+    };
     let message = await createEntityInDB(messageModel, messageFields);
     await challengeModel.findOneAndUpdate(
       {
@@ -127,6 +138,16 @@ const createMessageInDB = async (challengeID, data, userID) => {
       },
       { $push: { messages: message._id } }
     );
+
+    // if the messge is a reply to another message, add the message id to the replies field of the other message
+    if (data.reply) {
+      await messageModel.findOneAndUpdate(
+        {
+          _id: data.reply
+        },
+        { $push: { replies: message._id } }
+      );
+    }
   } catch (error) {
     return error;
   }
@@ -309,10 +330,12 @@ exports.createMessage = async (req, res) => {
 
     // Check if user is a participant in the challenge
     let validatedFields = matchedData(req, { includeOptionals: false });
-
     await createMessageInDB(challengeID, validatedFields, userID);
+    let challenge = await getEntityFromDB(challengeModel, challengeID);
 
-    res.status(200).end();
+    let formattedChallenge = await formatContentsinChallenge(challenge);
+
+    res.status(200).json(formattedChallenge);
   } catch (error) {
     sendErrorResponse(res, error);
   }
@@ -343,29 +366,6 @@ exports.updateChallenge = async (req, res) => {
   }
 };
 
-exports.updateActivity = async (req, res) => {
-  try {
-    let challengeID = req.params.challengeID;
-    let participantID = req.params.participantID;
-
-    await checkIfUserIsAuthorized(participantID, req);
-
-    // Use the matched data function of validator to return data that was validated thru express-validaotr. Optional data will be included
-    let validatedFields = {
-      $set: matchedData(req, { includeOptionals: false })
-    };
-
-    let updatedChallenge = await updateActivityInDB(
-      challengeID,
-      participantID,
-      validatedFields.total
-    );
-    res.status(200).json(updatedChallenge);
-  } catch (error) {
-    sendErrorResponse(res, error);
-  }
-};
-
 exports.deleteChallenge = async (req, res) => {
   try {
     let challengeID = req.params.id;
@@ -377,6 +377,46 @@ exports.deleteChallenge = async (req, res) => {
     await getEntityFromDB(challengeModel, challengeID);
 
     await deleteEntityFromDB(challengeModel, challengeID);
+    res.status(204).end();
+  } catch (error) {
+    sendErrorResponse(res, error);
+  }
+};
+
+exports.deleteMessage = async (req, res) => {
+  try {
+    let challengeID = req.params.challengeID;
+    let messageID = req.params.messageID;
+    let userID = req.user._id;
+
+    // Only allow participant of challenge to delete the message
+    //await checkIfUserIsParticipantOfChallenge(challengeID, userID);
+
+    // Check to make sure user is owner of message
+    let message = await getEntityFromDB(messageModel, messageID);
+
+    await checkIfUserIsSenderOfMessage(message._id, userID);
+
+    // Remove the message id from the messages of the challenge field
+    await removeFromFieldArray(
+      challengeModel,
+      "messages",
+      challengeID,
+      messageID
+    );
+
+    // If the message was a reply to any message remove that instance off the parent message
+    if (message.reply_to) {
+      await removeFromFieldArray(
+        messageModel,
+        "replies",
+        message.reply_to,
+        message._id
+      );
+    }
+
+    await deleteEntityFromDB(messageModel, messageID);
+
     res.status(204).end();
   } catch (error) {
     sendErrorResponse(res, error);

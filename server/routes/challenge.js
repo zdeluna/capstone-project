@@ -12,11 +12,10 @@ router.post(
   controller.addParticipant
 );
 
-router.patch(
-  "/:challengeID/participants/:participantID",
+router.delete(
+  "/:challengeID/messages/:messageID",
   authenticateUser,
-  validator.updateActivity,
-  controller.updateActivity
+  controller.deleteMessage
 );
 
 router.post(

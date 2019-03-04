@@ -249,6 +249,8 @@ id - The id of the challenge
 
 content - The content of the message
 
+reply \*optional - The id of the message the user is replying to
+
 Requires a valid token of a user that is a participant of the challenge
 
 ## Update a challenge
@@ -270,20 +272,6 @@ activity - The type of activity
 measurement - The unit of measurement to measure activity
 
 duration - The number of days of the challenge
-
-## Update the activity total of a participant
-
-### PATCH /challenges/:challengeID/participants/:participantID
-
-#### Parameters:
-
-challengeID - The id of the challenge
-
-participantID - The id of the participant
-
-#### Body Parameters: Required
-
-activity - The total amount of the participant in the challenge
 
 ## Delete a challenge
 
@@ -488,47 +476,3 @@ end_date - the end date in YYYY-MM-DD
 start_date and end_date are inclusive, all activities between those two dates will be returned
 
 Response: 200 OK
-
-const formatMessageContentsinChallenge = async challenge => {
-try {
-let messageArray = [];
-
-    challenge = JSON.parse(JSON.stringify(challenge));
-
-    // Show the content of the messages instead of the reference to the message
-    for (let i = 0; i < challenge.messages.length; i++) {
-      console.log(i);
-      let message = await getEntityFromDB(messageModel, challenge.messages[i]);
-
-      messageArray[i] = {
-        _id: message._id,
-        sender: message.sender,
-        content: message.content,
-        createdAt: message.createdAt,
-        updatedAt: message.updatedAt
-      };
-    }
-
-    console.log("message array: " + messageArray);
-
-    for (let i = 0; i < challenge.pending_participants.length; i++) {
-      let challengeRequest = await getEntityFromDB(
-        challengeRequestModel,
-        challenge.pending_participants[i]
-      );
-      pending_participants[i] = {
-        user: challengeRequest.recipient,
-        status: challengeRequest.status
-      };
-    }
-    challenge.pending_participants = pending_participants;
-
-    challenge.messages = messageArray;
-    console.log(challenge);
-
-    return challenge;
-
-} catch (error) {
-return error;
-}
-};

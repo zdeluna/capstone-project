@@ -17,7 +17,12 @@ let messageSchema = new Schema(
         type: Schema.Types.ObjectId,
         ref: "Message"
       }
-    ]
+    ],
+
+    reply_to: {
+      type: Schema.Types.ObjectId,
+      ref: "Message"
+    }
   },
 
   {
