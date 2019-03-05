@@ -182,29 +182,41 @@ Example:
 ```
 {
     "pending_participants": [],
-    "_id": "5c697086cc4db848f636433a",
+    "messages": [
+        {
+            "_id": "5c7db17cf776bf3188323755",
+            "sender": "5c7db158f776bf3188323751",
+            "content": "How are you user 2?",
+            "replies": [
+                "5c7db183f776bf3188323756"
+            ],
+            "createdAt": "2019-03-04T23:15:08.927Z",
+            "updatedAt": "2019-03-04T23:15:15.262Z"
+        },
+        {
+            "_id": "5c7db183f776bf3188323756",
+            "sender": "5c7db01f5ab8f33131af14f0",
+            "content": "Hi, from user 2",
+            "replies": [],
+            "reply_to": "5c7db17cf776bf3188323755",
+            "createdAt": "2019-03-04T23:15:15.145Z",
+            "updatedAt": "2019-03-04T23:15:15.145Z"
+        }
+    ],
+    "_id": "5c7db16ff776bf3188323752",
     "name": "Work Challenge",
-    "start_date": "2019-02-17T05:00:00.000Z",
+    "start_date": "2019-02-17T06:00:00.000Z",
     "activity": "WALK",
     "measurement": "KM",
     "duration": "2",
     "participants": [
         {
-            "_id": "5c697086cc4db848f636433b",
-            "user_id": "5c69704bcc4db848f6364338",
-            "total": 0
+            "_id": "5c7db16ff776bf3188323753",
+            "user_id": "5c7db158f776bf3188323751"
         },
         {
-            "_id": "5c69708fcc4db848f636433c",
-            "user_id": "5c69704ecc4db848f6364339",
-            "total": 0
-        }
-    ],
-    "messages": [
-        {
-            "_id": "5c697098cc4db848f636433d",
-            "content": "I am going to win",
-            "sender": "5c69704bcc4db848f6364338"
+            "_id": "5c7db177f776bf3188323754",
+            "user_id": "5c7db01f5ab8f33131af14f0"
         }
     ],
     "__v": 0
@@ -237,7 +249,7 @@ challengeID - The id of the challenge
 
 participantID - The user id of the invited user
 
-## Write a message on the message board of the challenge
+## Write a message on the message board of a challenge
 
 ### POST /challenges/:id/messages
 
@@ -252,6 +264,18 @@ content - The content of the message
 reply \*optional - The id of the message the user is replying to
 
 Requires a valid token of a user that is a participant of the challenge
+
+# Delete a message on the mesage board of a challenge
+
+### DELETE /challenges/:challengeID/messages/:messageID
+
+#### Parameters:
+
+challengeID - The id of the challenge
+
+messageID - The id of the message
+
+Response: 204 No Content
 
 ## Update a challenge
 

@@ -51,6 +51,21 @@ exports.createMessage = [
   }
 ];
 
+exports.updateMessage = [
+  check("content")
+    .exists()
+    .withMessage("MESSAGE_CONTENT_BODY_PARAMETER_MUST_NOT_BE_EMPTY"),
+  check("reply").optional(),
+  (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(422).json({ errors: errors.array() });
+    } else {
+      return next();
+    }
+  }
+];
+
 exports.updateChallenge = [
   check("name").optional(),
   check("start_date")

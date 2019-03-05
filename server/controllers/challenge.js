@@ -390,7 +390,7 @@ exports.deleteMessage = async (req, res) => {
     let userID = req.user._id;
 
     // Only allow participant of challenge to delete the message
-    //await checkIfUserIsParticipantOfChallenge(challengeID, userID);
+    await checkIfUserIsParticipantOfChallenge(challengeID, userID);
 
     // Check to make sure user is owner of message
     let message = await getEntityFromDB(messageModel, messageID);
@@ -418,6 +418,29 @@ exports.deleteMessage = async (req, res) => {
     await deleteEntityFromDB(messageModel, messageID);
 
     res.status(204).end();
+  } catch (error) {
+    sendErrorResponse(res, error);
+  }
+};
+
+exports.updateMessage = async (req, res) => {
+  try {
+    let messageID = req.params.messageID;
+    let challengeID = req.params.challengeID;
+    let userID = req.user._id;
+    let validatedFields = {
+      $set: matchedData(req, { includeOptionals: false })
+    };
+
+    await checkIfUserIsSenderOfMessage(messageID, userID);
+
+    await updateEntityFromDB(messageModel, messageID, validatedFields);
+    let challenge = await getEntityFromDB(challengeModel, challengeID);
+
+    let formattedChallenge = await formatContentsinChallenge(challenge);
+    res.status(200).json(formattedChallenge);
+
+    res.status(200).json(formattedConversation);
   } catch (error) {
     sendErrorResponse(res, error);
   }

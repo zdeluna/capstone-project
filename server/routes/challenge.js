@@ -18,6 +18,13 @@ router.delete(
   controller.deleteMessage
 );
 
+router.patch(
+  "/:challengeID/messages/:messageID",
+  authenticateUser,
+  validator.updateMessage,
+  controller.updateMessage
+);
+
 router.post(
   "/:id/messages",
   authenticateUser,
