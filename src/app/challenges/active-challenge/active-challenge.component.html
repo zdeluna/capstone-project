@@ -7,12 +7,9 @@
 
 <div class="row">
   <div class="col-12">
-    <mat-card>
+    <mat-card [hidden]="!challengeIsOver">
       <mat-card-content>
-        <h2 *ngIf="challenge.startDate">Duration: {{ challenge.startDate.getMonth() + 1}}/{{ challenge.startDate.getDate() }} - {{ endDate.getMonth() + 1}}/{{ endDate.getDate() }}</h2>
-        <br/>
-        <h5>{{ currentDays }} of {{ totalDays }} Days - {{ totalDays - currentDays }} Remaining!</h5>
-        <mat-progress-bar mode="determinate" [(value)]="progress"></mat-progress-bar>
+        <app-completed-challenge [sortedParticipants]="sortedParticipants"></app-completed-challenge>
       </mat-card-content>
     </mat-card>
   </div>
@@ -22,6 +19,19 @@
   <div class="col-12">
     <mat-card>
       <mat-card-content>
+        <h2 *ngIf="challenge.startDate">Duration: {{ challenge.startDate.getMonth() + 1}}/{{ challenge.startDate.getDate() }} - {{ endDate.getMonth() + 1}}/{{ endDate.getDate() }}</h2>
+        <br [hidden]="challengeIsOver"/>
+        <h5 [hidden]="challengeIsOver">{{ currentDays }} of {{ totalDays }} Days - {{ totalDays - currentDays }} Remaining!</h5>
+        <mat-progress-bar mode="determinate" [(value)]="progress" [hidden]="challengeIsOver"></mat-progress-bar>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-12">
+    <mat-card [hidden]="challengeIsOver">
+      <mat-card-content>
         <h2>Leaderboard</h2>
 
         <table matSort style="width:100%;">
@@ -30,7 +40,6 @@
             <th mat-header-cell> Name </th>
             <th mat-header-cell> Username </th>
             <th mat-header-cell> Total </th>
-            <th mat-header-cell> </th>
           </tr>
         
           <tr *ngFor="let p of sortedParticipants | slice: 0:10; let i = index">
@@ -38,7 +47,6 @@
             <td mat-cell>{{ p.user.firstName }} {{ p.user.lastName }}</td>
             <td mat-cell>{{ p.user.username }}</td>
             <td mat-cell>{{ p.activityTotal }}</td>
-            <td mat-cell style="text-align: right"><button mat-stroked-button> Visit Profile </button></td>
           </tr>
         </table>
       </mat-card-content>
@@ -53,7 +61,7 @@
         <h2>Message Board</h2>
 
         <div class="container">
-          <app-message-board [challenge]="challenge" [user]="user"></app-message-board>
+          <app-message-board [challenge]="challenge" [user]="user" [challengeIsOver]="challengeIsOver"></app-message-board>
         </div>
       </mat-card-content>
     </mat-card>
@@ -70,12 +78,14 @@
             <tr>
               <th mat-header-cell> Name </th>
               <th mat-header-cell> Username </th>
+              <th mat-header-cell> Total </th>
               <th mat-header-cell> </th>
             </tr>
           
             <tr *ngFor="let p of participants">
               <td mat-cell>{{ p.user.firstName }} {{ p.user.lastName }}</td>
               <td mat-cell>{{ p.user.username }}</td>
+              <td mat-cell>{{ p.activityTotal }}</td>
               <td mat-cell style="text-align: right"><button mat-stroked-button> Visit Profile </button></td>
             </tr>
           </table>
