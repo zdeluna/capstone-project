@@ -93,3 +93,11 @@
   margin-bottom: 10px;
   text-align: center;
 }
+
+.mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
+  border-color: #5bc0de !important;
+}
+
+.mat-radio-button.mat-accent .mat-radio-inner-circle{
+  background-color: #5bc0de !important;
+}

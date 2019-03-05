@@ -1,112 +1,156 @@
+<!-- main container for the activity form-->
 <div class='container'>
-  <div class="row justify-content-between">
-    <div class="col-10">
-      <h1>Enter Exercise Session</h1>
+
+  <form [formGroup]='activityForm'>
+
+    <!-- for testing, will take out -->
+    <!-- {{type.value}}
+    {{measurment.value}}
+    {{unit.value}}
+    {{value.value}}
+    {{date.value}}
+    {{activityForm.valid}} -->
+
+   <!-- header -->
+    <div class="row justify-content-between">
+      <div class="col-10">
+        <h1>Enter Exercise Session</h1>
+      </div>
+      <div>
+        <button class="btn btn-info">Back</button>
+      </div>
     </div>
-    <div>
-      <button class="btn btn-info">Back</button>
+    
+    <!--container for sports tiles, hover scrollbar, and heading-->
+    <div class='activity'>
+      <div class="row">
+          <h6>Activity Type:</h6>
+      </div>
+      <div class='row'>
+        <div class="scroll-container col-12">
+          <mat-grid-list cols="2" rowHeight='2:1'> 
+            <mat-grid-tile  
+              *ngFor="let sport of sports" 
+              class='example-item border rounded'
+              colspan='1'> 
+              <mat-button-toggle-group 
+                formControlName='Type' 
+                name = 'sport' 
+                class='btn btn-lg'> 
+                  <mat-button-toggle 
+                    value={{sport.name}} 
+                    (change)="hitSport($event.value)"> 
+                      {{sport.name}}
+                  </mat-button-toggle> 
+              </mat-button-toggle-group> 
+            </mat-grid-tile> 
+          </mat-grid-list>
+        </div>
+      </div>
     </div>
-  </div>
-  
-  <div class='activity'>
-    <div class="row">
-        <h6>Activity Type:</h6>
+
+    <!-- Measurement radio buttons -->
+    <div class='row'>
+      <h6>Type of Measurment:</h6>
+      <div class='btn-group row col-9'>
+        <mat-radio-group
+          formControlName='Measurment'>
+            <mat-radio-button *ngFor='let measurement of measurments' 
+              [value]='measurement' 
+              (change)="hitMeasurement($event.value)" 
+              class="btn btn-lg">
+                {{measurement}}
+            </mat-radio-button>
+        </mat-radio-group>
+      </div>
     </div>
-      <!-- <mat-button-toggle-group> -->
-            <!-- <mat-grid-tile>
-              <mat-button-toggle class='btn btn-lg decision-button-svg'> 
-                  {{sport.name}}
-              </mat-button-toggle> 
-            </mat-grid-tile> -->
-            <mat-grid-list cols="3">
-                <mat-grid-tile
-                    *ngFor="let sport of sports" class='border rounded'>
-                    <mat-button-toggle-group class='btn btn-lg'>
-                      <mat-button-toggle>
-                        {{sport.name}}
-                    </mat-button-toggle>
-                  </mat-button-toggle-group>
-                </mat-grid-tile>
-            </mat-grid-list>
-      <!-- </mat-button-toggle-group> -->
-    <!-- </div> -->
-  </div>
-  <div class='row'>
-    <h6>
-      Type of Measurment:
-    </h6>
-    <div class='row col-9'>
-      <mat-button-toggle-group data-toggle="toggle">
-        <mat-button-toggle class="btn btn-lg">
-            Distance
-        </mat-button-toggle>
-        <mat-button-toggle class="btn btn-lg">
-            Time
-        </mat-button-toggle>
-      </mat-button-toggle-group>
-    </div>
-  </div>
-  <div class='row'>
-    <h6>
-      Units:
-    </h6>
-    <mat-form-field>
-      <mat-select placeholder='Miles/Km'>
-        <!-- <mat-option *ngFor="let food of foods" [value]="food.value">
-          {{food.viewValue}}
-        </mat-option> -->
-        <mat-option value='Miles'> 
-            Miles
-          </mat-option>
-        <mat-option value='Km'> 
-          Km
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-  </div>
-  <div class='row justify-content-between'>
-    <div class='col-6'>
-      <h6 >
-        Value:
+
+    <!-- units dropdown -->
+    <div class='row'>
+      <h6>
+        Units:
       </h6>
-      <mat-form-field class="col-12">
-        <input matInput 
-        placeholder="Number up to one decimal spot ex:10.5" 
-        value="">
-      </mat-form-field>
+      <div class="row">
+        <mat-form-field>
+          <mat-select 
+            placeholder="Miles/Km" 
+            (change)='hitUnit($event.value)'
+            formControlName="Unit">
+              <mat-option 
+                *ngFor='let unit of units' 
+                [value]="unit.type"> 
+                  {{unit.type}}
+              </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
     </div>
-    <div class='col-6'>
-      <h6 >
-        Date:
+
+    <!--value and date container -->
+    <div class='row justify-content-between'>
+
+      <!-- value -->
+      <div class='col-6'>
+        <h6 >
+          Value:
+        </h6>
+        <mat-form-field class="col-12">
+          <input 
+            matInput 
+            placeholder="Number - ex:10.5" 
+            type='number'
+            value=""
+            formControlName='Value'>
+        </mat-form-field>
+      </div>
+
+      <!-- date -->
+      <div class='col-6'>
+        <h6 >
+          Date:
+        </h6>
+        <mat-form-field class='col-12'>
+          <input 
+            matInput 
+            formControlName='Date' 
+            [matDatepicker]="picker" 
+            placeholder="Date ex:2/4/2019">
+            <mat-datepicker-toggle 
+              matSuffix 
+              [for]="picker">
+            </mat-datepicker-toggle>
+        </mat-form-field>
+        <mat-datepicker #picker></mat-datepicker>
+      </div>
+    </div>
+
+    <!-- description text area -->
+    <div class='row'>
+      <h6>
+        Description:
       </h6>
       <mat-form-field class='col-12'>
-        <input matInput [matDatepicker]="picker" placeholder="Ex: 2/19/2019">
-        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-datepicker #picker></mat-datepicker>
+          <textarea 
+            matInput
+            formControlName='Description'
+            cdkTextareaAutosize
+            #autosize="cdkTextareaAutosize"
+            cdkAutosizeMinRows="2"
+            cdkAutosizeMaxRows="5"
+            placeholder='Enter a short description of activity:'
+            (change)=descriptionChange()>
+          </textarea>
       </mat-form-field>
+      <mat-error>
+
+      </mat-error>
     </div>
-  
-  </div>
-  <div class='row'>
-    <h6>
-      Description:
-    </h6>
-    <mat-form-field class='col-12'>
-        <!-- <mat-label>
-          
-        </mat-label> -->
-        <textarea matInput
-                  cdkTextareaAutosize
-                  #autosize="cdkTextareaAutosize"
-                  cdkAutosizeMinRows="2"
-                  cdkAutosizeMaxRows="5"
-                  placeholder='Enter a short description of activity:'>
-        </textarea>
-    </mat-form-field>
-  </div>
-  <div class='col-8'>
-    <button class="sub-btn btn btn-info">
-      Submit
-    </button>
-  </div>
+
+    <!-- submit form btn -->
+    <div class='col-8'>
+      <button [disabled]='activityForm.invalid' class="sub-btn btn btn-info">
+        Submit
+      </button>
+    </div>
+  </form>
 </div>

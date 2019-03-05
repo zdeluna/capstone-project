@@ -3,6 +3,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule, MatFormFieldModule, MatInputModule, MatOptionModule, MatSelectModule, MatListModule, MatRadioModule, MatSliderModule, MatCardModule, MatDatepickerModule, MatNativeDateModule, MatProgressBarModule, MatProgressSpinnerModule } from '@angular/material';
+import {ScrollDispatchModule} from '@angular/cdk/scrolling';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import {MatGridListModule} from '@angular/material/grid-list';
 import { HttpClientModule } from '@angular/common/http';
@@ -21,7 +22,7 @@ import { MessageBoardComponent } from './challenges/message-board/message-board.
 import { MessageBoardReplyComponent } from './challenges/message-board/message-board-reply/message-board-reply.component';
 import { AuthGuard } from './auth.guard';
 import { ActivityComponent } from './activity/activity.component';
-
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 @NgModule({
   declarations: [
@@ -59,7 +60,9 @@ import { ActivityComponent } from './activity/activity.component';
     MatProgressSpinnerModule,
     MatButtonToggleModule,
     MatGridListModule,
+    MatCheckboxModule,
     HttpClientModule,
+    ScrollDispatchModule
   ],
   providers: [AuthGuard],
   bootstrap: [AppComponent]

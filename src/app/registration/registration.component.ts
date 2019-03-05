@@ -111,5 +111,7 @@ export class RegistrationComponent implements OnInit {
   };
 
   //TODO: sign up with google 
-  googleRegistration() {}
+  google() {
+    this.router.navigate(['/google/login']);
+  }
 }

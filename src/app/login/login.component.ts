@@ -1,3 +1,4 @@
+
 /*****************************
  * Description: This is the login component file.
  * This file contains all the logic controlling the
@@ -8,8 +9,6 @@ import { Component, OnInit } from '@angular/core';
 import { User } from '../models/user.model';
 import { AuthService } from '../services/auth.service';
 import { UserService } from '../services/user.service';
-//import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-//import { MatProgressSpinnerModule} from '@angular/material';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
@@ -46,7 +45,7 @@ export class LoginComponent implements OnInit {
 
     //form group controls form fields
     this.loginForm = this.fb.group({
-      email: ['', [
+      email: ["", [
         Validators.required,
         Validators.email
       ]],
