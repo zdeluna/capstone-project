@@ -177,7 +177,7 @@ const acceptChallengeRequest = async (challengeID, participantID) => {
     // Add the participant's id to the participants field
     await challengeModel.findOneAndUpdate(
       { _id: challengeRequest.challenge_id },
-      { $push: { participants: { user_id: participantID, total: 0 } } }
+      { $push: { participants: participantID } }
     );
 
     removePendingChallenges(challengeID, participantID);
@@ -259,7 +259,7 @@ exports.createChallenge = async (req, res) => {
 
     // Add the user who created the challenge as a participant
     let participants = [];
-    participants.push({ user_id: new ObjectId(req.user._id), total: 0 });
+    participants.push(req.user._id);
     validatedFields.participants = participants;
 
     let challenge = await createEntityInDB(challengeModel, validatedFields);
@@ -296,6 +296,31 @@ exports.addParticipant = async (req, res) => {
         break;
     }
 
+    res.status(200).end();
+  } catch (error) {
+    sendErrorResponse(res, error);
+  }
+};
+
+exports.removeParticipant = async (req, res) => {
+  try {
+    let challengeID = req.params.challengeID;
+    let participantID = req.params.participantID;
+    let userID = req.user._id;
+
+    await checkIfUserIsParticipantOfChallenge(challengeID, userID);
+
+    console.log("remove: " + challengeID + " " + participantID);
+    // Remove the user's id from the participants field of challenge
+    await removeFromFieldArray(
+      challengeModel,
+      "participants",
+      challengeID,
+      participantID
+    );
+
+    // Remove the challenge id from the user model
+    await removeFromFieldArray(userModel, "challenges", userID, challengeID);
     res.status(200).end();
   } catch (error) {
     sendErrorResponse(res, error);

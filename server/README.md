@@ -144,7 +144,7 @@ Response 200 OK
 userID - The id of the user  
 friendID = the id of the person the user wants to send a friend request
 
-#### Body Parameters - Required
+#### Body Parameters
 
 status - The status code which indicates the stage of the friendship  
 0 - Send a friend request  
@@ -294,7 +294,7 @@ status - Indicates the stage of where the user is in the accepting/rejecting the
 
 id - The id of the challenge
 
-#### Body Parameters
+#### Body Parameters:
 
 content \*optional - The content of the message
 
@@ -312,7 +312,7 @@ challengeID - The id of the challenge
 
 messageID - The id of the message
 
-#### Body Parameters
+#### Body Parameters: All optional
 
 content \*optional - The content of the message
 
@@ -387,7 +387,7 @@ Example:
 
 ### DELETE /conversations/:conversationID/messages/:messageID
 
-#### Parameters
+#### Parameters:
 
 conversationID - The id of the conversation
 
@@ -405,7 +405,7 @@ messageID - The id of the message
 
 Response: 200 OK
 
-#### Body Parameters
+#### Body Parameter:
 
 content - The updated message
 
@@ -421,7 +421,7 @@ Response: 200 OK
 
 ### DELETE /conversations/:conversationID/messages/:messageID
 
-#### Parameters
+#### Parameters:
 
 conversationID - The id of the conversation  
 messageID = The id of the message
@@ -454,11 +454,11 @@ Response: 200 OK
 
 ### PATCH /activities/:id
 
-#### Parameters
+#### Parameters:
 
 id - The id of the activity you wish to update
 
-#### Body Parameters:
+#### Body Parameters: All optional
 
 description - A description of the activity
 
@@ -478,7 +478,7 @@ Reponse: 200 OK
 
 ### GET /activities/:id
 
-#### Parameters
+#### Parameters:
 
 id - The id of the activity you wish to update
 

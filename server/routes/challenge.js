@@ -9,7 +9,14 @@ const controller = require("../controllers/challenge");
 router.post(
   "/:challengeID/participants/:participantID",
   authenticateUser,
+  validator.addParticipant,
   controller.addParticipant
+);
+
+router.delete(
+  "/:challengeID/participants/:participantID",
+  authenticateUser,
+  controller.removeParticipant
 );
 
 router.delete(

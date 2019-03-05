@@ -40,7 +40,7 @@ let challengeSchema = new Schema({
     type: String
   },
 
-  participants: [{ user_id: Schema.Types.ObjectId }]
+  participants: [{ type: Schema.Types.ObjectId }]
 });
 
 module.exports = mongoose.model("Challenge", challengeSchema);
