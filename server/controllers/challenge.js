@@ -439,8 +439,6 @@ exports.updateMessage = async (req, res) => {
 
     let formattedChallenge = await formatContentsinChallenge(challenge);
     res.status(200).json(formattedChallenge);
-
-    res.status(200).json(formattedConversation);
   } catch (error) {
     sendErrorResponse(res, error);
   }

@@ -52,9 +52,7 @@ exports.createMessage = [
 ];
 
 exports.updateMessage = [
-  check("content")
-    .exists()
-    .withMessage("MESSAGE_CONTENT_BODY_PARAMETER_MUST_NOT_BE_EMPTY"),
+  check("content").optional(),
   check("reply").optional(),
   (req, res, next) => {
     const errors = validationResult(req);

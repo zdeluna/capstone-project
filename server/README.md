@@ -239,44 +239,6 @@ measurement - The unit of measurement to measure activity
 
 duration - The number of days of the challenge
 
-## Invite a participant to the challenge
-
-### POST /challenges/:challengeID/participants/:participantID
-
-#### Parameters:
-
-challengeID - The id of the challenge
-
-participantID - The user id of the invited user
-
-## Write a message on the message board of a challenge
-
-### POST /challenges/:id/messages
-
-#### Parameters:
-
-id - The id of the challenge
-
-#### Body Parameters
-
-content - The content of the message
-
-reply \*optional - The id of the message the user is replying to
-
-Requires a valid token of a user that is a participant of the challenge
-
-# Delete a message on the mesage board of a challenge
-
-### DELETE /challenges/:challengeID/messages/:messageID
-
-#### Parameters:
-
-challengeID - The id of the challenge
-
-messageID - The id of the message
-
-Response: 204 No Content
-
 ## Update a challenge
 
 ### POST /challenges/:id
@@ -304,6 +266,67 @@ duration - The number of days of the challenge
 #### Parameters:
 
 id - The id of the challenge
+
+Response: 204 No Content
+
+## Invite a participant to the challenge
+
+### POST /challenges/:challengeID/participants/:participantID
+
+#### Parameters:
+
+challengeID - The id of the challenge
+
+participantID - The user id of the invited user
+
+status - Indicates the stage of where the user is in the accepting/rejecting the challenge
+
+0 - Send challenge request  
+1 - Pending challenge request  
+2 - Accept challenge request  
+3 - Reject challenge request
+
+## Write a message on the message board of a challenge
+
+### POST /challenges/:id/messages
+
+#### Parameters:
+
+id - The id of the challenge
+
+#### Body Parameters
+
+content \*optional - The content of the message
+
+reply \*optional - The id of the message the user is replying to
+
+Requires a valid token of a user that is a participant of the challenge
+
+# Update a message on the message board of a challenge
+
+### PATCH /challenges/:challengeID/messages/:messageID
+
+#### Parameters:
+
+challengeID - The id of the challenge
+
+messageID - The id of the message
+
+#### Body Parameters
+
+content \*optional - The content of the message
+
+reply \*optional - The id of the message the user is replying to
+
+# Delete a message on the mesage board of a challenge
+
+### DELETE /challenges/:challengeID/messages/:messageID
+
+#### Parameters:
+
+challengeID - The id of the challenge
+
+messageID - The id of the message
 
 Response: 204 No Content
 
