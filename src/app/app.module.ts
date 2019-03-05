@@ -3,6 +3,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule, MatFormFieldModule, MatInputModule, MatOptionModule, MatSelectModule, MatListModule, MatRadioModule, MatSliderModule, MatCardModule, MatDatepickerModule, MatNativeDateModule, MatProgressBarModule, MatProgressSpinnerModule } from '@angular/material';
+import {ScrollDispatchModule} from '@angular/cdk/scrolling';
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
+import {MatGridListModule} from '@angular/material/grid-list';
 import { HttpClientModule } from '@angular/common/http';
 import { AngularFireModule } from '@angular/fire';  
 import { environment } from '../environments/environment'; 
@@ -20,6 +23,8 @@ import { MessageBoardReplyComponent } from './challenges/message-board/message-b
 import { CompletedChallengeComponent } from './challenges/completed-challenge/completed-challenge.component';
 
 import { AuthGuard } from './auth.guard';
+import { ActivityComponent } from './activity/activity.component';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 @NgModule({
   declarations: [
@@ -33,6 +38,7 @@ import { AuthGuard } from './auth.guard';
     ChallengesPageComponent,
     MessageBoardComponent,
     MessageBoardReplyComponent,
+    ActivityComponent
     CompletedChallengeComponent
   ],
   imports: [
@@ -55,7 +61,11 @@ import { AuthGuard } from './auth.guard';
     MatNativeDateModule,
     MatProgressBarModule,
     MatProgressSpinnerModule,
+    MatButtonToggleModule,
+    MatGridListModule,
+    MatCheckboxModule,
     HttpClientModule,
+    ScrollDispatchModule
   ],
   providers: [AuthGuard],
   bootstrap: [AppComponent]

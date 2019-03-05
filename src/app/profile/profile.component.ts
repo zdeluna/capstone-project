@@ -28,7 +28,7 @@ export class ProfileComponent implements OnInit {
     //these values should come from the user object
     //in the user service
     this.sports = [
-      {name: 'Running', miles: 55},
+      {name: 'Running', miles: this.userservice.user.bikeMile},
       {name: 'Biking', miles: 103},
       {name: 'Elliptical', miles: 13},
       {name: 'Rowing', miles: 37}

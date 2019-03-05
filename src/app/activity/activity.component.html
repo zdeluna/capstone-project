@@ -1,0 +1,156 @@
+<!-- main container for the activity form-->
+<div class='container'>
+
+  <form [formGroup]='activityForm'>
+
+    <!-- for testing, will take out -->
+    <!-- {{type.value}}
+    {{measurment.value}}
+    {{unit.value}}
+    {{value.value}}
+    {{date.value}}
+    {{activityForm.valid}} -->
+
+   <!-- header -->
+    <div class="row justify-content-between">
+      <div class="col-10">
+        <h1>Enter Exercise Session</h1>
+      </div>
+      <div>
+        <button class="btn btn-info">Back</button>
+      </div>
+    </div>
+    
+    <!--container for sports tiles, hover scrollbar, and heading-->
+    <div class='activity'>
+      <div class="row">
+          <h6>Activity Type:</h6>
+      </div>
+      <div class='row'>
+        <div class="scroll-container col-12">
+          <mat-grid-list cols="2" rowHeight='2:1'> 
+            <mat-grid-tile  
+              *ngFor="let sport of sports" 
+              class='example-item border rounded'
+              colspan='1'> 
+              <mat-button-toggle-group 
+                formControlName='Type' 
+                name = 'sport' 
+                class='btn btn-lg'> 
+                  <mat-button-toggle 
+                    value={{sport.name}} 
+                    (change)="hitSport($event.value)"> 
+                      {{sport.name}}
+                  </mat-button-toggle> 
+              </mat-button-toggle-group> 
+            </mat-grid-tile> 
+          </mat-grid-list>
+        </div>
+      </div>
+    </div>
+
+    <!-- Measurement radio buttons -->
+    <div class='row'>
+      <h6>Type of Measurment:</h6>
+      <div class='btn-group row col-9'>
+        <mat-radio-group
+          formControlName='Measurment'>
+            <mat-radio-button *ngFor='let measurement of measurments' 
+              [value]='measurement' 
+              (change)="hitMeasurement($event.value)" 
+              class="btn btn-lg">
+                {{measurement}}
+            </mat-radio-button>
+        </mat-radio-group>
+      </div>
+    </div>
+
+    <!-- units dropdown -->
+    <div class='row'>
+      <h6>
+        Units:
+      </h6>
+      <div class="row">
+        <mat-form-field>
+          <mat-select 
+            placeholder="Miles/Km" 
+            (change)='hitUnit($event.value)'
+            formControlName="Unit">
+              <mat-option 
+                *ngFor='let unit of units' 
+                [value]="unit.type"> 
+                  {{unit.type}}
+              </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <!--value and date container -->
+    <div class='row justify-content-between'>
+
+      <!-- value -->
+      <div class='col-6'>
+        <h6 >
+          Value:
+        </h6>
+        <mat-form-field class="col-12">
+          <input 
+            matInput 
+            placeholder="Number - ex:10.5" 
+            type='number'
+            value=""
+            formControlName='Value'>
+        </mat-form-field>
+      </div>
+
+      <!-- date -->
+      <div class='col-6'>
+        <h6 >
+          Date:
+        </h6>
+        <mat-form-field class='col-12'>
+          <input 
+            matInput 
+            formControlName='Date' 
+            [matDatepicker]="picker" 
+            placeholder="Date ex:2/4/2019">
+            <mat-datepicker-toggle 
+              matSuffix 
+              [for]="picker">
+            </mat-datepicker-toggle>
+        </mat-form-field>
+        <mat-datepicker #picker></mat-datepicker>
+      </div>
+    </div>
+
+    <!-- description text area -->
+    <div class='row'>
+      <h6>
+        Description:
+      </h6>
+      <mat-form-field class='col-12'>
+          <textarea 
+            matInput
+            formControlName='Description'
+            cdkTextareaAutosize
+            #autosize="cdkTextareaAutosize"
+            cdkAutosizeMinRows="2"
+            cdkAutosizeMaxRows="5"
+            placeholder='Enter a short description of activity:'
+            (change)=descriptionChange()>
+          </textarea>
+      </mat-form-field>
+      <mat-error>
+
+      </mat-error>
+    </div>
+
+    <!-- submit form btn -->
+    <div class='col-8'>
+      <button [disabled]='activityForm.invalid' class="sub-btn btn btn-info">
+        Submit
+      </button>
+    </div>
+  </form>
+</div>

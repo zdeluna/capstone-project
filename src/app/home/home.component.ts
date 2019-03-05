@@ -55,9 +55,9 @@ export class HomeComponent implements OnInit {
       view: 'Challenges'
     },
     {
-      value: "activity-minutes", 
+      value: "activity", 
       location: "assets/flat-icons/check-list.svg", 
-      view: 'Enter Activity Minutes'
+      view: 'Enter Activity'
     }
     ];
   }
