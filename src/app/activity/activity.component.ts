@@ -1,12 +1,15 @@
 import { Component, OnInit, QueryList, ViewChildren, ViewChild } from '@angular/core';
 import {MatButtonToggle, MatButtonToggleGroup} from '@angular/material/button-toggle';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-// import {TextFieldModule} from '@angular/cdk/text-field';
+import { Activity } from '../models/activity.model';
+import { ActivityService } from '../services/activity.service';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-activity',
   templateUrl: './activity.component.html',
-  styleUrls: ['./activity.component.css']
+  styleUrls: ['./activity.component.css'],
+  providers: [ DatePipe ]
 })
 
 export class ActivityComponent implements OnInit {
@@ -23,41 +26,38 @@ export class ActivityComponent implements OnInit {
   
   constructor(
     private fb: FormBuilder,
+    private activityService: ActivityService,
+    private DatePipe : DatePipe
   ) { }
 
+  activity: Activity = new Activity
   activityForm: FormGroup;
   submitted: boolean = false;
   error: boolean = false;
-  sport: String;
-  _measure: String;
-  _unit: String;
-  units: Object[] = [];
-  _value: String;
-  _date: String;
-  _description: String;
+  _units: Object[] = [];
   measurments: Array<String> = ["Distance", "Time"];
 
   ngOnInit() {
 
       //form group controls form fields
       this.activityForm = this.fb.group({
-        Type: [this.sport, [
+        type: ['', [
           Validators.required,
         ]],
-        Measurment: [this._measure,[
+        measurement: ['',[
           Validators.required,
         ]],
-        Unit: [this._unit,[
+        units: ['',[
           Validators.required,
         ]],
-        Value: [this._value, [
+        value: ['', [
           Validators.required,
           Validators.min(0)
         ]],
-        Date: [this._date, [
+        date: ['', [
           Validators.required,
         ]],
-        Description: [this._description]
+        description: ['']
       });
     
     this.sports = [  
@@ -79,7 +79,7 @@ export class ActivityComponent implements OnInit {
       {name: "Video Games"}
     ];
 
-    this.units = [
+    this._units = [
       { type: "Miles" },
       { type: "KM" }
     ];
@@ -104,25 +104,36 @@ export class ActivityComponent implements OnInit {
     return this.activityForm.get('Descripton');
   }
 
-  hitSport(val: String) {
-    this.sport = val;
-    console.log("Sport: " + val);
-    // console.log(this.activityForm);
+  // descriptionChange() {
+  //   console.log(this.activityForm
+  //     .get("Description").value)
+  // }
+
+  onSubmit() {
+    this.submitted = true;
+    console.log('submitted');
+    this.activityForm.value.date = this.DatePipe.transform(
+      this.activityForm.value.date,
+      'MM-dd-yyyy'
+    );
+    console.log(this.activityForm.value);
+    this.activity = new Activity(this.activityForm.value);
+    this.activityService.fillActivity(this.activity);
+    this.activityService
+    .sendActivity()
+      .subscribe(
+      data => {
+        console.log(data);
+      },
+      error => {
+        console.log(error);
+        
+      }
+    );
   }
 
-  hitMeasurement(val: String) {
-    this._measure = val;
-    console.log('Units: ' + val);
-  }
+  back() {
 
-  hitUnit(val: string) {
-    this._unit= val;
-    console.log('Units: ' + val);
-  }
-
-  descriptionChange() {
-    console.log(this.activityForm
-      .get("Description").value)
   }
 
 }
