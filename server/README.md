@@ -144,7 +144,7 @@ Response 200 OK
 userID - The id of the user  
 friendID = the id of the person the user wants to send a friend request
 
-#### Body Parameters - Required
+#### Body Parameters
 
 status - The status code which indicates the stage of the friendship  
 0 - Send a friend request  
@@ -182,31 +182,38 @@ Example:
 ```
 {
     "pending_participants": [],
-    "_id": "5c697086cc4db848f636433a",
+    "messages": [
+        {
+            "_id": "5c7db17cf776bf3188323755",
+            "sender": "5c7db158f776bf3188323751",
+            "content": "How are you user 2?",
+            "replies": [
+                "5c7db183f776bf3188323756"
+            ],
+            "createdAt": "2019-03-04T23:15:08.927Z",
+            "updatedAt": "2019-03-04T23:15:15.262Z"
+        },
+        {
+            "_id": "5c7db183f776bf3188323756",
+            "sender": "5c7db01f5ab8f33131af14f0",
+            "content": "Hi, from user 2",
+            "replies": [],
+            "reply_to": "5c7db17cf776bf3188323755",
+            "createdAt": "2019-03-04T23:15:15.145Z",
+            "updatedAt": "2019-03-04T23:15:15.145Z"
+        }
+    ],
+    "_id": "5c7db16ff776bf3188323752",
     "name": "Work Challenge",
-    "start_date": "2019-02-17T05:00:00.000Z",
+    "start_date": "2019-02-17T06:00:00.000Z",
     "activity": "WALK",
     "measurement": "KM",
     "duration": "2",
     "participants": [
-        {
-            "_id": "5c697086cc4db848f636433b",
-            "user_id": "5c69704bcc4db848f6364338",
-            "total": 0
-        },
-        {
-            "_id": "5c69708fcc4db848f636433c",
-            "user_id": "5c69704ecc4db848f6364339",
-            "total": 0
-        }
-    ],
-    "messages": [
-        {
-            "_id": "5c697098cc4db848f636433d",
-            "content": "I am going to win",
-            "sender": "5c69704bcc4db848f6364338"
-        }
-    ],
+            "5c7db158f776bf3188323751",
+			5c7db01f5ab8f33131af14f0"
+    ]
+          ],
     "__v": 0
 }
 ```
@@ -226,30 +233,6 @@ activity - The type of activity
 measurement - The unit of measurement to measure activity
 
 duration - The number of days of the challenge
-
-## Invite a participant to the challenge
-
-### POST /challenges/:challengeID/participants/:participantID
-
-#### Parameters:
-
-challengeID - The id of the challenge
-
-participantID - The user id of the invited user
-
-## Write a message on the message board of the challenge
-
-### POST /challenges/:id/messages
-
-#### Parameters:
-
-id - The id of the challenge
-
-#### Body Parameters
-
-content - The content of the message
-
-Requires a valid token of a user that is a participant of the challenge
 
 ## Update a challenge
 
@@ -271,20 +254,6 @@ measurement - The unit of measurement to measure activity
 
 duration - The number of days of the challenge
 
-## Update the activity total of a participant
-
-### PATCH /challenges/:challengeID/participants/:participantID
-
-#### Parameters:
-
-challengeID - The id of the challenge
-
-participantID - The id of the participant
-
-#### Body Parameters: Required
-
-activity - The total amount of the participant in the challenge
-
 ## Delete a challenge
 
 ### DELETE /challenges/:id
@@ -292,6 +261,77 @@ activity - The total amount of the participant in the challenge
 #### Parameters:
 
 id - The id of the challenge
+
+Response: 204 No Content
+
+## Invite a participant to the challenge
+
+### POST /challenges/:challengeID/participants/:participantID
+
+#### Parameters:
+
+challengeID - The id of the challenge
+
+participantID - The user id of the invited user
+
+status - Indicates the stage of where the user is in the accepting/rejecting the challenge
+
+0 - Send challenge request  
+1 - Pending challenge request  
+2 - Accept challenge request  
+3 - Reject challenge request
+
+## Remove a participant from a challenge
+
+### DELETE /challenges/:challengeID/participants/:participantID
+
+#### Parameters:
+
+challengeID - The id of the challenge
+
+participantID - The user id of the participant
+
+## Write a message on the message board of a challenge
+
+### POST /challenges/:id/messages
+
+#### Parameters:
+
+id - The id of the challenge
+
+#### Body Parameters:
+
+content \*optional - The content of the message
+
+reply \*optional - The id of the message the user is replying to
+
+Requires a valid token of a user that is a participant of the challenge
+
+# Update a message on the message board of a challenge
+
+### PATCH /challenges/:challengeID/messages/:messageID
+
+#### Parameters:
+
+challengeID - The id of the challenge
+
+messageID - The id of the message
+
+#### Body Parameters: All optional
+
+content \*optional - The content of the message
+
+reply \*optional - The id of the message the user is replying to
+
+# Delete a message on the mesage board of a challenge
+
+### DELETE /challenges/:challengeID/messages/:messageID
+
+#### Parameters:
+
+challengeID - The id of the challenge
+
+messageID - The id of the message
 
 Response: 204 No Content
 
@@ -352,7 +392,7 @@ Example:
 
 ### DELETE /conversations/:conversationID/messages/:messageID
 
-#### Parameters
+#### Parameters:
 
 conversationID - The id of the conversation
 
@@ -370,7 +410,7 @@ messageID - The id of the message
 
 Response: 200 OK
 
-#### Body Parameters
+#### Body Parameter:
 
 content - The updated message
 
@@ -386,7 +426,7 @@ Response: 200 OK
 
 ### DELETE /conversations/:conversationID/messages/:messageID
 
-#### Parameters
+#### Parameters:
 
 conversationID - The id of the conversation  
 messageID = The id of the message
@@ -419,11 +459,11 @@ Response: 200 OK
 
 ### PATCH /activities/:id
 
-#### Parameters
+#### Parameters:
 
 id - The id of the activity you wish to update
 
-#### Body Parameters:
+#### Body Parameters: All optional
 
 description - A description of the activity
 
@@ -443,7 +483,7 @@ Reponse: 200 OK
 
 ### GET /activities/:id
 
-#### Parameters
+#### Parameters:
 
 id - The id of the activity you wish to update
 

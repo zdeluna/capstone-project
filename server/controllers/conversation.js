@@ -11,30 +11,9 @@ const {
   updateEntityFromDB,
   removeFromFieldArray,
   sendErrorResponse,
+  checkIfUserIsSenderOfMessage,
   checkIfUserIsAuthorized
 } = require("./controller.js");
-
-/**
- * Check to see if user is the original sender of a message, if they are not throw an error object
- * @param {string} message_id
- * @param {string} user_id
- * @returns Promise
- */
-
-const checkIfUserIsSenderOfMessage = async (message_id, user_id) => {
-  return new Promise((resolve, reject) => {
-    messageModel.findOne({ _id: message_id }, function(error, message) {
-      if (error) reject({ statusCode: 500, msg: error.message });
-
-      if (message.sender != user_id)
-        reject({
-          statusCode: 403,
-          msg: "USER_IS_NOT_SENDER_OF_MESSAGE"
-        });
-      else resolve();
-    });
-  });
-};
 
 /**
  * Check to see if user is a participant of a conversation, if they are not throw an error object

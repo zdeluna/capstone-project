@@ -29,13 +29,18 @@ let challengeSchema = new Schema({
     }
   ],
 
-  messages: [{ sender: Schema.Types.ObjectId, content: String }],
+  messages: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Message"
+    }
+  ],
 
   duration: {
     type: String
   },
 
-  participants: [{ user_id: Schema.Types.ObjectId, total: Number }]
+  participants: [{ type: Schema.Types.ObjectId }]
 });
 
 module.exports = mongoose.model("Challenge", challengeSchema);

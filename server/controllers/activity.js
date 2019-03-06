@@ -69,10 +69,10 @@ exports.deleteActivity = async (req, res) => {
 
 exports.getActivities = async (req, res) => {
   try {
-    let query = {
-      user_id: req.query.user_id,
-      type: req.query.type
-    };
+    let query = {};
+
+    if (req.query.user_id) query.user_id = req.query.user_id;
+    if (req.query.type) query.type = req.query.type;
 
     // Consulted https://stackoverflow.com/questions/2943222/find-objects-between-two-dates-mongodb
     if (req.query.start_date && req.query.end_date) {
