@@ -38,7 +38,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     ChallengesPageComponent,
     MessageBoardComponent,
     MessageBoardReplyComponent,
-    ActivityComponent
+    ActivityComponent,
     CompletedChallengeComponent
   ],
   imports: [

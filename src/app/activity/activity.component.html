@@ -1,7 +1,7 @@
 <!-- main container for the activity form-->
 <div class='container'>
 
-  <form [formGroup]='activityForm'>
+  
 
     <!-- for testing, will take out -->
     <!-- {{type.value}}
@@ -12,6 +12,7 @@
     {{activityForm.valid}} -->
     <hr>
     {{activity | json}}
+    <hr>
 
    <!-- header -->
     <div class="row justify-content-between">
@@ -19,12 +20,13 @@
         <h1>Enter Exercise Session</h1>
       </div>
       <div>
-        <button class="btn btn-info">Back</button>
+        <button (click)='homeButton()' class="btn btn-info">Home</button>
       </div>
     </div>
-    
+ 
+  <form [formGroup]='activityForm'>
     <!--container for sports tiles, hover scrollbar, and heading-->
-    <div class='activity'>
+    <div *ngIf='!submitted' class='activity'>
       <div class="row">
           <h6>Activity Type:</h6>
       </div>
@@ -51,13 +53,14 @@
     </div>
 
     <!-- Measurement radio buttons -->
-    <div class='row'>
+    <div *ngIf='!submitted' class='row'>
       <h6>Type of Measurment:</h6>
       <div class='btn-group row col-9'>
         <mat-radio-group
           formControlName='measurement'>
             <mat-radio-button *ngFor='let measurement of measurments' 
               [value]='measurement' 
+              (change)='fillMeasurement($event.value)'
               class="btn btn-lg">
                 {{measurement}}
             </mat-radio-button>
@@ -66,21 +69,20 @@
     </div>
 
     <!-- units dropdown -->
-    <div class='row'>
+    <div *ngIf='!submitted' class='row'>
       <h6>
         Units:
       </h6>
       <div class="row">
         <mat-form-field>
           <mat-select 
-            placeholder="Miles/Km" 
-            
+            placeholder={{units_placeholder}}
             formControlName="units">
               <mat-option 
                 *ngFor='let unit of _units' 
-                [value]="unit.type"
+                [value]="unit"
                 (change)='hitUnit($event.value)'> 
-                  {{unit.type}}
+                  {{unit}}
               </mat-option>
           </mat-select>
         </mat-form-field>
@@ -88,7 +90,7 @@
     </div>
 
     <!--value and date container -->
-    <div class='row justify-content-between'>
+    <div *ngIf='!submitted' class='row justify-content-between'>
 
       <!-- value -->
       <div class='col-6'>
@@ -126,7 +128,7 @@
     </div>
 
     <!-- description text area -->
-    <div class='row'>
+    <div *ngIf='!submitted' class='row'>
       <h6>
         Description:
       </h6>
@@ -147,10 +149,31 @@
     </div>
 
     <!-- submit form btn -->
-    <div class='col-8'>
+    <div *ngIf='!submitted' class='col-8'>
       <button (click)='onSubmit()' [disabled]='activityForm.invalid' class="sub-btn btn btn-info">
         Submit
       </button>
     </div>
   </form>
+
+  <!-- when user submits activity -->
+  <form *ngIf='submitted'>
+    <div class='container'>
+      <h3>
+        Success!
+        Add another activity?
+      </h3>
+      <mat-radio-group *ngFor='let option of options'>
+        <mat-error *ngIf='error'>
+          Error submitting last activity, Please try again!
+        </mat-error>
+        <mat-radio-button
+          (click)='goAgain(option)' 
+          class='btn btn-info'>
+            {{option}}
+        </mat-radio-button>
+      </mat-radio-group>
+    </div>
+  </form>
+
 </div>
