@@ -210,15 +210,10 @@ Example:
     "measurement": "KM",
     "duration": "2",
     "participants": [
-        {
-            "_id": "5c7db16ff776bf3188323753",
-            "user_id": "5c7db158f776bf3188323751"
-        },
-        {
-            "_id": "5c7db177f776bf3188323754",
-            "user_id": "5c7db01f5ab8f33131af14f0"
-        }
-    ],
+            "5c7db158f776bf3188323751",
+			5c7db01f5ab8f33131af14f0"
+    ]
+          ],
     "__v": 0
 }
 ```
@@ -285,6 +280,16 @@ status - Indicates the stage of where the user is in the accepting/rejecting the
 1 - Pending challenge request  
 2 - Accept challenge request  
 3 - Reject challenge request
+
+## Remove a participant from a challenge
+
+### DELETE /challenges/:challengeID/participants/:participantID
+
+#### Parameters:
+
+challengeID - The id of the challenge
+
+participantID - The user id of the participant
 
 ## Write a message on the message board of a challenge
 

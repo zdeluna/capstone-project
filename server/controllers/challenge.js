@@ -31,7 +31,7 @@ const checkIfUserIsParticipantOfChallenge = async (challenge_id, user_id) => {
 
       // Go through each of the challenge participants and determine if the passed in user_id is a participant, and set the flag variable to true
       for (i = 0; i < challenge.participants.length; i++) {
-        if (challenge.participants[i].user_id == user_id) {
+        if (challenge.participants[i] == user_id) {
           userIsParticipant = true;
         }
       }
@@ -310,7 +310,6 @@ exports.removeParticipant = async (req, res) => {
 
     await checkIfUserIsParticipantOfChallenge(challengeID, userID);
 
-    console.log("remove: " + challengeID + " " + participantID);
     // Remove the user's id from the participants field of challenge
     await removeFromFieldArray(
       challengeModel,
