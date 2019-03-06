@@ -1,0 +1,26 @@
+<div class="row">
+  <div class="col-4 podium-align">
+    <div></div>
+    <div class="podium">
+      <p *ngIf="sortedParticipants[1]">{{ sortedParticipants[1].user.firstName }} {{ sortedParticipants[1].user.lastName }}</p>
+      <p *ngIf="sortedParticipants[1]">{{ sortedParticipants[1].activityTotal }}</p>
+      <div class="silver"><img class="medal" src="assets/flat-icons/second.svg" alt="silver"></div>
+    </div>
+  </div>
+  <div class="col-4 podium-align">
+    <div></div>
+    <div class="podium">
+      <p *ngIf="sortedParticipants[0]">{{ sortedParticipants[0].user.firstName }} {{ sortedParticipants[0].user.lastName }}</p>
+      <p *ngIf="sortedParticipants[0]">{{ sortedParticipants[0].activityTotal }}</p>
+      <div class="gold"><img class="medal" src="assets/flat-icons/gold-medal.svg" alt="gold"></div>
+    </div>
+  </div>
+  <div class="col-4 podium-align">
+    <div></div>
+    <div class="podium">
+      <p *ngIf="sortedParticipants[2]">{{ sortedParticipants[2].user.firstName }} {{ sortedParticipants[2].user.lastName }}</p>
+      <p *ngIf="sortedParticipants[2]">{{ sortedParticipants[2].activityTotal }}</p>
+      <div class="bronze"><img class="medal" src="assets/flat-icons/third.svg" alt="third"></div>
+    </div>
+  </div>
+</div>

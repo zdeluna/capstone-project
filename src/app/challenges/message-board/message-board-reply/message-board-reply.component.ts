@@ -13,6 +13,7 @@ export class MessageBoardReplyComponent implements OnInit {
   constructor() { }
 
   @Input() parent: Post
+  @Input() challengeIsOver: Boolean
   @Input() user: User
   @Input() post: Post[] = []
   @Input() shouldBeGray: Boolean

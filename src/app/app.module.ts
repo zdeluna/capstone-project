@@ -20,6 +20,8 @@ import { ProfileComponent } from './profile/profile.component';
 import { ChallengesPageComponent } from './challenges/challenges-page/challenges-page.component';
 import { MessageBoardComponent } from './challenges/message-board/message-board.component';
 import { MessageBoardReplyComponent } from './challenges/message-board/message-board-reply/message-board-reply.component';
+import { CompletedChallengeComponent } from './challenges/completed-challenge/completed-challenge.component';
+
 import { AuthGuard } from './auth.guard';
 import { ActivityComponent } from './activity/activity.component';
 import {MatCheckboxModule} from '@angular/material/checkbox';
@@ -37,6 +39,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     MessageBoardComponent,
     MessageBoardReplyComponent,
     ActivityComponent
+    CompletedChallengeComponent
   ],
   imports: [
     BrowserModule,
