@@ -1,12 +1,16 @@
 import { Component, OnInit, QueryList, ViewChildren, ViewChild } from '@angular/core';
 import {MatButtonToggle, MatButtonToggleGroup} from '@angular/material/button-toggle';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-// import {TextFieldModule} from '@angular/cdk/text-field';
+import { Activity } from '../models/activity.model';
+import { ActivityService } from '../services/activity.service';
+import { DatePipe, Location } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-activity',
   templateUrl: './activity.component.html',
-  styleUrls: ['./activity.component.css']
+  styleUrls: ['./activity.component.css'],
+  providers: [ DatePipe ]
 })
 
 export class ActivityComponent implements OnInit {
@@ -23,41 +27,42 @@ export class ActivityComponent implements OnInit {
   
   constructor(
     private fb: FormBuilder,
+    private activityService: ActivityService,
+    private DatePipe : DatePipe,
+    private location: Location,
+    private router: Router
   ) { }
 
+  activity: Activity = new Activity
   activityForm: FormGroup;
   submitted: boolean = false;
   error: boolean = false;
-  sport: String;
-  _measure: String;
-  _unit: String;
-  units: Object[] = [];
-  _value: String;
-  _date: String;
-  _description: String;
+  _units: Array<String> = [];
+  units_placeholder: String = 'Pick Measurement';
   measurments: Array<String> = ["Distance", "Time"];
+  options: Array<String> = ["Yes"];
 
   ngOnInit() {
 
       //form group controls form fields
       this.activityForm = this.fb.group({
-        Type: [this.sport, [
+        type: ['', [
           Validators.required,
         ]],
-        Measurment: [this._measure,[
+        measurement: ['',[
           Validators.required,
         ]],
-        Unit: [this._unit,[
+        units: ['',[
           Validators.required,
         ]],
-        Value: [this._value, [
+        value: ['', [
           Validators.required,
           Validators.min(0)
         ]],
-        Date: [this._date, [
+        date: ['', [
           Validators.required,
         ]],
-        Description: [this._description]
+        description: ['']
       });
     
     this.sports = [  
@@ -77,11 +82,6 @@ export class ActivityComponent implements OnInit {
       {name: "Hiking"},
       {name: "Kayaking"},
       {name: "Video Games"}
-    ];
-
-    this.units = [
-      { type: "Miles" },
-      { type: "KM" }
     ];
   }
 
@@ -104,25 +104,72 @@ export class ActivityComponent implements OnInit {
     return this.activityForm.get('Descripton');
   }
 
-  hitSport(val: String) {
-    this.sport = val;
-    console.log("Sport: " + val);
-    // console.log(this.activityForm);
+  // descriptionChange() {
+  //   console.log(this.activityForm
+  //     .get("Description").value)
+  // }
+
+  onSubmit() {
+
+    //disable submit btn
+    this.submitted = true;
+    console.log('submitted');
+
+    //changes date into wanted format
+    //got help here https://stackoverflow.com/questions/54576074/angular-7-reactive-forms-how-to-format-date-as-yyyy-mm-dd
+    this.activityForm.value.date = this.DatePipe.transform(
+      this.activityForm.value.date,
+      'MM-dd-yyyy' //still not perfect
+    );
+    console.log(this.activityForm.value);
+
+    //changes form object to activity objecy and fills
+    //activity in activity service
+    this.activity = new Activity(this.activityForm.value);
+    this.activityService.fillActivity(this.activity);
+
+    //sends activity to server
+    this.activityService
+    .sendActivity()
+      .subscribe(
+      data => {
+        console.log(data);
+      },
+      error => {
+        this.error = true;
+        console.log(error);
+      }
+    );
   }
 
-  hitMeasurement(val: String) {
-    this._measure = val;
-    console.log('Units: ' + val);
+  fillMeasurement(val: String) {
+    if(val == 'Distance') {
+      this._units = ['Miles', 'Kilometers', 'Steps'];
+      this.units_placeholder = 'KM/Miles/Steps'
+    }
+    else if (val == 'Time') {
+      this._units = ['Minutes', "Hours"];
+      this.units_placeholder = "Minutes/Hours"
+    }
   }
 
-  hitUnit(val: string) {
-    this._unit= val;
-    console.log('Units: ' + val);
+  goAgain(val: String) {
+    if(val == this.options[0]) {
+      this.clearForm();
+    }
+   else this.homeButton();
   }
 
-  descriptionChange() {
-    console.log(this.activityForm
-      .get("Description").value)
+  homeButton() {
+    this.router.navigate(['/']);
+  }
+
+  clearForm() {
+    this.submitted = false; 
+    this.error = false;
+    this._units = [];
+    this.units_placeholder = "Pick measurement"
+    this.activityForm.reset();
   }
 
 }
