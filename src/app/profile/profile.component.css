@@ -27,6 +27,20 @@ img {
     padding: 0 0 0 3px;
 }
 
+.header-edit {
+    display: flex;
+    flex-direction: row;
+    /* border: 1px solid black; */
+}
+
+.fa-edit {
+    /* border: 1px solid red; */
+    position: relative;
+    margin: 1px;
+    padding: 1px;
+    top: 1.5em;
+}
+
 .radio-buttons-left {
     /* margin-bottom: 15px; */
     padding: 5px;

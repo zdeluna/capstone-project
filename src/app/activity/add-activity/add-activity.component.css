@@ -1,0 +1,68 @@
+/* div {
+    border: 1px dashed black;
+}
+
+.example-viewport {
+    height: 100px;
+    width: 500px;
+    border: 1px solid black;
+  } */
+
+/* .example-item {
+    width: 50%;
+} */
+
+/* mat-grid-list, mat-grid-tile {
+    border: 1px dashed black;
+} */
+
+.activity {
+    text-align: center;
+    margin: 10px;
+    /* padding: 5px; */
+} 
+
+.scroll-container {
+    /* overflow-x: scroll; */
+    overflow-y: hidden;
+    height: 300px;
+  }
+  .scroll-container:hover {
+    overflow-y: scroll;
+  }
+  
+
+.activity > h6 {
+    float: left;
+    padding: 10px;
+}
+
+mat-grid-list {
+    position: relative;
+    top: 0;
+}
+
+mat-grid-tile {
+    float: left;
+}
+ 
+mat-grid-tile:hover {
+    background-color: whitesmoke;
+} 
+
+.row {
+    margin: 20px;
+    padding: 5px;
+}
+
+.btn-lg {
+    padding: 10px;
+}
+
+.btn-info {
+    margin: 5px;
+}
+
+.sub-btn {
+    margin: 20px;
+}

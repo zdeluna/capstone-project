@@ -1,179 +1,20 @@
 <!-- main container for the activity form-->
-<div class='container'>
-
-  
-
-    <!-- for testing, will take out -->
-    <!-- {{type.value}}
-    {{measurment.value}}
-    {{unit.value}}
-    {{value.value}}
-    {{date.value}}
-    {{activityForm.valid}} -->
-    <hr>
-    {{activity | json}}
-    <hr>
-
-   <!-- header -->
-    <div class="row justify-content-between">
-      <div class="col-10">
-        <h1>Enter Exercise Session</h1>
-      </div>
-      <div>
-        <button (click)='homeButton()' class="btn btn-info">Home</button>
-      </div>
-    </div>
- 
-  <form [formGroup]='activityForm'>
-    <!--container for sports tiles, hover scrollbar, and heading-->
-    <div *ngIf='!submitted' class='activity'>
-      <div class="row">
-          <h6>Activity Type:</h6>
-      </div>
-      <div class='row'>
-        <div class="scroll-container col-12">
-          <mat-grid-list cols="2" rowHeight='2:1'> 
-            <mat-grid-tile  
-              *ngFor="let sport of sports" 
-              class='example-item border rounded'
-              colspan='1'> 
-              <mat-button-toggle-group 
-                formControlName='type' 
-                name = 'sport' 
-                class='btn btn-lg'> 
-                  <mat-button-toggle 
-                    value={{sport.name}} >
-                      {{sport.name}}
-                  </mat-button-toggle> 
-              </mat-button-toggle-group> 
-            </mat-grid-tile> 
-          </mat-grid-list>
-        </div>
-      </div>
-    </div>
-
-    <!-- Measurement radio buttons -->
-    <div *ngIf='!submitted' class='row'>
-      <h6>Type of Measurment:</h6>
-      <div class='btn-group row col-9'>
-        <mat-radio-group
-          formControlName='measurement'>
-            <mat-radio-button *ngFor='let measurement of measurments' 
-              [value]='measurement' 
-              (change)='fillMeasurement($event.value)'
-              class="btn btn-lg">
-                {{measurement}}
-            </mat-radio-button>
-        </mat-radio-group>
-      </div>
-    </div>
-
-    <!-- units dropdown -->
-    <div *ngIf='!submitted' class='row'>
-      <h6>
-        Units:
-      </h6>
-      <div class="row">
-        <mat-form-field>
-          <mat-select 
-            placeholder={{units_placeholder}}
-            formControlName="units">
-              <mat-option 
-                *ngFor='let unit of _units' 
-                [value]="unit"
-                (change)='hitUnit($event.value)'> 
-                  {{unit}}
-              </mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-    </div>
-
-    <!--value and date container -->
-    <div *ngIf='!submitted' class='row justify-content-between'>
-
-      <!-- value -->
-      <div class='col-6'>
-        <h6 >
-          Value:
-        </h6>
-        <mat-form-field class="col-12">
-          <input 
-            matInput 
-            placeholder="Number - ex:10.5" 
-            type='number'
-            value=""
-            formControlName='value'>
-        </mat-form-field>
-      </div>
-
-      <!-- date -->
-      <div class='col-6'>
-        <h6 >
-          Date:
-        </h6>
-        <mat-form-field class='col-12'>
-          <input 
-            matInput 
-            formControlName='date' 
-            [matDatepicker]="picker" 
-            placeholder="Date ex:2/4/2019">
-            <mat-datepicker-toggle 
-              matSuffix 
-              [for]="picker">
-            </mat-datepicker-toggle>
-        </mat-form-field>
-        <mat-datepicker #picker></mat-datepicker>
-      </div>
-    </div>
-
-    <!-- description text area -->
-    <div *ngIf='!submitted' class='row'>
-      <h6>
-        Description:
-      </h6>
-      <mat-form-field class='col-12'>
-          <textarea 
-            matInput
-            formControlName='description'
-            cdkTextareaAutosize
-            #autosize="cdkTextareaAutosize"
-            cdkAutosizeMinRows="2"
-            cdkAutosizeMaxRows="5"
-            placeholder='Enter a short description of activity:'>
-          </textarea>
-      </mat-form-field>
-      <mat-error>
-
-      </mat-error>
-    </div>
-
-    <!-- submit form btn -->
-    <div *ngIf='!submitted' class='col-8'>
-      <button (click)='onSubmit()' [disabled]='activityForm.invalid' class="sub-btn btn btn-info">
-        Submit
-      </button>
-    </div>
-  </form>
-
-  <!-- when user submits activity -->
-  <form *ngIf='submitted'>
-    <div class='container'>
-      <h3>
-        Success!
-        Add another activity?
-      </h3>
-      <mat-radio-group *ngFor='let option of options'>
-        <mat-error *ngIf='error'>
-          Error submitting last activity, Please try again!
-        </mat-error>
-        <mat-radio-button
-          (click)='goAgain(option)' 
-          class='btn btn-info'>
-            {{option}}
-        </mat-radio-button>
-      </mat-radio-group>
-    </div>
-  </form>
-
+<div class="container">
+  <div class='header'>
+    <h1>Activities</h1>
+    <button (click)='back()' class="btn btn-info">Back</button>
+  </div>
+  <mat-grid-list class='text-center' cols="2" rowHeight="1:1">
+    <mat-grid-tile *ngFor='let option of options'>
+      <a 
+        [routerLink]='option.value'>
+          <img class="decision-button-svg" 
+            [src]="option.location" 
+            [alt]="option.view"/>
+              <div>
+                {{option.view}}
+              </div>
+      </a>
+    </mat-grid-tile>
+  </mat-grid-list>
 </div>
