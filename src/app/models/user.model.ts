@@ -8,12 +8,15 @@ export class User {
     password: string;
     firstName?: string;
     lastName?: string;
-    photoURL?: string = "";
+    photoURL?: string = "assets/flat-icons/user-no-photo.svg";
     friends?: string[] = [];
     pending_friends?: string[] = [];
     challenges?: string[] = [];
     pending_challenges?: string[] = [];
-    location?: UserLocation[] = [];
+    location?: UserLocation = {
+      city: "Seattle",
+      state: "WA"
+    };
     dateOfBirth?: Date;
     activities?: Activity[];
     activity_types?: Activity_Type[] = [

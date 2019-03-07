@@ -10,11 +10,11 @@
       <h1>{{user.username}}</h1>
       <i *ngIf='edit' class="far fa-edit"></i>
     </div>
-    <img src="assets/flat-icons/user-no-photo.svg" 
+    <img src={{user.photoURL}} 
     class="img-circle decision-button-svg">
     <div 
       class="b row col-12 justify-content-between">
-      <h5>Seattle, WA</h5>
+      <h5>{{user.location.city}}, {{user.location.state}}</h5>
       <button 
         type='button'
         class="btn btn-info btn-sm"
