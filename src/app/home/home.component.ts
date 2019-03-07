@@ -57,8 +57,10 @@ export class HomeComponent implements OnInit {
     {
       value: "activity", 
       location: "assets/flat-icons/check-list.svg", 
-      view: 'Enter Activity'
+      view: 'Activities'
     }
     ];
+
+
   }
 }

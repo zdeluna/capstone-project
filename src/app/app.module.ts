@@ -25,6 +25,8 @@ import { CompletedChallengeComponent } from './challenges/completed-challenge/co
 import { AuthGuard } from './auth.guard';
 import { ActivityComponent } from './activity/activity.component';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import { AddActivityComponent } from './activity/add-activity/add-activity.component';
+import { ViewActivityComponent } from './activity/view-activity/view-activity.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +41,9 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     MessageBoardComponent,
     MessageBoardReplyComponent,
     ActivityComponent,
-    CompletedChallengeComponent
+    CompletedChallengeComponent,
+    AddActivityComponent,
+    ViewActivityComponent,
   ],
   imports: [
     BrowserModule,
