@@ -198,3 +198,37 @@ exports.checkIfUserIsSenderOfMessage = async (message_id, user_id) => {
     });
   });
 };
+
+exports.checkIfIDAlreadyExistsWithinArrayField = async (
+  model,
+  model_id,
+  fieldName,
+  idToSearch
+) => {
+  console.log("in function");
+  return new Promise((resolve, reject) => {
+    let alreadyExists = false;
+    model.findOne({ _id: model_id }, function(error, entity) {
+      if (error) reject({ statusCode: 500, msg: error.message });
+
+      // Go through each of the elements of the array and if the id is found then set the flag variable to true
+      let arrayToSearch = entity[fieldName];
+
+      for (i = 0; i < arrayToSearch.length; i++) {
+        if (arrayToSearch[i] == idToSearch) {
+          console.log("Found id in " + fieldName);
+          alreadyExists = true;
+          break;
+        }
+      }
+      if (alreadyExists == true) {
+        let message =
+          "CANNOT_BE_ADDED_SINCE_ID_IS_ALREADY_IN_" + fieldName.toUpper();
+        reject({
+          statusCode: 422,
+          msg: message
+        });
+      } else resolve();
+    });
+  });
+};

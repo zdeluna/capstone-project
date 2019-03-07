@@ -13,7 +13,8 @@ const {
   removeFromFieldArray,
   sendErrorResponse,
   checkIfUserIsSenderOfMessage,
-  checkIfUserIsAuthorized
+  checkIfUserIsAuthorized,
+  checkIfIDAlreadyExistsWithinArrayField
 } = require("./controller.js");
 
 /**
@@ -162,6 +163,14 @@ const createMessageInDB = async (challengeID, data, userID) => {
 
 const acceptChallengeRequest = async (challengeID, participantID) => {
   try {
+    // Make sure user is not already a participant in the challenge
+    await checkIfIDAlreadyExistsWithinArrayField(
+      challengeModel,
+      challengeID,
+      "participants",
+      participantID
+    );
+
     // Add the challenge ID to the challenge field of the user document
     await userModel.findOneAndUpdate(
       { _id: participantID },
@@ -276,7 +285,7 @@ exports.addParticipant = async (req, res) => {
     let challengeID = new ObjectId(req.params.challengeID);
     let participantID = new ObjectId(req.params.participantID);
     let status = req.body.status;
-
+    console.log("ADDD");
     /* status codes
 	0  - Send challenge request
 	1  - Pending challenge request
