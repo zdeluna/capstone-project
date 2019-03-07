@@ -14,17 +14,19 @@ export class ViewActivityComponent implements OnInit {
     private activityService: ActivityService
   ) { }
 
+  error: boolean = false;
+
   ngOnInit() {
     this.activityService
     .getUserActivities()
     .subscribe(
       data=> {
+        this.error = false;
         console.log(data);
-        
       },
       error => {
+        this.error = true;
         console.log(error);
-        
       }
     )
   }

@@ -3,7 +3,7 @@
       <h1>Activities</h1>
       <button (click)='back()' class="btn btn-info">Back</button>
     </div>
-  <p>
-    view-activity works!
-  </p>
+  <mat-error *ngIf='error'>
+    No activities posted! Add an activity to see it here!
+  </mat-error>
 </div>

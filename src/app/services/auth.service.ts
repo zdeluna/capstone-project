@@ -83,6 +83,10 @@ export class AuthService {
       .subscribe(
         data => {
           //here you would fill the user with more details
+          console.log(data);
+          
+          console.log('remembered token ' + data['token']);
+          this.dbService.setToken(data['token']);
           this.userService.user.username = data['username'];
           this.userService.user.id = data['_id'];
         },
@@ -113,6 +117,8 @@ export class AuthService {
   userLoggedIn(data: any) {
     console.log('Login success', data);
 
+    console.log('loggin in token ' + data['token']);
+    
     this.dbService.setToken(data['token']);
     this.userService.setCurrentUserId(data['user_id']);
     this.setLoggedIn(true); 
