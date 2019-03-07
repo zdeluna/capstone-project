@@ -84,6 +84,7 @@ export class AuthService {
         data => {
           //here you would fill the user with more details
           this.userService.user.username = data['username'];
+          this.userService.user.id = data['_id'];
         },
         error => {
           console.log(error);

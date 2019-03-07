@@ -2,17 +2,19 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Activity } from '../models/activity.model';
 import { DatabaseService } from '../services/database.service';
+import { UserService } from './user.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ActivityService {
 
-  _url = 'https://capstone-wazn.appspot.com/api/activities';
+  _url = 'https://capstone-wazn.appspot.com/api/activities/';
 
   constructor(
     private _http : HttpClient,
-    private _db : DatabaseService
+    private _db : DatabaseService,
+    private _user : UserService
   ) { }
 
   token = this._db.token;
@@ -30,6 +32,15 @@ export class ActivityService {
     console.log(this.activity);
     
     return this._http.post<any>(this._url, this.activity, this.httpOptions);
+  }
+
+  getUserActivities() {
+    console.log(this._url + this._user.user.id);
+    
+    return this._http.get(
+      this._url + this._user.getCurrentUserId(),
+      this.httpOptions
+      );
   }
 
   fillActivity(activity: Activity) {
