@@ -1,8 +1,8 @@
 /* div {
     border: 1px dashed red;
 } */
-
-/* .header-col > h1, h6 {
+/* 
+.header-col > h1, h6 {
     border: 1px dashed red;
 } */
 
@@ -16,7 +16,7 @@ img {
     margin-bottom: 30px;
     margin-top: 30px;
     padding: 10px;
-    background-color: lightgrey;
+    background-color: whitesmoke;
 }
 
 .header-col > h1 {
@@ -24,13 +24,18 @@ img {
 }
 
 .header-col > h6 {
-    padding: 0 0 0 3px;
+    padding: 0 0 0 0;
 }
 
 .header-edit {
     display: flex;
     flex-direction: row;
+    /* margin-bottom: 0; */
     /* border: 1px solid black; */
+}
+
+.b {
+    margin: 0 0 0 0;
 }
 
 .fa-edit {
@@ -41,31 +46,32 @@ img {
     top: 1.5em;
 }
 
-.radio-buttons-left {
-    /* margin-bottom: 15px; */
-    padding: 5px;
-    background-color: whitesmoke;
+.btn-group {
+    display: flex; 
+    flex-direction: row;
 }
 
-.btn-primary {
-    margin: 5px;
+
+.btn-group>.btn {
+    /* border-radius: 0; */
+    flex: 1;
 }
 
 .row-6 {
-    display: flex;
-    flex-wrap: wrap;
+    /* display: flex; */
+    /* flex-wrap: wrap; */
     /* justify-content: left; */
     text-align: center;
     padding: 5px;
-    background-color: whitesmoke;
+    /* background-color: whitesmoke; */
     margin-bottom: 30px;
 }
 
 .another {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    width: 70%;
+     display: flex; 
+     flex-wrap: wrap;
+    justify-content: space-around; 
+    /* width: 70%; */
     margin-bottom: 30px;
 }
 
@@ -84,7 +90,7 @@ img {
     margin: 20px 5px 20px 0px;
 }
 
-#Running {
+/* #Running {
     border: 2px solid #93c47d;
 }
 #Biking {
@@ -95,11 +101,21 @@ img {
 }
 #Rowing {
     border: 2px solid #597eaa;
+} */
+
+#sport {
+    border: 2px solid rgb(19, 132, 150);
 }
 
 #more {
     background-color: coral;
 }
+#distance {
+    margin-bottom: 20px;
+}
 .inside-more {
     margin: 5px auto 5px auto;
+}
+.space {
+    background-color: white;
 }

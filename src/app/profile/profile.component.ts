@@ -15,8 +15,15 @@ export class ProfileComponent implements OnInit {
     private userservice: UserService
   ) { }
 
-  sports: Object = []
+  sports: Object[] = []
+  btnOptions: Array<String> = [
+    'General',
+    'Achievements',
+    'Current Challenges',
+    'Records'
+  ]
   user: User = new User
+  edit: boolean = false;
 
   ngOnInit() {
 
@@ -28,6 +35,10 @@ export class ProfileComponent implements OnInit {
     //these values should come from the user object
     //in the user service
     this.sports = this.user.activity_types;
+  }
+
+  editProfile() {
+    this.edit = !this.edit;
   }
 
 }
