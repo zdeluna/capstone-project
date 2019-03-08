@@ -84,11 +84,14 @@ export class AuthService {
         data => {
           //here you would fill the user with more details
           console.log(data);
-          
-          console.log('remembered token ' + data['token']);
-          this.dbService.setToken(data['token']);
           this.userService.user.username = data['username'];
           this.userService.user.id = data['_id'];
+          console.log('user remembered: ' + JSON.stringify(this.userService.user));
+          
+          //here set token for session
+          let token = JSON.parse(remembered).token
+          this.dbService.setToken(token);
+          console.log('remembered token ' + token);
         },
         error => {
           console.log(error);
@@ -115,17 +118,26 @@ export class AuthService {
 
   //gets app ready after user logs in
   userLoggedIn(data: any) {
-    console.log('Login success', data);
 
+    console.log('Login success', data);
     console.log('loggin in token ' + data['token']);
     
+    //these always get set when logging in
     this.dbService.setToken(data['token']);
     this.userService.setCurrentUserId(data['user_id']);
     this.setLoggedIn(true); 
 
+    //puts id and token in local storage if user wants remembered
+    //so that the user can be re-loaded after exit
     if(this.rememberMe) {
-      localStorage.setItem('loggedIn', 
-      JSON.stringify({ val: 'true', id: data['user_id']}));
+      localStorage.setItem(
+        'loggedIn', 
+        JSON.stringify({ 
+          val: 'true', 
+          id: data['user_id'],
+          token: data['token']
+        })
+      );
     }
 
     this.router.navigate(['/home']);

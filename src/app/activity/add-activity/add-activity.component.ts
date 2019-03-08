@@ -119,7 +119,6 @@ export class AddActivityComponent implements OnInit {
       .subscribe(
       data => {
         console.log(data);
-        
       },
       error => {
         this.error = true;

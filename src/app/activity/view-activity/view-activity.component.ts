@@ -17,6 +17,14 @@ export class ViewActivityComponent implements OnInit {
   error: boolean = false;
 
   ngOnInit() {
+    this.getActivities();
+  }
+
+  back() {
+    this.location.back();
+   }
+
+   getActivities() { 
     this.activityService
     .getUserActivities()
     .subscribe(
@@ -29,10 +37,7 @@ export class ViewActivityComponent implements OnInit {
         console.log(error);
       }
     )
-  }
-
-  back() {
-    this.location.back();
+    // this.error = true; //for now
    }
 
 }
