@@ -17,6 +17,27 @@ const {
   checkIfIDAlreadyExistsWithinArrayField
 } = require("./controller.js");
 
+const checkIfChallengeRequestAlreadyExists = async (
+  challengeID,
+  userID,
+  status
+) => {
+  return new Promise((resolve, reject) => {
+    challengeRequestModel.findOne(
+      { challenge_id: challengeID, recipient: userID, status: status },
+      function(error, challengeRequest) {
+        if (error) reject({ statusCode: 500, msg: error.message });
+        if (challengeRequest) {
+          reject({
+            statusCode: 422,
+            msg: "REQUEST_ALREADY_EXISTS"
+          });
+        } else resolve();
+      }
+    );
+  });
+};
+
 /**
  * Check to see if user is a participant of a challenge, if they are not throw an error object
  * @param {string} challengeID
@@ -191,7 +212,7 @@ const acceptChallengeRequest = async (challengeID, participantID) => {
 
     removePendingChallenges(challengeID, participantID);
   } catch (error) {
-    return error;
+    throw error;
   }
 };
 
@@ -238,6 +259,9 @@ const removePendingChallenges = async (challengeID, participantID) => {
 
 const createChallengeRequest = async (challengeID, participantID) => {
   try {
+    // Check to make sure there aren't any pending challenges with the participant and challengeID
+    await checkIfChallengeRequestAlreadyExists(challengeID, participantID, 1);
+
     const challengeRequest = await challengeRequestModel.findOneAndUpdate(
       { recipient: participantID },
       { $set: { status: 1, challenge_id: challengeID } },
@@ -256,7 +280,7 @@ const createChallengeRequest = async (challengeID, participantID) => {
       { $push: { pending_participants: challengeRequest._id } }
     );
   } catch (error) {
-    return error;
+    throw error;
   }
 };
 
@@ -282,10 +306,10 @@ exports.createChallenge = async (req, res) => {
 
 exports.addParticipant = async (req, res) => {
   try {
-    let challengeID = new ObjectId(req.params.challengeID);
-    let participantID = new ObjectId(req.params.participantID);
+    let challengeID = req.params.challengeID;
+    let participantID = req.params.participantID;
     let status = req.body.status;
-    console.log("ADDD");
+
     /* status codes
 	0  - Send challenge request
 	1  - Pending challenge request
