@@ -7,8 +7,10 @@ import { ProfileComponent } from './profile/profile.component';
 import { ActiveChallengeComponent } from './challenges/active-challenge/active-challenge.component';
 import { ChallengesPageComponent } from './challenges/challenges-page/challenges-page.component';
 import { RegistrationComponent } from './registration/registration.component';
+import {  AddActivityComponent } from './activity/add-activity/add-activity.component'
 import { ActivityComponent } from './activity/activity.component';
 import { AuthGuard } from './auth.guard';
+import { ViewActivityComponent } from './activity/view-activity/view-activity.component';
 
 const routes: Routes = [
   {
@@ -48,7 +50,17 @@ const routes: Routes = [
     path: 'activity', 
     component: ActivityComponent,
     canActivate: [AuthGuard]
-  }
+  },
+  {
+    path: 'activity/add',
+    component: AddActivityComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'activity/view',
+    component: ViewActivityComponent,
+    canActivate: [AuthGuard]
+  },
 ];
 
 @NgModule({
