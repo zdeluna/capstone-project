@@ -20,7 +20,7 @@
         <a class="nav-link" routerLink="profile">Profile</a>
       </li>
       <li *ngIf="isLoggedIn()"  class="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show">
-        <a class="nav-link" routerLink="activity">Enter Activity</a>
+        <a class="nav-link" routerLink="activity">Activities</a>
       </li>
       <li *ngIf="!isLoginRoute() && !isLoggedIn()" class="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show">
         <a class="nav-link" routerLink="login">Log In</a>

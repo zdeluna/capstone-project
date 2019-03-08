@@ -14,23 +14,30 @@ export class ViewActivityComponent implements OnInit {
     private activityService: ActivityService
   ) { }
 
+  error: boolean = false;
+
   ngOnInit() {
-    this.activityService
-    .getUserActivities()
-    .subscribe(
-      data=> {
-        console.log(data);
-        
-      },
-      error => {
-        console.log(error);
-        
-      }
-    )
+    this.getActivities();
   }
 
   back() {
     this.location.back();
+   }
+
+   getActivities() { 
+    this.activityService
+    .getUserActivities()
+    .subscribe(
+      data=> {
+        this.error = false;
+        console.log(data);
+      },
+      error => {
+        this.error = true;
+        console.log(error);
+      }
+    )
+    // this.error = true; //for now
    }
 
 }
