@@ -1,7 +1,10 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Post } from '../message-board.component';
 import { FormGroup, FormControl } from '@angular/forms';
 import { User } from 'src/app/models/user.model';
+import { Post } from 'src/app/models/post.model';
+import { DatabaseService } from 'src/app/services/database.service';
+import { Challenge } from 'src/app/models/challenge.model';
+import { ActiveChallengeComponent } from '../../active-challenge/active-challenge.component';
 
 @Component({
   selector: 'app-message-board-reply',
@@ -10,11 +13,12 @@ import { User } from 'src/app/models/user.model';
 })
 export class MessageBoardReplyComponent implements OnInit {
 
-  constructor() { }
+  constructor(private dbService: DatabaseService, private parentComp: ActiveChallengeComponent) { }
 
   @Input() parent: Post
   @Input() challengeIsOver: Boolean
   @Input() user: User
+  @Input() challenge: Challenge
   @Input() post: Post[] = []
   @Input() shouldBeGray: Boolean
 
@@ -25,16 +29,21 @@ export class MessageBoardReplyComponent implements OnInit {
   ngOnInit() {
   }
 
-  submitReply(post: Post) {
-    post.replies.push({
-      id: (new Date()).getTime().toString(),
-      parent: post.id,
-      message: this.formReply.value.message,
-      date: new Date(),
-      replies: [],
-      user: this.user.username
+  submitNestedReply(post: Post) {
+    let r = {
+      content: this.formReply.value.message,
+      reply: post.id
+    }
+    this.dbService.submitMessage(this.challenge.id, r).subscribe(() => {
+      this.formReply.reset()
+      this.parentComp.ngOnInit()
     })
-    this.formReply.reset()
+  }
+
+  deleteMessage(post: Post) {
+    this.dbService.deleteMessage(this.challenge.id, post).subscribe(() => {
+      this.parentComp.ngOnInit()
+    })
   }
 
   getPlaceholder(message: string): string {
@@ -68,5 +77,10 @@ export class MessageBoardReplyComponent implements OnInit {
     }
 
     return `${date.getMonth() + 1}/${date.getDate()} at ${hours}:${mins} ${amPm}`
+  }
+
+  thisUserPosted(post: Post) {
+    // return post.user == this.user.username
+    return true
   }
 }

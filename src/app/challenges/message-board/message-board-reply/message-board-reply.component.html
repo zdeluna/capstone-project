@@ -1,6 +1,9 @@
 <mat-card [style.background-color]="shouldBeGray ? '#f9f9f9' : 'white'">
   <mat-card-content>
-    <div>{{ post.message }}</div>
+    <div class="friends-row">
+      {{ post.message }}
+      <button mat-stroked-button [hidden]="!thisUserPosted(post)" (click)="deleteMessage(post)"> Delete </button>
+    </div>
     <div class="friends-row">
       <span class="post-date">{{ formatDate(post.date) }} by {{ post.user }}</span>
     </div>
@@ -9,7 +12,7 @@
         <app-message-board-reply [parent]="post" [post]="reply" [user]="user" [shouldBeGray]="!shouldBeGray"></app-message-board-reply>
       </div>
     </div>
-    <form [formGroup]="formReply" (ngSubmit)="submitReply(post)" [hidden]="challengeIsOver">
+    <form [formGroup]="formReply" (ngSubmit)="submitNestedReply(post)" [hidden]="challengeIsOver">
       <mat-form-field class="full-width">
         <textarea matInput [placeholder]="getPlaceholder(post.message)" formControlName="message"></textarea>
       </mat-form-field>
