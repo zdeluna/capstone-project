@@ -66,8 +66,10 @@ Example:
 
 #### Body parameters:
 
-username - The email address of the user  
-password - The password of the user
+| Parameter  | Type     | Description                   |
+| ---------- | -------- | ----------------------------- |
+| `username` | `string` | The email address of the user |
+| `password` | `string` | The password of the user      |
 
 Response: 200 OK { token: token}
 
@@ -81,7 +83,7 @@ Example:
 
 ## Login using Google Oauth2
 
-## POST login/google
+### POST login/google
 
 ---
 
@@ -132,17 +134,12 @@ id - The id of the authenticated user
 
 Body Parameters - All optional
 
-first_name - The first name of the user  
-last_name - The last name of the user  
-location - The city, state where the user resides  
-date_of_birth - DOB of user - Formatted as “MM/DD/YYYY”
-
 | Parameter       | Type     | Description                             |
 | --------------- | -------- | --------------------------------------- |
 | `first_name`    | `string` | The first name of the user              |
 | `last_name`     | `string` | The last name of the user               |
 | `location`      | `string` | The city, state where the user resides  |
-| `date_of_birth` | `string` | DOB of user - Formatted as “MM/DD/YYYY” |
+| `date_of_birth` | `string` | DOB of user - Formatted as `MM/DD/YYYY` |
 
 Response 200 OK
 
@@ -150,10 +147,18 @@ Response 200 OK
 
 ### PATCH /users/:userID/friends/:friendID
 
-userID - The id of the user  
-friendID = the id of the person the user wants to send a friend request
+#### Parameters:
+
+| Parameter  | Description                                                  |
+| ---------- | ------------------------------------------------------------ |
+| `userID`   | The id of the user                                           |
+| `friendID` | The id of the person the user wants to send a friend request |
 
 #### Body Parameters
+
+| Parameter | Type     | Description                                                 |
+| --------- | -------- | ----------------------------------------------------------- |
+| `status`  | `string` | The status code which indicates the stage of the friendship |
 
 status - The status code which indicates the stage of the friendship  
 0 - Send a friend request  
@@ -170,7 +175,9 @@ Other codes that are only seen in /users/:id GET requests
 
 #### Parameters:
 
-id - The id of the authenticated user
+| Parameter | Description                      |
+| --------- | -------------------------------- |
+| `id`      | The id of the authenticated user |
 
 Response 204 No Content
 
@@ -182,7 +189,9 @@ Response 204 No Content
 
 #### Parameters:
 
-id - The id of the challenge
+| Parameter | Description             |
+| --------- | ----------------------- |
+| `id`      | The id of the challenge |
 
 Response 200 OK
 
@@ -233,15 +242,13 @@ Example:
 
 #### Body Parameters:
 
-name - The name of the challenge
-
-start_date - The start date of the challenge MM-DD-YYYY
-
-activity - The type of activity
-
-measurement - The unit of measurement to measure activity
-
-duration - The number of days of the challenge
+| Parameter     | Type     | Description                                  |
+| ------------- | -------- | -------------------------------------------- |
+| `name`        | `string` | The name of the challenge                    |
+| `start_date`  | `string` | The start date of the challenge `MM-DD-YYYY` |
+| `activity`    | `string` | The type of activity                         |
+| `measurement` | `string` | The unit of measurement to measure activity  |
+| `duration`    | `string` | The number of days of the challenge          |
 
 ## Update a challenge
 
@@ -249,19 +256,19 @@ duration - The number of days of the challenge
 
 #### Parameters:
 
-id - The id of the challenge
+| Parameter | Description             |
+| --------- | ----------------------- |
+| `id`      | The id of the challenge |
 
-#### Body Parameters: All optional
+#### Body Parameters:
 
-name - The name of the challenge
-
-start_date - The start date of the challenge MM-DD-YYYY
-
-activity - The type of activity
-
-measurement - The unit of measurement to measure activity
-
-duration - The number of days of the challenge
+| Parameter     | Type     | Description                                  |
+| ------------- | -------- | -------------------------------------------- |
+| `name`        | `string` | The name of the challenge                    |
+| `start_date`  | `string` | The start date of the challenge `MM-DD-YYYY` |
+| `activity`    | `string` | The type of activity                         |
+| `measurement` | `string` | The unit of measurement to measure activity  |
+| `duration`    | `string` | The number of days of the challenge          |
 
 ## Delete a challenge
 
@@ -269,7 +276,9 @@ duration - The number of days of the challenge
 
 #### Parameters:
 
-id - The id of the challenge
+| Parameter | Description             |
+| --------- | ----------------------- |
+| `id`      | The id of the challenge |
 
 Response: 204 No Content
 
@@ -279,11 +288,16 @@ Response: 204 No Content
 
 #### Parameters:
 
-challengeID - The id of the challenge
+| Parameter       | Description               |
+| --------------- | ------------------------- |
+| `challengeID`   | The id of the challenge   |
+| `participantID` | The id of the participant |
 
-participantID - The user id of the invited user
+#### Body Parameters:
 
-status - Indicates the stage of where the user is in the accepting/rejecting the challenge
+| Parameter | Type     | Description                                                                       |
+| --------- | -------- | --------------------------------------------------------------------------------- |
+| `status`  | `string` | Indicates the stage of where the user is in the accepting/rejecting the challenge |
 
 0 - Send challenge request  
 1 - Pending challenge request  
@@ -296,9 +310,10 @@ status - Indicates the stage of where the user is in the accepting/rejecting the
 
 #### Parameters:
 
-challengeID - The id of the challenge
-
-participantID - The user id of the participant
+| Parameter       | Description               |
+| --------------- | ------------------------- |
+| `challengeID`   | The id of the challenge   |
+| `participantID` | The id of the participant |
 
 ## Write a message on the message board of a challenge
 
@@ -306,41 +321,47 @@ participantID - The user id of the participant
 
 #### Parameters:
 
-id - The id of the challenge
+| Parameter | Description             |
+| --------- | ----------------------- |
+| `id`      | The id of the challenge |
 
 #### Body Parameters:
 
-content \*optional - The content of the message
+| Parameter | Type     | Description                                   |
+| --------- | -------- | --------------------------------------------- |
+| `content` | `string` | The content of the message                    |
+| `reply`   | `string` | The id of the message the user is replying to |
 
-reply \*optional - The id of the message the user is replying to
+Response: 200 OK
 
-Requires a valid token of a user that is a participant of the challenge
-
-# Update a message on the message board of a challenge
+## Update a message on the message board of a challenge
 
 ### PATCH /challenges/:challengeID/messages/:messageID
 
 #### Parameters:
 
-challengeID - The id of the challenge
+| Parameter       | Description               |
+| --------------- | ------------------------- |
+| `challengeID`   | The id of the challenge   |
+| `participantID` | The id of the participant |
 
-messageID - The id of the message
+#### Body Parameters:
 
-#### Body Parameters: All optional
+| Parameter | Type     | Description                                   |
+| --------- | -------- | --------------------------------------------- |
+| `content` | `string` | The content of the message                    |
+| `reply`   | `string` | The id of the message the user is replying to |
 
-content \*optional - The content of the message
-
-reply \*optional - The id of the message the user is replying to
-
-# Delete a message on the mesage board of a challenge
+## Delete a message on the mesage board of a challenge
 
 ### DELETE /challenges/:challengeID/messages/:messageID
 
 #### Parameters:
 
-challengeID - The id of the challenge
-
-messageID - The id of the message
+| Parameter     | Description             |
+| ------------- | ----------------------- |
+| `challengeID` | The id of the challenge |
+| `messageID`   | The id of the message   |
 
 Response: 204 No Content
 
@@ -352,9 +373,10 @@ Response: 204 No Content
 
 #### Body Parameters:
 
-recipient - The id of the recipent
-
-content - message content
+| Parameter   | Type     | Description            |
+| ----------- | -------- | ---------------------- |
+| `recipient` | `string` | The id of the recipent |
+| `content`   | `string` | The message content    |
 
 ## Get a conversation
 
@@ -362,7 +384,9 @@ content - message content
 
 #### Parameters:
 
-id - The id of the conversation
+| Parameter | Description                |
+| --------- | -------------------------- |
+| `id`      | The id of the conversation |
 
 Response: 200 OK
 
@@ -403,9 +427,10 @@ Example:
 
 #### Parameters:
 
-conversationID - The id of the conversation
-
-messageID - The id of the message
+| Parameter        | Description                |
+| ---------------- | -------------------------- |
+| `conversationID` | The id of the conversation |
+| `messageID`      | The id of the message      |
 
 ## Update a message
 
@@ -413,21 +438,26 @@ messageID - The id of the message
 
 #### Parameters
 
-conversationID - The id of the conversation
-
-messageID - The id of the message
+| Parameter        | Description                |
+| ---------------- | -------------------------- |
+| `conversationID` | The id of the conversation |
+| `messageID`      | The id of the message      |
 
 Response: 200 OK
 
 #### Body Parameter:
 
-content - The updated message
+| Parameter | Type     | Description                 |
+| --------- | -------- | --------------------------- |
+| `content` | `string` | The updated message content |
 
 ## Leave a conversation
 
 ### DELETE /conversations/:conversationID/participants
 
-conversationID - The id of the conversation
+| Parameter        | Type     | Description                |
+| ---------------- | -------- | -------------------------- |
+| `conversationID` | `string` | The id of the conversation |
 
 Response: 200 OK
 
@@ -437,8 +467,10 @@ Response: 200 OK
 
 #### Parameters:
 
-conversationID - The id of the conversation  
-messageID = The id of the message
+| Parameter        | Description                |
+| ---------------- | -------------------------- |
+| `conversationID` | The id of the conversation |
+| `messageID`      | The id of the message      |
 
 Response: 200 OK
 
@@ -450,17 +482,14 @@ Response: 200 OK
 
 #### Body Parameters:
 
-description \*optional - A description of the activity
-
-type - The type of activity i.e. BiKING, RUNNING
-
-date - The date of the activity
-
-measurement - The unit of measurement to measure activity such as steps or time
-
-units - The units the activity is measured in
-
-value: The amount of activity
+| Parameter     | Type     | Description                                                       |
+| ------------- | -------- | ----------------------------------------------------------------- |
+| `description` | `string` | A description of the activity (optional)                          |
+| `type`        | `string` | The type of activity i.e. BiKING, RUNNING                         |
+| `date`        | `string` | The date of the activity                                          |
+| `measurement` | `string` | The unit of measurement to measure activity such as steps or time |
+| `units`       | `string` | The units the activity is measured in                             |
+| `value`       | `string` | The amount of activity                                            |
 
 Response: 200 OK
 
@@ -470,21 +499,20 @@ Response: 200 OK
 
 #### Parameters:
 
-id - The id of the activity you wish to update
+| Parameter | Description            |
+| --------- | ---------------------- |
+| `id`      | The id of the activity |
 
-#### Body Parameters: All optional
+#### Body Parameters:
 
-description - A description of the activity
-
-type - The type of activity i.e. BiKING, RUNNING
-
-date - The date of the activity
-
-measurement - The unit of measurement to measure activity such as steps or time
-
-units - The units the activity is measured in
-
-value: The amount of activity
+| Parameter     | Type     | Description                                                       |
+| ------------- | -------- | ----------------------------------------------------------------- |
+| `description` | `string` | A description of the activity                                     |
+| `type`        | `string` | The type of activity i.e. BiKING, RUNNING                         |
+| `date`        | `string` | The date of the activity                                          |
+| `measurement` | `string` | The unit of measurement to measure activity such as steps or time |
+| `units`       | `string` | The units the activity is measured in                             |
+| `value`       | `string` | The amount of activity                                            |
 
 Reponse: 200 OK
 
@@ -494,7 +522,9 @@ Reponse: 200 OK
 
 #### Parameters:
 
-id - The id of the activity you wish to update
+| Parameter | Description            |
+| --------- | ---------------------- |
+| `id`      | The id of the activity |
 
 Response: 200 OK
 
@@ -524,15 +554,14 @@ Response: 200 OK
 
 ### GET /activities/?user_id={{userID}}&type={{type}}&start_date={start_date}&end_date={end_date}
 
-#### Query Parameters
+#### Query Parameters:
 
-user_id - The user id of the actitivies
-
-type - The type of activity i.e. BiKING, RUNNING
-
-start_date - the beginning date in YYYY-MM-DD
-
-end_date - the end date in YYYY-MM-DD
+| Parameter    | Description                                  |
+| ------------ | -------------------------------------------- |
+| `user_id`    | The user id of the actitivies                |
+| `type`       | The type of activity i.e. BiKING, RUNNING    |
+| `start_date` | The beginning date formatted as `YYYY-MM-DD` |
+| `end_date`   | The end date formatted as `YYYY-MM-DD`       |
 
 start_date and end_date are inclusive, all activities between those two dates will be returned
 
