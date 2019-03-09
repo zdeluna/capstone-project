@@ -450,7 +450,7 @@ Example:
 
 Response: 200 OK
 
-#### Body Parameter:
+#### Body Parameters:
 
 | Parameter | Type     | Description                 |
 | --------- | -------- | --------------------------- |
@@ -459,6 +459,8 @@ Response: 200 OK
 ## Leave a conversation
 
 ### DELETE /conversations/:conversationID/participants
+
+#### Parameters:
 
 | Parameter        | Type     | Description                |
 | ---------------- | -------- | -------------------------- |
