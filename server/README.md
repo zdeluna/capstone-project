@@ -137,6 +137,13 @@ last_name - The last name of the user
 location - The city, state where the user resides  
 date_of_birth - DOB of user - Formatted as “MM/DD/YYYY”
 
+| Parameter       | Type     | Description                             |
+| --------------- | -------- | --------------------------------------- |
+| `first_name`    | `string` | The first name of the user              |
+| `last_name`     | `string` | The last name of the user               |
+| `location`      | `string` | The city, state where the user resides  |
+| `date_of_birth` | `string` | DOB of user - Formatted as “MM/DD/YYYY” |
+
 Response 200 OK
 
 ## Send/Accept/Reject a friend request
