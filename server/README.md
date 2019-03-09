@@ -71,13 +71,14 @@ Example:
 | `username` | `string` | The email address of the user |
 | `password` | `string` | The password of the user      |
 
-Response: 200 OK { token: token}
+Response: 200 OK
 
-Example:
+Example Response:
 
 ```
 {
-    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjVjNGRlNjcwZTE5MTI3MWVlYmM4MjRlNCJ9LCJpYXQiOjE1NDg2MDk0NjB9.9Y3UHTC-DpoofVyVqw3devTR6BzCD9GNqwaml2LCqOQ"
+    "token": "eyJhbGciOiJIUzI1KiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjVjODNlMjQ4ZDlhOTliMWU3NjlkZGMwMyJ9LCJpYXQiOjE1NTIxNDcwMjR9.Vflm1hxHHrZ-LROwWK27S5yA14DM44dL1U3gpIFC95Q",
+    "user_id": "5c83e248d9a99b1e769ddc03"
 }
 ```
 
@@ -99,11 +100,13 @@ Example:
 
 #### Parameters:
 
-id - The id of the authenticated user
+| Parameter | Description        |
+| --------- | ------------------ |
+| `id`      | The id of the user |
 
 Response 200 OK
 
-Example: (Subject to change, will be much longer once we develop records, exercise, etc
+Example:
 
 ```
 {
@@ -130,7 +133,9 @@ Example: (Subject to change, will be much longer once we develop records, exerci
 
 #### Parameters:
 
-id - The id of the authenticated user
+| Parameter | Description        |
+| --------- | ------------------ |
+| `id`      | The id of the user |
 
 Body Parameters - All optional
 
