@@ -39,8 +39,10 @@ Authorization: Bearer `<token>`
 
 #### Body parameters:
 
-username - The email address of the user  
-password - The password of the user
+| Parameter  | Type     | Description                   |
+| ---------- | -------- | ----------------------------- |
+| `username` | `string` | The email address of the user |
+| `password` | `string` | The password of the user      |
 
 Response: 200 OK
 
