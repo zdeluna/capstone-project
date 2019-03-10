@@ -1,0 +1,20 @@
+<!-- main container -->
+<div class="container">
+  <div class='header'>
+    <h1>Activities</h1>
+    <button (click)='back()' class="btn btn-info">Back</button>
+  </div>
+  <mat-grid-list class='text-center' cols="2" rowHeight="1:1">
+    <mat-grid-tile *ngFor='let option of options'>
+      <a 
+        [routerLink]='option.value'>
+          <img class="decision-button-svg" 
+            [src]="option.location" 
+            [alt]="option.view"/>
+              <div>
+                {{option.view}}
+              </div>
+      </a>
+    </mat-grid-tile>
+  </mat-grid-list>
+</div>

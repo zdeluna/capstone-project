@@ -1,5 +1,19 @@
 const { check, validationResult } = require("express-validator/check");
 
+exports.addParticipant = [
+  check("status")
+    .exists()
+    .withMessage("TO_ADD_A_PARTICIPANT_A_STATUS_CODE_MUST_BE_SENT"),
+  (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(422).json({ errors: errors.array() });
+    } else {
+      return next();
+    }
+  }
+];
+
 exports.createChallenge = [
   check("name")
     .exists()
@@ -40,6 +54,20 @@ exports.createMessage = [
   check("content")
     .exists()
     .withMessage("MESSAGE_CONTENT_BODY_PARAMETER_MUST_NOT_BE_EMPTY"),
+  check("reply").optional(),
+  (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(422).json({ errors: errors.array() });
+    } else {
+      return next();
+    }
+  }
+];
+
+exports.updateMessage = [
+  check("content").optional(),
+  check("reply").optional(),
   (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {

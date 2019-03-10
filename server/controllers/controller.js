@@ -39,9 +39,9 @@ exports.getEntityFromDB = async (model, id) => {
  * @returns Promise containing entities
  */
 
-exports.getAllEntitiesFromDB = async model => {
+exports.getAllEntitiesFromDB = async (model, query) => {
   return new Promise((resolve, reject) => {
-    model.find({}, function(error, entities) {
+    model.find(query, function(error, entities) {
       if (error) {
         reject({ statusCode: 422, msg: error.message });
       }
@@ -170,9 +170,84 @@ exports.sendErrorResponse = (res, error) => {
 
 exports.checkIfUserIsAuthorized = async (id_of_user_to_update, req) => {
   return new Promise((resolve, reject) => {
-    if (id_of_user_to_update !== req.user._id) {
+    if (id_of_user_to_update != req.user._id) {
       reject({ statusCode: 403, msg: "USER_IS_NOT_AUTHORIZED" });
     }
     resolve();
+  });
+};
+
+/**
+ * Check to see if user is the original sender of a message, if they are not throw an error object
+ * @param {string} message_id
+ * @param {string} user_id
+ * @returns Promise
+ */
+
+exports.checkIfUserIsSenderOfMessage = async (message_id, user_id) => {
+  return new Promise((resolve, reject) => {
+    messageModel.findOne({ _id: message_id }, function(error, message) {
+      if (error) reject({ statusCode: 500, msg: error.message });
+
+      if (message.sender != user_id)
+        reject({
+          statusCode: 403,
+          msg: "USER_IS_NOT_SENDER_OF_MESSAGE"
+        });
+      else resolve();
+    });
+  });
+};
+
+/**
+ * Check to see if an id already exists within an array
+ * @param {Model} model
+ * @param {string} model_id
+ * @param {string} fieldName
+ * @param {string} idToSearch
+ * @returns Promise
+ */
+
+exports.checkIfIDAlreadyExistsWithinArrayField = async (
+  model,
+  model_id,
+  fieldName,
+  idToSearch,
+  additionalFieldName
+) => {
+  return new Promise((resolve, reject) => {
+    let alreadyExists = false;
+    model.findOne({ _id: model_id }, function(error, entity) {
+      if (error) reject({ statusCode: 500, msg: error.message });
+
+      // Go through each of the elements of the array and if the id is found then set the flag variable to true
+      let arrayToSearch = entity[fieldName];
+
+      if (!additionalFieldName) {
+        for (i = 0; i < arrayToSearch.length; i++) {
+          if (arrayToSearch[i] == idToSearch) {
+            alreadyExists = true;
+            break;
+          }
+        }
+      } else {
+        for (i = 0; i < arrayToSearch.length; i++) {
+          console.log("in array: " + arrayToSearch[i]);
+          if (arrayToSearch[i][additionalFieldName] == idToSearch) {
+            alreadyExists = true;
+            break;
+          }
+        }
+      }
+
+      if (alreadyExists == true) {
+        let message =
+          "CANNOT_BE_ADDED_SINCE_ID_IS_ALREADY_IN_" + fieldName.toUpperCase();
+        reject({
+          statusCode: 422,
+          msg: message
+        });
+      } else resolve();
+    });
   });
 };

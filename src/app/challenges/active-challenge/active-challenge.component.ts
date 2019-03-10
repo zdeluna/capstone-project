@@ -165,7 +165,6 @@ export class ActiveChallengeComponent implements OnInit {
   }
 
   checkIfChallengeIsOver() {
-    //return new Date() > this.endDate
-    return false
+    return new Date() > this.endDate
   }
 }

@@ -1,0 +1,15 @@
+/* div {
+    border: 1px dashed black;
+} */
+
+mat-grid-tile {
+    background: white;
+    padding: 5px;
+}
+
+.header {
+    display: flex;
+    flex-direction: row;
+    margin: 20px 0 0 0;
+}
+

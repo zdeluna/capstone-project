@@ -1,31 +1,84 @@
 <!-- <div class='container'> -->
-  <body>
+<body>
+
+  <!-- profile header -->
+  <h1 class='profile-name'>Profile</h1>
+
+  <!-- gray part -->
   <div class='rounded header-col'>
-    <h1 class='profile-name'>Profile</h1>
-    <img src="assets/flat-icons/user-no-photo.svg" class="img-circle decision-button-svg">
-    <h1>{{user.username}}</h1>
-    <h6>Seattle, WA</h6>
+    <div class='header-edit'>
+      <h1>{{user.username}}</h1>
+      <i *ngIf='edit' class="far fa-edit"></i>
+    </div>
+    <img src={{user.photoURL}} 
+    class="img-circle decision-button-svg">
+    <div 
+      class="b row col-12 justify-content-between">
+      <h5>{{user.location.city}}, {{user.location.state}}</h5>
+      <button 
+        type='button'
+        class="btn btn-info btn-sm"
+        (click)='editProfile()'>
+          Edit
+      </button>
+    </div>
   </div>
-  <div class='radio-buttons-left'>
-    <button class='rounded btn-primary'>General</button>
-    <button class='rounded btn-primary'>Goals</button>
-    <button class='rounded btn-primary'>Records</button>
+
+  <!-- toolbar -->
+  <div
+    class='btn-group'>
+      <button 
+      *ngFor='let option of btnOptions'
+        type="button" 
+        class="btn btn-info">
+          {{option}}
+      </button>
   </div>
-  <div class='rounded row-6'>  
+
+  <!-- distance data -->
+  <div id='distance' class='rounded row-6'>  
+    <h3 class="text-left">Distance: </h3>
     <div class='another'>
-      <div id={{sport.name}} *ngFor='let sport of sports' class='rounded col-md-4'>
-        <h3>{{sport.name}}</h3>
-        <p>Total: {{sport.miles}} miles</p>
+      <mat-grid-list 
+        cols='1'
+        rowHeight='4:1'
+        id='sport'
+        *ngFor='let sport of sports' 
+        class='rounded col-md-4'>
+          <mat-grid-tile>
+            <h3>{{sport.name}}</h3>
+            <!-- <p>Total: {{sport.miles}} miles</p> -->
+          </mat-grid-tile>
+      </mat-grid-list>
+    </div>
+
+    <div class='space'>
+      <br>
+    </div>
+
+    <!-- time data -->
+    <div id='time' class='rounded row-6'>  
+      <h3 class="text-left">Time: </h3>
+      <div class='another'>
+        <mat-grid-list 
+          cols='1'
+          rowHeight=''
+          id='sport'
+          *ngFor='let sport of sports' 
+          class='rounded col-md-4'>
+            <mat-grid-tile>
+              <h3>{{sport.name}}</h3>
+              <!-- <p>Total: {{sport.miles}} miles</p> -->
+            </mat-grid-tile>
+        </mat-grid-list>
       </div>
     </div>
-    <div id='achievments' class='rounded col-md-3'>
-        Achievements
-        <div id='inner' class='row'></div>
-    </div>
-
   </div>
+
+  <!-- not sure what si going here -->
   <div id='more' class='rounded row-6'>
-      <div class='inside-more'><h6>More Here!</h6></div>
+      <div class='inside-more'>
+        <h3>More Here!</h3>
+      </div>
   </div>
-
 </body>
