@@ -10,7 +10,6 @@ import { AuthService } from '../services/auth.service';
 import { Router} from '@angular/router';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { UserService } from '../services/user.service';
-//import {MatProgressSpinnerModule} from '@angular/material';
 
 
 @Component({
@@ -70,7 +69,7 @@ export class RegistrationComponent implements OnInit {
     
     //fill user service object with what user 
     //typed into form
-    this.userService.setUserDetails(this.registrationForm);
+    this.userService.setUserDetailsFromForm(this.registrationForm);
     this.shouldLogIn =  this.registrationForm.value.shouldLogIn;
     
     //calls api/signup
@@ -84,7 +83,7 @@ export class RegistrationComponent implements OnInit {
             .subscribe( //calls api/login
               data => {
                 this.authService.setRememberMe(true); 
-                this.authService.userLoggedIn(data); //routes to home
+                this.authService.logUserIn(data); //routes to home
               },
               //error logging in automatically after signing up 
               //if this happens probably something 

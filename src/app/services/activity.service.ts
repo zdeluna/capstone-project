@@ -11,53 +11,62 @@ export class ActivityService {
 
   constructor(
     private _http : HttpClient,
-    private _db : DatabaseService,
     private _user : UserService
   ) { }
 
-  _url = 'https://capstone-wazn.appspot.com/api/activities/';
-  token = this._db.token; //token set here
-  httpOptions = {
-    headers: new HttpHeaders({
-      'Content-Type':  'application/json',
-      'Authorization': 'Bearer ' + this.token
-    })
-  }
-
+  _url: string = 'https://capstone-wazn.appspot.com/api/activities/';
+  token: string;
+  httpOptions = {}
   activity: Activity = new Activity();
+
+
+  //sets token
+  getHeaders(token: string) {
+    let httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        'Authorization': 'Bearer ' + token
+      })
+    }
+    return httpOptions;
+  }
  
 
   //creates new activity
   sendActivity() { 
-    console.log('token used to create new activity' + this.token);
+    let headers = this.getHeaders(this._user.getToken())
+    console.log('headers about to be sent' + headers);
     console.log('local activity object about to be sent' + this.activity);
-    return this._http.post<any>(this._url, this.activity, this.httpOptions);
+    return this._http.post<any>(this._url, this.activity, headers);
   }
+
 
   //replace gets activities
   getUserActivities() {
 
     //create query for url
-    let type = 'Rowing';
-    let userID: String = this._user.getCurrentUserId();
-    console.log('user id to get activity: ' + userID);
+    let type = 'Running'; //later loop through all activities
+    let userID = this._user.getCurrentUserId();
     
     //change to date picker later, hardcoded for now
-    let startDate = '2019/3/3';
-    let endDate = '2019/31/3';
+    let startDate = '2019-3-1';
+    let endDate = '2019-3-31';
 
     //build url
-    this._url = 
+    let url = 
       this._url + `?user_id=${userID}&type=${type}&start_date=${startDate}&end_date=${endDate}`;
 
-    this.token = this._db.token; //shouldn't need this put using for now
+    //set token for auth
+    let headers = this.getHeaders(this._user.getToken())
 
-    console.log('full url used to get activities: ' + this._url);
-    console.log('token used to get activities: ' + this.token);
-    
+    console.log('user id to get activity: ' + userID);
+    console.log('full url used to get activities: ' + url);
+    console.log('headers about to be sent' + JSON.stringify(headers));
+
     //this is the Get request to get activities
-    return this._http.get(this._url, this.httpOptions);
+    return this._http.get(url, headers);
   }
+
 
   //fills the local object from the add activity form
   fillActivity(activity: Activity) {

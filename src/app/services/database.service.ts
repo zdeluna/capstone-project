@@ -17,11 +17,11 @@ export class DatabaseService {
   uri = 'https://capstone-wazn.appspot.com/api'
   user: User = new User()
 
-  token:string;
+  // token:string;
   httpOptions = {
     headers: new HttpHeaders({
       'Content-Type':  'application/json',
-      'Authorization': 'Bearer ' + this.token
+      'Authorization': 'Bearer ' + this.userService.getToken()
     })
   };
 
@@ -57,10 +57,10 @@ export class DatabaseService {
     return this.getUser(this.userService.getCurrentUserId())
   }
 
-  setToken(token: string) {
-    console.log('dbService token: ' + token);
-    this.token = token;
-  }
+  // setToken(token: string) {
+  //   console.log('dbService token: ' + token);
+  //   this.token = token;
+  // }
 
   getUserHardCoded(id: string): User {
     let user = new User
