@@ -88,7 +88,7 @@ export class CreateChallengeComponent implements OnInit {
       let participants = ['5c79ac775891120006658fee', '5c79ac955891120006658fef'] // <---- temp REMOVE THIS
       if(this.form.value.invitees.length > 0) {
         this.dbService.inviteParticipants(challenge['_id'], participants)
-        this.router.navigate([`/challenges/${challenge['_id']}`])
+        setTimeout(() => this.router.navigate([`/challenges/${challenge['_id']}`]), 2000) //have to do this bc no response is sent
       } else {
         this.router.navigate([`/challenges/${challenge['_id']}`])
       }

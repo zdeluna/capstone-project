@@ -71,7 +71,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
     MatCheckboxModule,
     HttpClientModule,
     ScrollDispatchModule,
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: true })
   ],
   providers: [AuthGuard],
   bootstrap: [AppComponent]
