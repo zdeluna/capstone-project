@@ -50,7 +50,6 @@ export class ActiveChallengeComponent implements OnInit {
 
     this.route.paramMap.subscribe(params => {
       this.dbService.getChallenge(params.get('id')).subscribe(res => {
-        console.log(res)
         this.challenge.id = res['_id']
         this.challenge.name = res['name']
         this.challenge.activity = res['activity']

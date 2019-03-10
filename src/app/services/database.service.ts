@@ -21,12 +21,7 @@ export class DatabaseService {
   user: User = new User()
 
   token:string;
-  httpOptions = {
-    headers: new HttpHeaders({
-      'Content-Type':  'application/json',
-      'Authorization': 'Bearer ' + this.token
-    })
-  };
+  httpOptions = {}
 
   addChallenge(challenge: Challenge) {
     let c = {
@@ -91,8 +86,13 @@ export class DatabaseService {
   }
 
   setToken(token: string) {
-    console.log('dbService token: ' + token);
-    this.token = token;
+    this.token = token
+    this.httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        'Authorization': 'Bearer ' + this.token
+      })
+    }
   }
 
   getUserHardCoded(id: string): User {
