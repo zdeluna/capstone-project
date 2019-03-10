@@ -17,6 +17,14 @@ const {
   checkIfIDAlreadyExistsWithinArrayField
 } = require("./controller.js");
 
+/**
+ * Check to see if challenge request alredy exists for user
+ * @param {string} challengeID
+ * @param {string} userID
+ * @param {string} status
+ * @returns Promise
+ */
+
 const checkIfChallengeRequestAlreadyExists = async (
   challengeID,
   userID,
@@ -41,11 +49,11 @@ const checkIfChallengeRequestAlreadyExists = async (
 /**
  * Check to see if user is a participant of a challenge, if they are not throw an error object
  * @param {string} challengeID
- * @param {string} user_id
+ * @param {string} userID
  * @returns Promise
  */
 
-const checkIfUserIsParticipantOfChallenge = async (challenge_id, user_id) => {
+const checkIfUserIsParticipantOfChallenge = async (challenge_id, userID) => {
   return new Promise((resolve, reject) => {
     let userIsParticipant = false;
     challengeModel.findOne({ _id: challenge_id }, function(error, challenge) {
@@ -53,7 +61,7 @@ const checkIfUserIsParticipantOfChallenge = async (challenge_id, user_id) => {
 
       // Go through each of the challenge participants and determine if the passed in user_id is a participant, and set the flag variable to true
       for (i = 0; i < challenge.participants.length; i++) {
-        if (challenge.participants[i] == user_id) {
+        if (challenge.participants[i] == userID) {
           userIsParticipant = true;
         }
       }
