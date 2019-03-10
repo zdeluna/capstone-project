@@ -27,6 +27,7 @@ import { ActivityComponent } from './activity/activity.component';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { AddActivityComponent } from './activity/add-activity/add-activity.component';
 import { ViewActivityComponent } from './activity/view-activity/view-activity.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 @NgModule({
   declarations: [
@@ -69,7 +70,8 @@ import { ViewActivityComponent } from './activity/view-activity/view-activity.co
     MatGridListModule,
     MatCheckboxModule,
     HttpClientModule,
-    ScrollDispatchModule
+    ScrollDispatchModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [AuthGuard],
   bootstrap: [AppComponent]
