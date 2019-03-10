@@ -131,7 +131,6 @@ export class ActiveChallengeComponent implements OnInit {
             replies: []
           }
           this.setReplies(p)
-
           
           if(!p.parent) {
             this.challenge.messages.push(p)

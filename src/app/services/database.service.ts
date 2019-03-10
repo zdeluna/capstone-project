@@ -39,7 +39,7 @@ export class DatabaseService {
     return this.http.post(`${this.uri}/challenges`, c, this.httpOptions)
   }
 
-  inviteParticipants(id: string, participants: any[]): Observable<any> {
+  inviteParticipants(id: string, participants: any[]) {
     let status = {status: "0"}
 
     if(participants.length > 1) {
@@ -49,7 +49,7 @@ export class DatabaseService {
       })
     } else {
       let url = `${this.uri}/challenges/${id}/participants/${participants.pop()}`
-      return this.http.post(url, status, this.httpOptions)
+      this.http.post(url, status, this.httpOptions)
     }
   }
 
