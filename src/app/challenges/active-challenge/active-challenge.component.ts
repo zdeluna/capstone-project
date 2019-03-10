@@ -87,7 +87,9 @@ export class ActiveChallengeComponent implements OnInit {
         let user: User = {
           id: res['_id'],
           username: res['username'],
-          password: res['password']
+          password: res['password'],
+          firstName: "first",
+          lastName: "last"
         }
 
         let p: Leaderboard = {
@@ -106,7 +108,9 @@ export class ActiveChallengeComponent implements OnInit {
         let user: User = {
           id: res['_id'],
           username: res['username'],
-          password: res['password']
+          password: res['password'],
+          firstName: "first",
+          lastName: "last"
         }
 
         let p: Leaderboard = {
