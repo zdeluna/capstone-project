@@ -493,7 +493,7 @@ Response: 200 OK
 | ------------- | -------- | ----------------------------------------------------------------- |
 | `description` | `string` | A description of the activity (optional)                          |
 | `type`        | `string` | The type of activity i.e. BiKING, RUNNING                         |
-| `date`        | `string` | The date of the activity                                          |
+| `date`        | `string` | The date of the activity formatted as `MM-DD-YYYY`                |
 | `measurement` | `string` | The unit of measurement to measure activity such as steps or time |
 | `units`       | `string` | The units the activity is measured in                             |
 | `value`       | `string` | The amount of activity                                            |
@@ -516,7 +516,7 @@ Response: 200 OK
 | ------------- | -------- | ----------------------------------------------------------------- |
 | `description` | `string` | A description of the activity                                     |
 | `type`        | `string` | The type of activity i.e. BiKING, RUNNING                         |
-| `date`        | `string` | The date of the activity                                          |
+| `date`        | `string` | The date of the activity formatted as `MM-DD-YYYY`                |
 | `measurement` | `string` | The unit of measurement to measure activity such as steps or time |
 | `units`       | `string` | The units the activity is measured in                             |
 | `value`       | `string` | The amount of activity                                            |
@@ -567,8 +567,8 @@ Response: 200 OK
 | ------------ | -------------------------------------------- |
 | `user_id`    | The user id of the actitivies                |
 | `type`       | The type of activity i.e. BiKING, RUNNING    |
-| `start_date` | The beginning date formatted as `YYYY-MM-DD` |
-| `end_date`   | The end date formatted as `YYYY-MM-DD`       |
+| `start_date` | The beginning date formatted as `MM-DD-YYYY` |
+| `end_date`   | The end date formatted as `MM-DD-YYYY`       |
 
 start_date and end_date are inclusive, all activities between those two dates will be returned
 

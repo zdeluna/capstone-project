@@ -9,6 +9,7 @@ const auth = require("./routes/auth");
 const challenge = require("./routes/challenge");
 const conversation = require("./routes/conversation");
 const activity = require("./routes/activity");
+const record = require("./routes/record");
 
 const User = require("./models/user");
 const startMongo = require("./config/mongo");
@@ -43,6 +44,7 @@ app.use("/api/users", user);
 app.use("/api/challenges", challenge);
 app.use("/api/conversations", conversation);
 app.use("/api/activities", activity);
+app.use("/api/records", record);
 app.use("/api", auth);
 
 app.use(function(err, req, res, next) {

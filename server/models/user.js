@@ -67,6 +67,13 @@ let UserSchema = new Schema(
       }
     ],
 
+    records: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Record"
+      }
+    ],
+
     /* Additional fields if user signs in using Google */
     accessToken: String,
     provider: String,
