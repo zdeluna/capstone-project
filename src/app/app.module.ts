@@ -27,6 +27,8 @@ import { ActivityComponent } from './activity/activity.component';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { AddActivityComponent } from './activity/add-activity/add-activity.component';
 import { ViewActivityComponent } from './activity/view-activity/view-activity.component';
+import { ResolveGuard } from './resolve.guard';
+import { AuthService } from './services/auth.service';
 
 @NgModule({
   declarations: [
@@ -71,7 +73,7 @@ import { ViewActivityComponent } from './activity/view-activity/view-activity.co
     HttpClientModule,
     ScrollDispatchModule
   ],
-  providers: [AuthGuard],
+  providers: [AuthGuard, ResolveGuard, AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

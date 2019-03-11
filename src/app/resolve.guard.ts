@@ -21,7 +21,7 @@ constructor(
 //
 canActivate(): Observable<boolean> {
     let remembered: string = localStorage.getItem('loggedIn');
-    if(this.authService.isLoggedIn() && remembered) { 
+    if(this.authService.isLoggedIn()) { 
       return this.dbService.getUser(JSON.parse(remembered).id)
       .pipe(map(
           data => {
