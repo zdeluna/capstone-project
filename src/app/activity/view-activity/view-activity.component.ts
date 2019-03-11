@@ -1,16 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { ActivityService } from 'src/app/services/activity.service';
 import { Activity } from 'src/app/models/activity.model';
 import { UserService } from 'src/app/services/user.service';
 import { Activity_Type } from 'src/app/models/activity_type.model';
+import { MatSort, MatTableDataSource } from '@angular/material';
 
 @Component({
   selector: 'app-view-activity',
   templateUrl: './view-activity.component.html',
   styleUrls: ['./view-activity.component.css']
 })
-export class ViewActivityComponent implements OnInit {
+export class ViewActivityComponent implements OnInit, AfterViewInit {
 
   constructor(
     private location: Location,
@@ -21,18 +22,25 @@ export class ViewActivityComponent implements OnInit {
   error: boolean = false;
   activities: Array<Activity> = [];
   displayedColumns: string[] = ['type', 'measurement', 'value', 'units', 'date', 'description'];
-  dataSource;
+  dataSource : MatTableDataSource<Activity>;
 
+  @ViewChild(MatSort) sort: MatSort;
 
   ngOnInit() {
     this.getActivities();
+    // this.dataSource = this.activities;
+  }
+
+  ngAfterViewInit() {
+    // this.dataSource = this.activities;
+    // this.dataSource.sort = this.sort;
   }
 
   back() {
     this.location.back();
    }
 
-   getActivities() { 
+   getActivities(){ 
     this.activityService
     .getUserActivities()
     .subscribe(
@@ -53,7 +61,11 @@ export class ViewActivityComponent implements OnInit {
       }
 
       console.log(this.activities);
-      
+      this.dataSource = new MatTableDataSource(this.activities);
+      this.dataSource.sort = this.sort;
+      // this.dataSource.data = this.activities;
+      // this.dataSource.sort = this.sort;
+     
       },
       error => {
         this.error = true;
@@ -61,10 +73,8 @@ export class ViewActivityComponent implements OnInit {
       },
       () => {
         console.log('Completed');
-        this.dataSource = this.activities;
       }
     )
-    // this.error = true; //for now
    }
 
 }
