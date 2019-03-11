@@ -593,7 +593,7 @@ Response: 200 OK
 
 ### PATCH /records/:id
 
-####: Parameter:
+#### Parameter:
 
 | Parameter | Description          |
 | --------- | -------------------- |
@@ -638,7 +638,7 @@ Example:
 
 ### DELETE /records/:id
 
-####: Parameter:
+#### Parameter:
 
 | Parameter | Description          |
 | --------- | -------------------- |
