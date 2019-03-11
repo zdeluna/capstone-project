@@ -53,3 +53,38 @@ exports.deleteRecord = async (req, res) => {
     sendErrorResponse(res, error);
   }
 };
+
+exports.getRecord = async (req, res) => {
+  try {
+    let recordID = req.params.id;
+    let record = await getEntityFromDB(recordModel, recordID);
+    res.status(200).send(record);
+  } catch (error) {
+    sendErrorResponse(res, error);
+  }
+};
+
+exports.updateRecord = async (req, res) => {
+  try {
+    let recordID = req.params.id;
+    let userID = req.user._id;
+
+    // Use the matched data function of validator to return data that was validated thru express-validaotr. Optional data will be included
+    let validatedFields = {
+      $set: matchedData(req, { includeOptionals: false })
+    };
+
+    // Check to make sure user is only updating their own record
+    let record = await getEntityFromDB(recordModel, recordID);
+    await checkIfUserIsAuthorized(record.user_id, req);
+
+    let updatedRecord = await updateEntityFromDB(
+      recordModel,
+      recordID,
+      validatedFields
+    );
+    res.status(200).json(updatedRecord);
+  } catch (error) {
+    sendErrorResponse(res, error);
+  }
+};

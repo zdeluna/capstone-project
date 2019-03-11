@@ -12,14 +12,16 @@ router.post(
   validator.createRecord,
   controller.createRecord
 );
-/*
+
 router.patch(
   "/:id",
   authenticateUser,
-  validator.updateActivity,
-  controller.updateActivity
+  validator.updateRecord,
+  controller.updateRecord
 );
-*/
+
+router.get("/:id", authenticateUser, controller.getRecord);
+
 router.delete("/:id", authenticateUser, controller.deleteRecord);
 
 module.exports = router;
