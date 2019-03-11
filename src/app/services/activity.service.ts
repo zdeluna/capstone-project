@@ -3,6 +3,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Activity } from '../models/activity.model';
 import { DatabaseService } from '../services/database.service';
 import { UserService } from './user.service';
+import { forkJoin, Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -45,14 +47,14 @@ export class ActivityService {
   getUserActivities() {
 
     //create query for url
-    let type = 'Running'; //later loop through all activities
     let userID = this._user.getCurrentUserId();
     
     //change to date picker later, hardcoded for now
     let startDate = '2019-3-1';
     let endDate = '2019-3-31';
 
-    //build url
+    // build url
+    let type = "Running"
     let url = 
       this._url + `?user_id=${userID}&type=${type}&start_date=${startDate}&end_date=${endDate}`;
 
@@ -60,11 +62,19 @@ export class ActivityService {
     let headers = this.getHeaders(this._user.getToken())
 
     console.log('user id to get activity: ' + userID);
-    console.log('full url used to get activities: ' + url);
-    console.log('headers about to be sent' + JSON.stringify(headers));
+    // console.log('full url used to get activities: ' + url);
+
+    let running = this._http.get(url, headers)
+    type = "Biking"
+    url = 
+      this._url + `?user_id=${userID}&type=${type}&start_date=${startDate}&end_date=${endDate}`;
+    let biking = this._http.get<Activity>(url, headers);
+
+    // console.log(join);
+    
 
     //this is the Get request to get activities
-    return this._http.get(url, headers);
+    return forkJoin([running, biking]);
   }
 
 

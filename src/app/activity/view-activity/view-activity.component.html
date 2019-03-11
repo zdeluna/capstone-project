@@ -1,10 +1,22 @@
 <div class="container">
   <div class='header'>
-      <h1>Activities</h1>
-      <button (click)='back()' class="btn btn-info">Back</button>
-    </div>
+    <h1>Activities</h1>
+    <button (click)='back()' class="btn btn-info">Back</button>
+  </div>
+  <div>
+    <!-- <mat-spinner *ngIf='!activities' style="margin:0 auto;"></mat-spinner> -->
+  </div>
+  <div class='row'>
+    <ul *ngFor='let activity of activities'>
+      <li>{{activity.type}}</li>
+      <li>{{activity.measurement}}</li>
+      <li>{{activity.value}} {{activity.units}}</li>
+      <li>{{activity.date | date: mediumDate}}</li>
+      <li>Description: {{activity.description}}</li>
+    </ul>
+  </div>
   <mat-error *ngIf='error'>
     No activities posted! Add an activity to see it here!
   </mat-error>
-  
+
 </div>

@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { ActivityService } from 'src/app/services/activity.service';
+import { Activity } from 'src/app/models/activity.model';
+import { UserService } from 'src/app/services/user.service';
+import { Activity_Type } from 'src/app/models/activity_type.model';
 
 @Component({
   selector: 'app-view-activity',
@@ -11,10 +14,13 @@ export class ViewActivityComponent implements OnInit {
 
   constructor(
     private location: Location,
-    private activityService: ActivityService
+    private activityService: ActivityService,
+    private userService: UserService
   ) { }
 
   error: boolean = false;
+  activities: any = [];
+  t: Object;
 
   ngOnInit() {
     this.getActivities();
@@ -28,14 +34,32 @@ export class ViewActivityComponent implements OnInit {
     this.activityService
     .getUserActivities()
     .subscribe(
-      data=> {
-        this.error = false;
+      data => { //data is array of arrays
         console.log(data);
+        let indexCounter = 0;
+        for(var activityType = 0; activityType < data.length; activityType++)
+        {        
+          // console.log(data[activityType]); //for every activity array in data array
+  
+          for( var activity in data[activityType]) { //for every activity in array
+            // console.log('index: ' + activity);     
+            // console.log(data[activityType][activity]);
+          
+            this.activities[indexCounter] = data[activityType][activity];
+            indexCounter++;
+        }
+      }
+
+      console.log(this.activities);
+      
+        
+        
       },
       error => {
         this.error = true;
         console.log(error);
-      }
+      },
+      () => console.log('Completed')
     )
     // this.error = true; //for now
    }
