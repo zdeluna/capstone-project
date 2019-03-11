@@ -585,7 +585,7 @@ Response: 200 OK
 | Parameter | Type     | Description                                                           |
 | --------- | -------- | --------------------------------------------------------------------- |
 | `date`    | `string` | The date of the when the record was acheived formated as `MM-DD-YYYY` |
-| `type`    | `string` | The message content                                                   |
+| `type`    | `string` | The type of record                                                    |
 
 Response: 200 OK
 
@@ -606,7 +606,7 @@ Response: 200 OK
 | Parameter | Type     | Description                                                           |
 | --------- | -------- | --------------------------------------------------------------------- |
 | `date`    | `string` | The date of the when the record was acheived formated as `MM-DD-YYYY` |
-| `type`    | `string` | The message content                                                   |
+| `type`    | `string` | The type of record                                                    |
 
 Response: 200 OK
 
