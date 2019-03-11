@@ -4,16 +4,61 @@
     <button (click)='back()' class="btn btn-info">Back</button>
   </div>
   <div>
-    <!-- <mat-spinner *ngIf='!activities' style="margin:0 auto;"></mat-spinner> -->
+    <mat-spinner *ngIf='!activities' style="margin:0 auto;"></mat-spinner>
   </div>
   <div class='row'>
-    <ul *ngFor='let activity of activities'>
+    <!-- <ul *ngFor='let activity of activities'>
+        <li>{{activity.type}}</li>
+    </ul> -->
+    <table 
+      mat-table
+      [dataSource]='dataSource'
+      class='mat-elevation-z8 table table-striped table-bordered'>
+        <!-- type column -->
+        <ng-container matColumnDef="type">
+            <th mat-header-cell *matHeaderCellDef class='text-center'> <h5>Activity Type</h5> </th>
+            <td mat-cell *matCellDef="let activity"> {{activity.type}} </td>
+        </ng-container>
+
+        <!-- measurement column -->
+        <ng-container matColumnDef="measurement">
+            <th mat-header-cell *matHeaderCellDef class='text-center'> <h5>Measurement</h5> </th>
+            <td mat-cell *matCellDef="let activity"> {{activity.measurement}} </td>
+        </ng-container>
+
+        <!-- value column -->
+        <ng-container matColumnDef="value">
+            <th mat-header-cell *matHeaderCellDef  class='text-center'> <h5>Value </h5></th>
+            <td mat-cell *matCellDef="let activity"> {{activity.value}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="units">
+            <th mat-header-cell *matHeaderCellDef  class='text-center'> <h5>Units</h5> </th>
+            <td mat-cell *matCellDef="let activity"> {{activity.units}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="date">
+            <th mat-header-cell *matHeaderCellDef  class='text-center'> <h5>Date</h5> </th>
+            <td mat-cell *matCellDef="let activity"> {{activity.date | date: mediumDate}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="description">
+            <th mat-header-cell *matHeaderCellDef class='text-center'> <h5>Description</h5> </th>
+            <td mat-cell *matCellDef="let activity"> {{activity.description}} </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr> 
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+
+
+    <!-- <ul *ngFor='let activity of activities'>
       <li>{{activity.type}}</li>
       <li>{{activity.measurement}}</li>
       <li>{{activity.value}} {{activity.units}}</li>
       <li>{{activity.date | date: mediumDate}}</li>
       <li>Description: {{activity.description}}</li>
-    </ul>
+    </ul> -->
   </div>
   <mat-error *ngIf='error'>
     No activities posted! Add an activity to see it here!

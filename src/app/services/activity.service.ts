@@ -20,7 +20,7 @@ export class ActivityService {
   token: string;
   httpOptions = {}
   activity: Activity = new Activity();
-
+ 
 
   //sets token
   getHeaders(token: string) {
@@ -54,9 +54,9 @@ export class ActivityService {
     let endDate = '2019-3-31';
 
     // build url
-    let type = "Running"
-    let url = 
-      this._url + `?user_id=${userID}&type=${type}&start_date=${startDate}&end_date=${endDate}`;
+    // let type = "Running"
+    // let url = 
+    //   this._url + `?user_id=${userID}&type=${type}&start_date=${startDate}&end_date=${endDate}`;
 
     //set token for auth
     let headers = this.getHeaders(this._user.getToken())
@@ -64,17 +64,20 @@ export class ActivityService {
     console.log('user id to get activity: ' + userID);
     // console.log('full url used to get activities: ' + url);
 
-    let running = this._http.get(url, headers)
-    type = "Biking"
-    url = 
-      this._url + `?user_id=${userID}&type=${type}&start_date=${startDate}&end_date=${endDate}`;
-    let biking = this._http.get<Activity>(url, headers);
+    let join = []
+    for(let activity of this._user.user.activity_types) {
+      let url = this._url + `?user_id=${userID}&type=${activity.name}&start_date=${startDate}&end_date=${endDate}`;
+      let req = this._http.get(url, headers);
+      join.push(req)
+    }
+    
 
     // console.log(join);
     
 
     //this is the Get request to get activities
-    return forkJoin([running, biking]);
+    //help from https://coryrylan.com/blog/angular-multiple-http-requests-with-rxjs
+    return forkJoin(join);
   }
 
 
@@ -83,6 +86,10 @@ export class ActivityService {
     this.activity = activity;
     console.log('Service activity object: ' + JSON.stringify(this.activity));
     console.log('Activity argument object passed in: ' + JSON.stringify(activity));
+  }
+
+  buildUrl(name: string) {
+    
   }
 
 }

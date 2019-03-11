@@ -19,8 +19,10 @@ export class ViewActivityComponent implements OnInit {
   ) { }
 
   error: boolean = false;
-  activities: any = [];
-  t: Object;
+  activities: Array<Activity> = [];
+  displayedColumns: string[] = ['type', 'measurement', 'value', 'units', 'date', 'description'];
+  dataSource;
+
 
   ngOnInit() {
     this.getActivities();
@@ -34,7 +36,7 @@ export class ViewActivityComponent implements OnInit {
     this.activityService
     .getUserActivities()
     .subscribe(
-      data => { //data is array of arrays
+      data => { //data is array of arrays of objects
         console.log(data);
         let indexCounter = 0;
         for(var activityType = 0; activityType < data.length; activityType++)
@@ -52,14 +54,15 @@ export class ViewActivityComponent implements OnInit {
 
       console.log(this.activities);
       
-        
-        
       },
       error => {
         this.error = true;
         console.log(error);
       },
-      () => console.log('Completed')
+      () => {
+        console.log('Completed');
+        this.dataSource = this.activities;
+      }
     )
     // this.error = true; //for now
    }
