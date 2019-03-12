@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { AuthService } from './services/auth.service';
 import { Router } from '@angular/router';
 
@@ -8,6 +8,25 @@ import { Router } from '@angular/router';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+
+  //https://stackoverflow.com/questions/37642589/how-can-we-detect-when-user-closes-browser/37642657
+  @HostListener('window:unload', [ '$event' ])
+  unloadHandler(event) {
+    // if(!this.authService.rememberMe) {
+      
+    //   this.authService.logout();
+    // }
+    // else {
+    //   console.log('keeping you looged in!!');
+      
+    // }
+  }
+
+  @HostListener('window:beforeunload', [ '$event' ])
+  beforeUnloadHander(event) {
+    
+    
+  }
 
   constructor(
     private authService: AuthService,

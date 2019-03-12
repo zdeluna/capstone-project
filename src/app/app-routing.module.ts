@@ -10,6 +10,7 @@ import { RegistrationComponent } from './registration/registration.component';
 import {  AddActivityComponent } from './activity/add-activity/add-activity.component'
 import { ActivityComponent } from './activity/activity.component';
 import { AuthGuard } from './auth.guard';
+import { ResolveGuard } from './resolve.guard';
 import { ViewActivityComponent } from './activity/view-activity/view-activity.component';
 
 const routes: Routes = [
@@ -24,7 +25,7 @@ const routes: Routes = [
   {
     path: 'home', 
     component: HomeComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard, /*ResolveGuard*/]
   },
   {
     path: 'profile', 
@@ -59,7 +60,7 @@ const routes: Routes = [
   {
     path: 'activity/view',
     component: ViewActivityComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard, ResolveGuard]
   },
 ];
 

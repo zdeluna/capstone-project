@@ -77,7 +77,7 @@ export class LoginComponent implements OnInit {
     this.submitted = true;
 
     //fill user object based on form values and remember me
-    this.userService.setUserDetails(this.loginForm);
+    this.userService.setUserDetailsFromForm(this.loginForm);
     this.rememberUser =  this.loginForm.value.rememberUser;
 
     //sets remember me in auth service
@@ -88,7 +88,7 @@ export class LoginComponent implements OnInit {
     this.authService.login()
     .subscribe (
       data => {
-        this.authService.userLoggedIn(data);
+        this.authService.logUserIn(data);
       },
        //user typed in incorrect email or password
       error => {

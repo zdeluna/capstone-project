@@ -3,6 +3,7 @@ import { Challenge } from '../models/challenge.model';
 import { User } from '../models/user.model';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { UserService } from './user.service';
+import { map, catchError } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { pipeFromArray } from 'rxjs/internal/util/pipe';
 import { Post } from '../models/post.model';
@@ -20,8 +21,18 @@ export class DatabaseService {
   uri = 'https://capstone-wazn.appspot.com/api'
   user: User = new User()
 
+
+  // token:string;
+  httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type':  'application/json',
+      'Authorization': 'Bearer ' + this.userService.getToken()
+    })
+  };
+
   token:string;
   httpOptions = {}
+
 
   addChallenge(challenge: Challenge) {
     let c = {
@@ -78,7 +89,9 @@ export class DatabaseService {
   }
 
   getUser(id: string) {
-    return this.http.get(`${this.uri}/users/${id}`, this.httpOptions)
+    //got help from https://stackoverflow.com/questions/50203241/angular-5-to-6-upgrade-property-map-does-not-exist-on-type-observable
+    return this.http.get<any>(`${this.uri}/users/${id}`, this.httpOptions)
+    .pipe(map((res) => res));
   }
 
   getCurrentUser() {

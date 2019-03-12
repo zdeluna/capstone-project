@@ -25,4 +25,5 @@ export class User {
       {name: 'Elliptical'},
       {name: 'Rowing'}
     ];
+    token?: string;
   }

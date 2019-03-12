@@ -3,6 +3,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Activity } from '../models/activity.model';
 import { DatabaseService } from '../services/database.service';
 import { UserService } from './user.service';
+import { forkJoin, Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -11,59 +13,83 @@ export class ActivityService {
 
   constructor(
     private _http : HttpClient,
-    private _db : DatabaseService,
     private _user : UserService
   ) { }
 
-  _url = 'https://capstone-wazn.appspot.com/api/activities/';
-  token = this._db.token; //token set here
-  httpOptions = {
-    headers: new HttpHeaders({
-      'Content-Type':  'application/json',
-      'Authorization': 'Bearer ' + this.token
-    })
-  }
-
+  _url: string = 'https://capstone-wazn.appspot.com/api/activities/';
+  token: string;
+  httpOptions = {}
   activity: Activity = new Activity();
+ 
+
+  //sets token
+  getHeaders(token: string) {
+    let httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        'Authorization': 'Bearer ' + token
+      })
+    }
+    return httpOptions;
+  }
  
 
   //creates new activity
   sendActivity() { 
-    console.log('token used to create new activity' + this.token);
+    let headers = this.getHeaders(this._user.getToken())
+    console.log('headers about to be sent' + headers);
     console.log('local activity object about to be sent' + this.activity);
-    return this._http.post<any>(this._url, this.activity, this.httpOptions);
+    return this._http.post<any>(this._url, this.activity, headers);
   }
+
 
   //replace gets activities
   getUserActivities() {
 
     //create query for url
-    let type = 'Rowing';
-    let userID: String = this._user.getCurrentUserId();
-    console.log('user id to get activity: ' + userID);
+    let userID = this._user.getCurrentUserId();
     
     //change to date picker later, hardcoded for now
-    let startDate = '2019/3/3';
-    let endDate = '2019/31/3';
+    let startDate = '2019-3-1';
+    let endDate = '2019-3-31';
 
-    //build url
-    this._url = 
-      this._url + `?user_id=${userID}&type=${type}&start_date=${startDate}&end_date=${endDate}`;
+    // build url
+    // let type = "Running"
+    // let url = 
+    //   this._url + `?user_id=${userID}&type=${type}&start_date=${startDate}&end_date=${endDate}`;
 
-    this.token = this._db.token; //shouldn't need this put using for now
+    //set token for auth
+    let headers = this.getHeaders(this._user.getToken())
 
-    console.log('full url used to get activities: ' + this._url);
-    console.log('token used to get activities: ' + this.token);
+    console.log('user id to get activity: ' + userID);
+    // console.log('full url used to get activities: ' + url);
+
+    let join = []
+    for(let activity of this._user.user.activity_types) {
+      let url = this._url + `?user_id=${userID}&type=${activity.name}&start_date=${startDate}&end_date=${endDate}`;
+      let req = this._http.get(url, headers);
+      join.push(req)
+    }
     
+
+    // console.log(join);
+    
+
     //this is the Get request to get activities
-    return this._http.get(this._url, this.httpOptions);
+    //help from https://coryrylan.com/blog/angular-multiple-http-requests-with-rxjs
+    return forkJoin(join);
   }
+
 
   //fills the local object from the add activity form
   fillActivity(activity: Activity) {
     this.activity = activity;
     console.log('Service activity object: ' + JSON.stringify(this.activity));
     console.log('Activity argument object passed in: ' + JSON.stringify(activity));
+  }
+
+  buildUrl(name: string) {
+    
   }
 
 }

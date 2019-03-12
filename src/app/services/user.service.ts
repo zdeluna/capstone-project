@@ -18,8 +18,10 @@ export class UserService {
 
   user: User = new User()
 
-  setUserDetails(form: any) {
+  setUserDetailsFromForm(form: any) {
     this.user.username = form.value.email;
+    console.log(this.user.username);
+    
     this.user.password = form.value.password;
   }
 
@@ -29,5 +31,21 @@ export class UserService {
 
   setCurrentUserId(_id : string) {
     this.user.id = _id;
+  }
+
+  setToken(token:string) {
+    this.user.token = token;
+  }
+
+  getToken() {
+    return this.user.token;
+  }
+
+  setUsername(username: string){
+    this.user.username = username;
+  }
+
+  getUsername() {
+    return this.user.username;
   }
 }

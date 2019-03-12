@@ -2,9 +2,10 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatButtonModule, MatFormFieldModule, MatInputModule, MatOptionModule, MatSelectModule, MatListModule, MatRadioModule, MatSliderModule, MatCardModule, MatDatepickerModule, MatNativeDateModule, MatProgressBarModule, MatProgressSpinnerModule } from '@angular/material';
+import { MatButtonModule, MatFormFieldModule, MatInputModule, MatOptionModule, MatSelectModule, MatListModule, MatRadioModule, MatSliderModule, MatCardModule, MatDatepickerModule, MatNativeDateModule, MatProgressBarModule, MatProgressSpinnerModule, MatSortModule } from '@angular/material';
 import {ScrollDispatchModule} from '@angular/cdk/scrolling';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
+import {MatTableModule} from '@angular/material/table';
 import {MatGridListModule} from '@angular/material/grid-list';
 import { HttpClientModule } from '@angular/common/http';
 import { AngularFireModule } from '@angular/fire';  
@@ -27,6 +28,8 @@ import { ActivityComponent } from './activity/activity.component';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { AddActivityComponent } from './activity/add-activity/add-activity.component';
 import { ViewActivityComponent } from './activity/view-activity/view-activity.component';
+import { ResolveGuard } from './resolve.guard';
+import { AuthService } from './services/auth.service';
 import { ServiceWorkerModule } from '@angular/service-worker';
 
 @NgModule({
@@ -69,11 +72,13 @@ import { ServiceWorkerModule } from '@angular/service-worker';
     MatButtonToggleModule,
     MatGridListModule,
     MatCheckboxModule,
+    MatTableModule,
+    MatSortModule,
     HttpClientModule,
     ScrollDispatchModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: true })
   ],
-  providers: [AuthGuard],
+  providers: [AuthGuard, ResolveGuard, AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

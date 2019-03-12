@@ -7,30 +7,29 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { UserService } from './user.service';
-import { Router } from '@angular/router';
+import { Router, Resolve, ActivatedRouteSnapshot } from '@angular/router';
 import { DatabaseService } from './database.service';
+import { ActivityService } from './activity.service';
+import { Observable } from 'rxjs';
 
-@Injectable({
-  providedIn: 'root'
-})
-
+@Injectable()
 export class AuthService {
 
-  login_url = 'https://capstone-wazn.appspot.com/api/login';
-  signup_url = 'https://capstone-wazn.appspot.com/api/signup';
-  
   constructor(
     private _http: HttpClient,
     private userService: UserService,
     private router: Router,
     private dbService: DatabaseService,
-    ) { }
+    private activityService: ActivityService,
+  ) { }
 
-    //not sure these are needed
-    //I think setting to false is what to do
+
+  login_url = 'https://capstone-wazn.appspot.com/api/login';
+  signup_url = 'https://capstone-wazn.appspot.com/api/signup';
   localStatus: string = localStorage.getItem('loggedIn');
   loggedIn: boolean = JSON.parse(this.localStatus || 'false');
   rememberMe: boolean = false;
+  token: string;
 
   //signs user up if no account by posting to api/signup
   //subscriber logic in registration component
@@ -74,27 +73,35 @@ export class AuthService {
 
   //if user hit remember me, sets current user
   //and goes to home page skipping login
-  loadRememberedUser(): void {
+  //cant put in function with stuff from 
+  //log user in because this may happen when 
+  //not logging in like reload, also return
+  //fields not exactly the same
+  loadRememberedUser():void {
     console.log('Checking to see if user was remembered!!');
     
+    //either somethings in local storage or not and null
     let remembered: string = localStorage.getItem('loggedIn');
-    if(this.isLoggedIn() && remembered) { 
+    if(this.isLoggedIn()) { 
       this.dbService.getUser(JSON.parse(remembered).id)
       .subscribe(
-        data => {
-          //here you would fill the user with more details
-          console.log(data);
-          this.userService.user.username = data['username'];
-          this.userService.user.id = data['_id'];
-          console.log('user remembered: ' + JSON.stringify(this.userService.user));
+        data => { 
+          //should block until this is done
+
+          this.userService.setUsername(data['username']); 
+          this.userService.setCurrentUserId(data['_id']);
           
-          //here set token for session
-          let token = JSON.parse(remembered).token
-          this.dbService.setToken(token);
-          console.log('remembered token ' + token);
+          //here set token for session from local storage
+          this.token = JSON.parse(remembered).token;
+          this.userService.setToken(this.token);
+
+          console.log('user was remembered');
+          console.log('loaded: ' + JSON.stringify(this.userService.user));
         },
         error => {
-          console.log(error);
+          console.log('tried to load remembered user but loggedIn false/null!');
+          console.log(JSON.stringify(error));
+
           this.logout();
           this.router.navigate(['/login']);
         }
@@ -117,19 +124,19 @@ export class AuthService {
   }
 
   //gets app ready after user logs in
-  userLoggedIn(data: any) {
+  logUserIn(data: any) {
 
-    console.log('Login success', data);
+    console.log('Login success', JSON.stringify(data));
     console.log('loggin in token ' + data['token']);
     
     //these always get set when logging in
-    this.dbService.setToken(data['token']);
-    this.userService.setCurrentUserId(data['user_id']);
+    // this.dbService.setToken(data['token']); //neeed data token in case user logs in manually
+    this.fillUserObjectFromDb(data);
     this.setLoggedIn(true); 
 
     //puts id and token in local storage if user wants remembered
     //so that the user can be re-loaded after exit
-    if(this.rememberMe) {
+    // if(this.rememberMe) {
       localStorage.setItem(
         'loggedIn', 
         JSON.stringify({ 
@@ -138,8 +145,17 @@ export class AuthService {
           token: data['token']
         })
       );
-    }
+    // }
+
+    console.log('user loggedIn: ' + JSON.stringify(this.userService.user));
+    
 
     this.router.navigate(['/home']);
+  }
+
+  fillUserObjectFromDb(data: any) {
+    console.log('filling user object with req data');
+    this.userService.setToken(data['token']);
+    this.userService.setCurrentUserId(data['user_id']);
   }
 }
