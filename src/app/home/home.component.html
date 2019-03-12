@@ -1,7 +1,7 @@
 <body>
   <div class ="jumbotron">
-      <mat-spinner *ngIf='!user.username' style="margin:0 auto;"></mat-spinner>
       <h1 *ngIf="user" class='profile-name'>Welcome, {{user.username}}</h1>
+      <mat-spinner *ngIf='!user.username' style="margin:0 auto;"></mat-spinner>
       <p> {{date | date: mediumDate}} </p>
   </div>
 

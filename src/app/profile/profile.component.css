@@ -12,6 +12,18 @@ img {
     padding: 2px;
 }
 
+.shoop {
+    background-color: whitesmoke;
+    border: none;
+    font-size: 2em;
+    
+}
+
+.shoop::placeholder {
+    color: grey;
+    font-weight: bold; 
+}
+
 .header-col{
     margin-bottom: 30px;
     margin-top: 30px;
@@ -119,4 +131,19 @@ img {
 }
 .space {
     background-color: white;
+}
+
+mat-grid-tile {
+    /* border: 1px dashed black; */
+    height: 100%;
+}
+
+.data > div {
+    /* border: 1px dashed black; */
+}
+
+.data {
+    display: flex;
+    flex-direction: column;
+    /* flex-wrap: wrap; */
 }
