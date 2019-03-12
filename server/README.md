@@ -249,7 +249,7 @@ Example:
 
 ## Post a new challenge
 
-### POST /challenges/
+### POST /challenges
 
 #### Authorization: `token required`
 
@@ -394,7 +394,7 @@ Response: 204 No Content
 
 ## Create a new conversation
 
-### POST /conversations/
+### POST /conversations
 
 #### Authorization: `token required`
 
@@ -517,7 +517,7 @@ Response: 200 OK
 
 ## Post a new activity
 
-### POST /activities/
+### POST /activities
 
 #### Authorization: `token required`
 
@@ -591,7 +591,7 @@ Example:
 
 ## Get all activities
 
-### GET /activities/
+### GET /activities
 
 #### Authorization: `token required`
 
@@ -620,7 +620,7 @@ Response: 200 OK
 
 ## Create a new record
 
-### POST /records/
+### POST /records
 
 #### Body Parameters:
 
@@ -693,3 +693,11 @@ Example:
 | `id`      | The id of the record |
 
 Response: 204
+
+# Testing on Postman
+
+1. Download Postman at https://www.getpostman.com
+
+2. Select Import and import the file in the folder server/tests "Capstone-API.postman_collection.json"
+
+3. Click "Manage Environment" in top right corner and import environment found in server/tests "CapstoneEnv.postman_environment.json"
