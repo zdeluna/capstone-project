@@ -127,9 +127,9 @@ Example:
 }
 ```
 
-## Update an authenticated user using user id
+## Update a user
 
-### PATCH /users/:id
+### PATCH /users/:id `token required`
 
 #### Parameters:
 
@@ -137,7 +137,7 @@ Example:
 | --------- | ------------------ |
 | `id`      | The id of the user |
 
-Body Parameters - All optional
+#### Body Parameters
 
 | Parameter       | Type     | Description                             |
 | --------------- | -------- | --------------------------------------- |
