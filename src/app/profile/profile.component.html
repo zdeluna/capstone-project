@@ -7,14 +7,16 @@
   <!-- gray part -->
   <div class='rounded header-col'>
     <div class='header-edit'>
-      <h1>{{user.username}}</h1>
-      <i *ngIf='edit' class="far fa-edit"></i>
+      <h1 *ngIf='!edit'>{{user.username}}</h1>
+      <input *ngIf='edit' class='shoop' type="text" placeholder="{{user.username}}" [disabled]='edit_btn_disabled'>
+      <!-- <i *ngIf='edit' class="far fa-edit"></i> -->
     </div>
     <img src={{user.photoURL}} 
     class="img-circle decision-button-svg">
     <div 
       class="b row col-12 justify-content-between">
-      <h5>{{user.location.city}}, {{user.location.state}}</h5>
+      <h5 *ngIf='!edit'>{{user.location.city}}, {{user.location.state}}</h5>
+      <input *ngIf='edit' class='shoop' type="text" placeholder="{{user.location.city}}, {{user.location.state}}" [disabled]='edit_btn_disabled'>
       <button 
         type='button'
         class="btn btn-info btn-sm"

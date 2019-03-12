@@ -12,6 +12,18 @@ img {
     padding: 2px;
 }
 
+.shoop {
+    background-color: whitesmoke;
+    border: none;
+    font-size: 2em;
+    
+}
+
+.shoop::placeholder {
+    color: grey;
+    font-weight: bold; 
+}
+
 .header-col{
     margin-bottom: 30px;
     margin-top: 30px;

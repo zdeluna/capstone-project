@@ -7,9 +7,10 @@
     <mat-spinner *ngIf='!activities' style="margin:0 auto;"></mat-spinner>
   </div>
   <div class='row'>
-    <!-- <ul *ngFor='let activity of activities'>
-        <li>{{activity.type}}</li>
-    </ul> -->
+    <!-- got help with table from:
+    https://material.angular.io/components/sort/overview
+   https://getbootstrap.com/docs/4.0/content/tables/
+   https://embed.plnkr.co/SVWgs38PWGsIJP3nyQEc/ -->
     <table 
       mat-table
       [dataSource]='dataSource'
@@ -48,6 +49,7 @@
             <td mat-cell *matCellDef="let activity"> {{activity.value}} </td>
         </ng-container>
 
+        <!-- units column -->
         <ng-container matColumnDef="units">
             <th 
               mat-header-cell 
@@ -58,11 +60,13 @@
             <td mat-cell *matCellDef="let activity"> {{activity.units}} </td>
         </ng-container>
 
+        <!-- date column -->
         <ng-container matColumnDef="date">
             <th mat-header-cell *matHeaderCellDef mat-sort-header class='text-center'> <h5>Date</h5> </th>
             <td mat-cell *matCellDef="let activity"> {{activity.date | date: mediumDate}} </td>
         </ng-container>
 
+        <!-- description column -->
         <ng-container matColumnDef="description">
             <th mat-header-cell *matHeaderCellDef mat-sort-header class='text-center'> <h5>Description</h5> </th>
             <td mat-cell *matCellDef="let activity"> {{activity.description}} </td>

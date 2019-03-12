@@ -30,7 +30,7 @@ const routes: Routes = [
   {
     path: 'profile', 
     component: ProfileComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard, ResolveGuard]
   },
   {
     path: 'challenges', 
