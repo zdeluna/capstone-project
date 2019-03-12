@@ -154,6 +154,8 @@ Response: 200 OK
 
 ### PATCH /users/:userID/friends/:friendID
 
+#### Authorization: `token required`
+
 #### Parameters:
 
 | Parameter  | Description                                                  |
@@ -179,6 +181,8 @@ Other codes that are only seen in /users/:id GET requests
 ## Delete an authenticated user using user id
 
 ### DELETE /users/:id
+
+#### Authorization: `token required`
 
 #### Parameters:
 
@@ -247,6 +251,8 @@ Example:
 
 ### POST /challenges/
 
+#### Authorization: `token required`
+
 #### Body Parameters:
 
 | Parameter     | Type     | Description                                  |
@@ -281,6 +287,8 @@ Example:
 
 ### DELETE /challenges/:id
 
+#### Authorization: `token required`
+
 #### Parameters:
 
 | Parameter | Description             |
@@ -292,6 +300,8 @@ Response: 204 No Content
 ## Invite a participant to the challenge
 
 ### POST /challenges/:challengeID/participants/:participantID
+
+#### Authorization: `token required`
 
 #### Parameters:
 
@@ -315,6 +325,8 @@ Response: 204 No Content
 
 ### DELETE /challenges/:challengeID/participants/:participantID
 
+#### Authorization: `token required`
+
 #### Parameters:
 
 | Parameter       | Description               |
@@ -325,6 +337,8 @@ Response: 204 No Content
 ## Write a message on the message board of a challenge
 
 ### POST /challenges/:id/messages
+
+#### Authorization: `token required`
 
 #### Parameters:
 
@@ -345,6 +359,8 @@ Response: 200 OK
 
 ### PATCH /challenges/:challengeID/messages/:messageID
 
+#### Authorization: `token required`
+
 #### Parameters:
 
 | Parameter       | Description               |
@@ -363,6 +379,8 @@ Response: 200 OK
 
 ### DELETE /challenges/:challengeID/messages/:messageID
 
+#### Authorization: `token required`
+
 #### Parameters:
 
 | Parameter     | Description             |
@@ -378,6 +396,8 @@ Response: 204 No Content
 
 ### POST /conversations/
 
+#### Authorization: `token required`
+
 #### Body Parameters:
 
 | Parameter   | Type     | Description            |
@@ -388,6 +408,8 @@ Response: 204 No Content
 ## Get a conversation
 
 ### GET /conversations/:id
+
+#### Authorization: `token required`
 
 #### Parameters:
 
@@ -432,6 +454,8 @@ Example:
 
 ### DELETE /conversations/:conversationID/messages/:messageID
 
+#### Authorization: `token required`
+
 #### Parameters:
 
 | Parameter        | Description                |
@@ -442,6 +466,8 @@ Example:
 ## Update a message
 
 ### PATCH /conversations/:conversationID/messages/:messageID
+
+#### Authorization: `token required`
 
 #### Parameters
 
@@ -462,6 +488,8 @@ Response: 200 OK
 
 ### DELETE /conversations/:conversationID/participants
 
+#### Authorization: `token required`
+
 #### Parameters:
 
 | Parameter        | Type     | Description                |
@@ -473,6 +501,8 @@ Response: 200 OK
 ## Delete a message
 
 ### DELETE /conversations/:conversationID/messages/:messageID
+
+#### Authorization: `token required`
 
 #### Parameters:
 
@@ -488,6 +518,8 @@ Response: 200 OK
 ## Post a new activity
 
 ### POST /activities/
+
+#### Authorization: `token required`
 
 #### Body Parameters:
 
@@ -505,6 +537,8 @@ Response: 200 OK
 ## Update an activity
 
 ### PATCH /activities/:id
+
+#### Authorization: `token required`
 
 #### Parameters:
 
@@ -528,6 +562,8 @@ Reponse: 200 OK
 ## Get an activity
 
 ### GET /activities/:id
+
+#### Authorization: `token required`
 
 #### Parameters:
 
@@ -557,11 +593,15 @@ Example:
 
 ### GET /activities/
 
+#### Authorization: `token required`
+
 Response: 200 OK
 
 ## Make a query of activities
 
 ### GET /activities/?user_id={{userID}}&type={{type}}&start_date={start_date}&end_date={end_date}
+
+#### Authorization: `token required`
 
 #### Query Parameters:
 
@@ -595,6 +635,8 @@ Response: 200 OK
 
 ### PATCH /records/:id
 
+#### Authorization: `token required`
+
 #### Parameter:
 
 | Parameter | Description          |
@@ -615,6 +657,8 @@ Response: 200 OK
 ## Get a record
 
 ### GET /records/:id
+
+#### Authorization: `token required`
 
 #### Parameter:
 
@@ -639,6 +683,8 @@ Example:
 ## Delete a record
 
 ### DELETE /records/:id
+
+#### Authorization: `token required`
 
 #### Parameter:
 
