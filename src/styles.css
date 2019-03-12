@@ -96,3 +96,8 @@
 .mat-radio-button.mat-accent .mat-radio-inner-circle{
   background-color: #5bc0de !important;
 }
+
+.mat-grid-tile .mat-figure {
+  /* justify-content: start !important ;
+  align-items: flex-start !important;  */
+} 

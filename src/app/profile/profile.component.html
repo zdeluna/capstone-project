@@ -39,17 +39,23 @@
 
   <!-- distance data -->
   <div id='distance' class='rounded row-6'>  
-    <h3 class="text-left">Distance: </h3>
+    <h3 class="text-left">Distance Totals: </h3>
     <div class='another'>
       <mat-grid-list 
         cols='1'
         rowHeight='4:1'
         id='sport'
-        *ngFor='let sport of sports' 
+        *ngFor='let activity of activities' 
         class='rounded col-md-4'>
           <mat-grid-tile>
-            <h3>{{sport.name}}</h3>
-            <!-- <p>Total: {{sport.miles}} miles</p> -->
+            <div class="data ">
+              <div>
+                <h3 class="row col-12">{{activity.name}} </h3>
+              </div>
+              <div> {{distanceTotalsTable[activity.name].Kilometers}} KM </div>
+              <div> {{distanceTotalsTable[activity.name].Miles}} Miles </div>
+              <div> {{distanceTotalsTable[activity.name].Steps}} Steps</div>
+            </div>
           </mat-grid-tile>
       </mat-grid-list>
     </div>
@@ -64,12 +70,12 @@
       <div class='another'>
         <mat-grid-list 
           cols='1'
-          rowHeight=''
+          rowHeight='4:1'
           id='sport'
-          *ngFor='let sport of sports' 
+          *ngFor='let activity of activities' 
           class='rounded col-md-4'>
             <mat-grid-tile>
-              <h3>{{sport.name}}</h3>
+              <h3>{{activity.name}}</h3>
               <!-- <p>Total: {{sport.miles}} miles</p> -->
             </mat-grid-tile>
         </mat-grid-list>

@@ -132,3 +132,18 @@ img {
 .space {
     background-color: white;
 }
+
+mat-grid-tile {
+    /* border: 1px dashed black; */
+    height: 100%;
+}
+
+.data > div {
+    /* border: 1px dashed black; */
+}
+
+.data {
+    display: flex;
+    flex-direction: column;
+    /* flex-wrap: wrap; */
+}
