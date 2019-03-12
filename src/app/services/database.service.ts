@@ -31,7 +31,7 @@ export class DatabaseService {
   };
 
   token:string;
-  httpOptions = {}
+  // httpOptions = {}
 
 
   addChallenge(challenge: Challenge) {
