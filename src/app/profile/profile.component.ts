@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import {User} from '../models/user.model';
 import { UserService } from '../services/user.service';
 import { ActivityService } from '../services/activity.service';
-import { DistanceTotalsTable } from '../models/distanceTotalsTable';
 import { Activity } from '../models/activity.model';
 import { Activity_Type } from '../models/activity_type.model';
 //import { AuthService } from '../services/auth.service';
