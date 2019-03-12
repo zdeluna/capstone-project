@@ -127,9 +127,11 @@ Example:
 }
 ```
 
-## Update a user `protected`
+## Update a user
 
 ### PATCH /users/:id
+
+`protected`
 
 #### Parameters:
 
