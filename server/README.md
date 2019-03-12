@@ -129,7 +129,7 @@ Example:
 
 ## Update a user
 
-### PATCH /users/:id `token required`
+### PATCH /users/:id <tab>`token required`
 
 #### Parameters:
 
