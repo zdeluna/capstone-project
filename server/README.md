@@ -129,7 +129,8 @@ Example:
 
 ## Update a user
 
-### PATCH /users/:id <tab>`token required`
+<!--prettier-ignore -->
+### PATCH /users/:id		`token required`
 
 #### Parameters:
 
