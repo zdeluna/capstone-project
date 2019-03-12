@@ -127,10 +127,9 @@ Example:
 }
 ```
 
-## Update a user
+## Update a user `protected`
 
-<!--prettier-ignore -->
-### PATCH /users/:id		`token required`
+### PATCH /users/:id
 
 #### Parameters:
 
@@ -147,7 +146,7 @@ Example:
 | `location`      | `string` | The city, state where the user resides  |
 | `date_of_birth` | `string` | DOB of user - Formatted as `MM/DD/YYYY` |
 
-Response 200 OK
+Response: 200 OK
 
 ## Send/Accept/Reject a friend request
 
