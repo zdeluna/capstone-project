@@ -2,13 +2,16 @@
   <div class="col-12">
     <mat-card *ngFor="let post of posts" class="full-width">
       <mat-card-content>
-        <div>{{ post.message }}</div>
+        <div class="friends-row">
+          {{ post.message }}
+          <button mat-stroked-button [hidden]="!thisUserPosted(post)" (click)="deleteMessage(post)"> Delete </button>
+        </div>
         <div class="friends-row">
           <span class="post-date">{{ formatDate(post.date) }} by {{ post.user }}</span>
         </div>
         <div *ngIf="post.replies">
           <div *ngFor="let reply of post.replies">
-            <app-message-board-reply [parent]="post" [post]="reply" [user]="user" [shouldBeGray]="!shouldBeGray" [challengeIsOver]="challengeIsOver"></app-message-board-reply>
+            <app-message-board-reply [challenge]="challenge" [parent]="post" [post]="reply" [user]="user" [shouldBeGray]="!shouldBeGray" [challengeIsOver]="challengeIsOver"></app-message-board-reply>
           </div>
         </div>
         <form [formGroup]="formReply" (ngSubmit)="submitReply(post)" [hidden]="challengeIsOver">

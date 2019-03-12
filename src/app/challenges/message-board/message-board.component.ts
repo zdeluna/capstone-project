@@ -2,15 +2,9 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Challenge } from 'src/app/models/challenge.model';
 import { FormGroup, FormControl } from '@angular/forms';
 import { User } from 'src/app/models/user.model';
-
-export interface Post {
-  id: string;
-  parent?: string;
-  message: string;
-  date: Date;
-  replies: Post[];
-  user;
-}
+import { Post } from 'src/app/models/post.model';
+import { DatabaseService } from 'src/app/services/database.service';
+import { ActiveChallengeComponent } from '../active-challenge/active-challenge.component';
 
 @Component({
   selector: 'app-message-board',
@@ -19,7 +13,7 @@ export interface Post {
 })
 export class MessageBoardComponent implements OnInit {
 
-  constructor() { }
+  constructor(private dbService: DatabaseService, private parent: ActiveChallengeComponent) { }
 
   @Input() challenge: Challenge
   @Input() challengeIsOver: Boolean
@@ -39,26 +33,31 @@ export class MessageBoardComponent implements OnInit {
   }
 
   submitNewPost() {
-    this.posts.push({
-      id: (new Date()).getTime().toString(),
-      message: this.form.value.message,
-      date: new Date(),
-      replies: [],
-      user: this.user.username
+    console.log(this.challenge)
+    let m = {
+      content: this.form.value.message
+    }
+    this.dbService.submitMessage(this.challenge.id, m).subscribe(() => {
+      this.form.reset()
+      this.parent.ngOnInit()
     })
-    this.form.reset()
   }
 
   submitReply(post: Post) {
-    post.replies.push({
-      id: (new Date()).getTime().toString(),
-      parent: post.id,
-      message: this.formReply.value.message,
-      date: new Date(),
-      replies: [],
-      user: this.user.username
+    let r = {
+      content: this.formReply.value.message,
+      reply: post.id
+    }
+    this.dbService.submitMessage(this.challenge.id, r).subscribe(() => {
+      this.formReply.reset()
+      this.parent.ngOnInit()
     })
-    this.formReply.reset()
+  }
+
+  deleteMessage(post: Post) {
+    this.dbService.deleteMessage(this.challenge.id, post).subscribe(() => {
+      this.parent.ngOnInit()
+    })
   }
 
   getPlaceholder(message: string): string {
@@ -92,5 +91,10 @@ export class MessageBoardComponent implements OnInit {
     }
 
     return `${date.getMonth() + 1}/${date.getDate()} at ${hours}:${mins} ${amPm}`
+  }
+
+  thisUserPosted(post: Post) {
+    // return post.user == this.user.username
+    return true
   }
 }

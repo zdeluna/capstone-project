@@ -13,17 +13,47 @@ const {
   removeFromFieldArray,
   sendErrorResponse,
   checkIfUserIsSenderOfMessage,
-  checkIfUserIsAuthorized
+  checkIfUserIsAuthorized,
+  checkIfIDAlreadyExistsWithinArrayField
 } = require("./controller.js");
+
+/**
+ * Check to see if challenge request alredy exists for user
+ * @param {string} challengeID
+ * @param {string} userID
+ * @param {string} status
+ * @returns Promise
+ */
+
+const checkIfChallengeRequestAlreadyExists = async (
+  challengeID,
+  userID,
+  status
+) => {
+  return new Promise((resolve, reject) => {
+    challengeRequestModel.findOne(
+      { challenge_id: challengeID, recipient: userID, status: status },
+      function(error, challengeRequest) {
+        if (error) reject({ statusCode: 500, msg: error.message });
+        if (challengeRequest) {
+          reject({
+            statusCode: 422,
+            msg: "REQUEST_ALREADY_EXISTS"
+          });
+        } else resolve();
+      }
+    );
+  });
+};
 
 /**
  * Check to see if user is a participant of a challenge, if they are not throw an error object
  * @param {string} challengeID
- * @param {string} user_id
+ * @param {string} userID
  * @returns Promise
  */
 
-const checkIfUserIsParticipantOfChallenge = async (challenge_id, user_id) => {
+const checkIfUserIsParticipantOfChallenge = async (challenge_id, userID) => {
   return new Promise((resolve, reject) => {
     let userIsParticipant = false;
     challengeModel.findOne({ _id: challenge_id }, function(error, challenge) {
@@ -31,7 +61,7 @@ const checkIfUserIsParticipantOfChallenge = async (challenge_id, user_id) => {
 
       // Go through each of the challenge participants and determine if the passed in user_id is a participant, and set the flag variable to true
       for (i = 0; i < challenge.participants.length; i++) {
-        if (challenge.participants[i] == user_id) {
+        if (challenge.participants[i] == userID) {
           userIsParticipant = true;
         }
       }
@@ -162,6 +192,14 @@ const createMessageInDB = async (challengeID, data, userID) => {
 
 const acceptChallengeRequest = async (challengeID, participantID) => {
   try {
+    // Make sure user is not already a participant in the challenge
+    await checkIfIDAlreadyExistsWithinArrayField(
+      challengeModel,
+      challengeID,
+      "participants",
+      participantID
+    );
+
     // Add the challenge ID to the challenge field of the user document
     await userModel.findOneAndUpdate(
       { _id: participantID },
@@ -182,7 +220,7 @@ const acceptChallengeRequest = async (challengeID, participantID) => {
 
     removePendingChallenges(challengeID, participantID);
   } catch (error) {
-    return error;
+    throw error;
   }
 };
 
@@ -229,6 +267,9 @@ const removePendingChallenges = async (challengeID, participantID) => {
 
 const createChallengeRequest = async (challengeID, participantID) => {
   try {
+    // Check to make sure there aren't any pending challenges with the participant and challengeID
+    await checkIfChallengeRequestAlreadyExists(challengeID, participantID, 1);
+
     const challengeRequest = await challengeRequestModel.findOneAndUpdate(
       { recipient: participantID },
       { $set: { status: 1, challenge_id: challengeID } },
@@ -247,7 +288,7 @@ const createChallengeRequest = async (challengeID, participantID) => {
       { $push: { pending_participants: challengeRequest._id } }
     );
   } catch (error) {
-    return error;
+    throw error;
   }
 };
 
@@ -273,8 +314,8 @@ exports.createChallenge = async (req, res) => {
 
 exports.addParticipant = async (req, res) => {
   try {
-    let challengeID = new ObjectId(req.params.challengeID);
-    let participantID = new ObjectId(req.params.participantID);
+    let challengeID = req.params.challengeID;
+    let participantID = req.params.participantID;
     let status = req.body.status;
 
     /* status codes

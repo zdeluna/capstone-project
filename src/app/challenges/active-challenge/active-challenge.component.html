@@ -37,14 +37,12 @@
         <table matSort style="width:100%;">
           <tr>
             <th mat-header-cell> Position </th>
-            <th mat-header-cell> Name </th>
             <th mat-header-cell> Username </th>
             <th mat-header-cell> Total </th>
           </tr>
         
           <tr *ngFor="let p of sortedParticipants | slice: 0:10; let i = index">
             <td mat-cell>{{ i + 1 }}</td>
-            <td mat-cell>{{ p.user.firstName }} {{ p.user.lastName }}</td>
             <td mat-cell>{{ p.user.username }}</td>
             <td mat-cell>{{ p.activityTotal }}</td>
           </tr>
@@ -61,7 +59,7 @@
         <h2>Message Board</h2>
 
         <div class="container">
-          <app-message-board [challenge]="challenge" [user]="user" [challengeIsOver]="challengeIsOver"></app-message-board>
+          <app-message-board [challenge]="challenge" [user]="user" [challengeIsOver]="challengeIsOver" [posts]="challenge.messages"></app-message-board>
         </div>
       </mat-card-content>
     </mat-card>
@@ -76,14 +74,36 @@
 
         <table matSort style="width:100%;">
             <tr>
-              <th mat-header-cell> Name </th>
               <th mat-header-cell> Username </th>
               <th mat-header-cell> Total </th>
               <th mat-header-cell> </th>
             </tr>
           
             <tr *ngFor="let p of participants">
-              <td mat-cell>{{ p.user.firstName }} {{ p.user.lastName }}</td>
+              <td mat-cell>{{ p.user.username }}</td>
+              <td mat-cell>{{ p.activityTotal }}</td>
+              <td mat-cell style="text-align: right"><button mat-stroked-button> Visit Profile </button></td>
+            </tr>
+          </table>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-12">
+    <mat-card>
+      <mat-card-content>
+        <h2>Pending Participants</h2>
+
+        <table matSort style="width:100%;">
+            <tr>
+              <th mat-header-cell> Username </th>
+              <th mat-header-cell> Total </th>
+              <th mat-header-cell> </th>
+            </tr>
+          
+            <tr *ngFor="let p of pendingParticipants">
               <td mat-cell>{{ p.user.username }}</td>
               <td mat-cell>{{ p.activityTotal }}</td>
               <td mat-cell style="text-align: right"><button mat-stroked-button> Visit Profile </button></td>

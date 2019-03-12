@@ -7,6 +7,7 @@ import { DurationService } from 'src/app/services/duration.service';
 import { User } from 'src/app/models/user.model';
 import { SortService } from 'src/app/services/sort.service';
 import { UserService } from 'src/app/services/user.service';
+import { Post } from 'src/app/models/post.model';
 
 export interface Leaderboard {
   user: User;
@@ -36,21 +37,33 @@ export class ActiveChallengeComponent implements OnInit {
   totalDays: number
   progress: number
   participants: Leaderboard[] = []
+  pendingParticipants: Leaderboard[] = []
   sortedParticipants: Leaderboard[] = []
   endDate: Date = new Date()
+  replies = []
 
   ngOnInit() {
+    this.participants = []
+    this.pendingParticipants = []
+    this.sortedParticipants = []
+    this.replies = []
+
     this.route.paramMap.subscribe(params => {
       this.dbService.getChallenge(params.get('id')).subscribe(res => {
+        this.challenge.id = res['_id']
         this.challenge.name = res['name']
         this.challenge.activity = res['activity']
         this.challenge.duration = res['duration']
         this.challenge.measurement = res['measurement']
         this.challenge.participants = res['participants']
+        this.challenge.pendingParticipants = res['pending_participants']
         this.challenge.invitees = res['pending_participants']
         this.challenge.startDate = new Date(res['start_date'])
+        this.challenge.messages = []
         
+        this.setMessages(res['messages'])
         this.getParticipants(this.challenge.participants)
+        this.getPendingParticipants(this.challenge.pendingParticipants)
         this.currentDays = this.durationService.getCurrentDays(this.challenge.startDate)
         this.totalDays = this.durationService.getTotalDays(this.challenge.startDate, this.challenge.duration)
         this.progress = this.getProgress(this.currentDays, this.totalDays)
@@ -67,145 +80,82 @@ export class ActiveChallengeComponent implements OnInit {
     })
   }
 
-  getParticipants(participants: Object[]) {
+  getParticipants(participants: string[]) {
     participants.forEach(participant => {
-      this.dbService.getUser(participant['user_id']).subscribe(res => {
-        let user1: User = {
+      this.dbService.getUser(participant).subscribe(res => {
+        let user: User = {
           id: res['_id'],
-          username: 'piemo',
-          firstName: 'Chris',
-          lastName: 'Piemonte',
-          password: 'pw'
-        }
-        let user2: User = {
-          id: res['_id'],
-          username: 'the_hawk',
-          firstName: 'Steve',
-          lastName: 'Hawking',
-          password: 'pw'
-        }
-        let user3: User = {
-          id: res['_id'],
-          username: 'sparky',
-          firstName: 'Matei',
-          lastName: 'Zaharia',
-          password: 'pw'
-        }
-        let user4: User = {
-          id: res['_id'],
-          username: 'mask_man',
-          firstName: 'Paulo',
-          lastName: 'Dybala',
-          password: 'pw'
-        }
-        let user5: User = {
-          id: res['_id'],
-          username: 'LookItUp',
-          firstName: 'Larry',
-          lastName: 'Paige',
-          password: 'pw'
-        }
-        let user6: User = {
-          id: res['_id'],
-          username: 'brinsanity',
-          firstName: 'Sergey',
-          lastName: 'Brin',
-          password: 'pw'
-        }
-        let user7: User = {
-          id: res['_id'],
-          username: 'deerhunter',
-          firstName: 'Jon',
-          lastName: 'Doe',
-          password: 'pw'
-        }
-        let user8: User = {
-          id: res['_id'],
-          username: 'deerhuntress',
-          firstName: 'Jane',
-          lastName: 'Doe',
-          password: 'pw'
-        }
-        let user9: User = {
-          id: res['_id'],
-          username: 'blazin',
-          firstName: 'Blaise',
-          lastName: 'Matuidi',
-          password: 'pw'
-        }
-        let user10: User = {
-          id: res['_id'],
-          username: 'crimson',
-          firstName: 'David',
-          lastName: 'Malan',
-          password: 'pw'
-        }
-        let user11: User = {
-          id: res['_id'],
-          username: 'italian_tower',
-          firstName: 'Giorgio',
-          lastName: 'Chiellini',
-          password: 'pw'
-        }
-        let user12: User = {
-          id: res['_id'],
-          username: 'cr7',
-          firstName: 'Cristiano',
-          lastName: 'Ronaldo',
-          password: 'pw'
+          username: res['username'],
+          password: res['password'],
+          firstName: "first",
+          lastName: "last"
         }
 
-        let p1: Leaderboard = {
-          user: user1,
+        let p: Leaderboard = {
+          user: user,
           activityTotal: Math.ceil(Math.random() * (150 - 0))
         }
-        let p2: Leaderboard = {
-          user: user2,
-          activityTotal: Math.ceil(Math.random() * (150 - 0))
-        }
-        let p3: Leaderboard = {
-          user: user3,
-          activityTotal: Math.ceil(Math.random() * (150 - 0))
-        }
-        let p4: Leaderboard = {
-          user: user4,
-          activityTotal: Math.ceil(Math.random() * (150 - 0))
-        }
-        let p5: Leaderboard = {
-          user: user5,
-          activityTotal: Math.ceil(Math.random() * (150 - 0))
-        }
-        let p6: Leaderboard = {
-          user: user6,
-          activityTotal: Math.ceil(Math.random() * (150 - 0))
-        }
-        let p7: Leaderboard = {
-          user: user7,
-          activityTotal: Math.ceil(Math.random() * (150 - 0))
-        }
-        let p8: Leaderboard = {
-          user: user8,
-          activityTotal: Math.ceil(Math.random() * (150 - 0))
-        }
-        let p9: Leaderboard = {
-          user: user9,
-          activityTotal: Math.ceil(Math.random() * (150 - 0))
-        }
-        let p10: Leaderboard = {
-          user: user10,
-          activityTotal: Math.ceil(Math.random() * (150 - 0))
-        }
-        let p11: Leaderboard = {
-          user: user11,
-          activityTotal: Math.ceil(Math.random() * (150 - 0))
-        }
-        let p12: Leaderboard = {
-          user: user12,
-          activityTotal: Math.ceil(Math.random() * (150 - 0))
-        }
-        this.participants.push(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12)
+        this.participants.push(p)
         this.sortedParticipants = this.sortService.sortByActivityTotal(this.participants)
       })
+    })
+  }
+
+  getPendingParticipants(participants: string[]) {
+    participants.forEach(participant => {
+      this.dbService.getUser(participant['user']).subscribe(res => {
+        let user: User = {
+          id: res['_id'],
+          username: res['username'],
+          password: res['password'],
+          firstName: "first",
+          lastName: "last"
+        }
+
+        let p: Leaderboard = {
+          user: user,
+          activityTotal: Math.ceil(Math.random() * (150 - 0))
+        }
+        this.pendingParticipants.push(p)
+      })
+    })
+  }
+
+  setMessages(messages) {
+    if(messages.length > 0) {
+      messages.forEach(m => {
+        this.dbService.getUser(m['sender']).subscribe(res => {
+          let p: Post = {
+            id: m['_id'],
+            parent: m['reply_to'],
+            message: m['content'],
+            date: new Date(m['createdAt']),
+            user: res['username'],
+            replies: []
+          }
+          this.setReplies(p)
+          
+          if(!p.parent) {
+            this.challenge.messages.push(p)
+          } else {
+            this.replies.push(p)
+          }
+        })
+      })
+    }
+  }
+
+  setReplies(m: Post) {
+    let id = m.parent
+    this.challenge.messages.forEach(message => {
+      if(message.id == id) {
+        message.replies.push(m)
+      }
+    })
+    this.replies.forEach(r => {
+      if(r.id == id) {
+        r.replies.push(m)
+      }
     })
   }
 
@@ -218,7 +168,6 @@ export class ActiveChallengeComponent implements OnInit {
   }
 
   checkIfChallengeIsOver() {
-    //return new Date() > this.endDate
-    return false
+    return new Date() > this.endDate
   }
 }

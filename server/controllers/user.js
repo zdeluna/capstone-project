@@ -12,8 +12,42 @@ const {
   checkIfUserIsAuthorized
 } = require("./controller.js");
 
+/**
+ * Check to see if friend request alredy exists for user
+ * @param {string} friendshipID
+ * @param {string} userID
+ * @param {string} status
+ * @returns Promise
+ */
+
+const checkIfFriendRequestAlreadyExists = async (userID, friendID, status) => {
+  return new Promise((resolve, reject) => {
+    friendshipModel.findOne(
+      { sender: userID, recipient: friendID, status: status },
+      function(error, friendRequest) {
+        if (error) reject({ statusCode: 500, msg: error.message });
+        if (friendRequest) {
+          reject({
+            statusCode: 422,
+            msg: "REQUEST_ALREADY_EXISTS"
+          });
+        } else resolve();
+      }
+    );
+  });
+};
+
+/**
+ * Create a friendship request for userID and friendID
+ * @param {string} userID
+ * @param {string} friendID
+ */
+
 const createPendingFriendships = async (userID, friendID) => {
   try {
+    // Check to make sure friendship request doesn't already exist
+    await checkIfFriendRequestAlreadyExists(userID, friendID, 1);
+
     const friendshipUser = await friendshipModel.findOneAndUpdate(
       { sender: userID, recipient: friendID },
       { $set: { status: 1 } },
@@ -38,9 +72,15 @@ const createPendingFriendships = async (userID, friendID) => {
       { $push: { pending_friends: friendshipFriend._id } }
     );
   } catch (error) {
-    return error;
+    throw error;
   }
 };
+
+/**
+ * Remove the friendship request for userID and friendID
+ * @param {string} userID
+ * @param {string} friendID
+ */
 
 const removePendingFriends = async (userID, friendID) => {
   // Store the document of the friendship where user is the sender, we will use the id to remove it from the pending friends field
@@ -72,6 +112,12 @@ const removePendingFriends = async (userID, friendID) => {
   await deleteEntityFromDB(friendshipModel, friendshipFriend._id);
 };
 
+/**
+ * Accept the friendship request for userID and friendID
+ * @param {string} userID
+ * @param {string} friendID
+ */
+
 const acceptFriendship = async (userID, friendID) => {
   try {
     // Add the friend ID to user's friends field
@@ -92,6 +138,12 @@ const acceptFriendship = async (userID, friendID) => {
   }
 };
 
+/**
+ * Delete the friendship request for userID and friendID in their user model
+ * @param {string} userID
+ * @param {string} friendID
+ */
+
 const deleteFriendshipFromDB = async (userID, friendID) => {
   try {
     // Delete friendID from user table
@@ -109,7 +161,6 @@ const deleteFriendshipFromDB = async (userID, friendID) => {
   }
 };
 
-/* Public Functions that are directly called by the routers */
 exports.getUser = async (req, res) => {
   var id = req.params.id;
   var pending_friends = [];

@@ -30,6 +30,7 @@ import { AddActivityComponent } from './activity/add-activity/add-activity.compo
 import { ViewActivityComponent } from './activity/view-activity/view-activity.component';
 import { ResolveGuard } from './resolve.guard';
 import { AuthService } from './services/auth.service';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 @NgModule({
   declarations: [
@@ -74,7 +75,8 @@ import { AuthService } from './services/auth.service';
     MatTableModule,
     MatSortModule,
     HttpClientModule,
-    ScrollDispatchModule
+    ScrollDispatchModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: true })
   ],
   providers: [AuthGuard, ResolveGuard, AuthService],
   bootstrap: [AppComponent]

@@ -198,3 +198,56 @@ exports.checkIfUserIsSenderOfMessage = async (message_id, user_id) => {
     });
   });
 };
+
+/**
+ * Check to see if an id already exists within an array
+ * @param {Model} model
+ * @param {string} model_id
+ * @param {string} fieldName
+ * @param {string} idToSearch
+ * @returns Promise
+ */
+
+exports.checkIfIDAlreadyExistsWithinArrayField = async (
+  model,
+  model_id,
+  fieldName,
+  idToSearch,
+  additionalFieldName
+) => {
+  return new Promise((resolve, reject) => {
+    let alreadyExists = false;
+    model.findOne({ _id: model_id }, function(error, entity) {
+      if (error) reject({ statusCode: 500, msg: error.message });
+
+      // Go through each of the elements of the array and if the id is found then set the flag variable to true
+      let arrayToSearch = entity[fieldName];
+
+      if (!additionalFieldName) {
+        for (i = 0; i < arrayToSearch.length; i++) {
+          if (arrayToSearch[i] == idToSearch) {
+            alreadyExists = true;
+            break;
+          }
+        }
+      } else {
+        for (i = 0; i < arrayToSearch.length; i++) {
+          console.log("in array: " + arrayToSearch[i]);
+          if (arrayToSearch[i][additionalFieldName] == idToSearch) {
+            alreadyExists = true;
+            break;
+          }
+        }
+      }
+
+      if (alreadyExists == true) {
+        let message =
+          "CANNOT_BE_ADDED_SINCE_ID_IS_ALREADY_IN_" + fieldName.toUpperCase();
+        reject({
+          statusCode: 422,
+          msg: message
+        });
+      } else resolve();
+    });
+  });
+};

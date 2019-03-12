@@ -42,11 +42,13 @@
           </div>
           <div class="form-element">
             <h3 class="form-element-header">Start Date</h3>
+            <mat-card-subtitle>{{ durationMessage }}</mat-card-subtitle>
             <mat-form-field class="full-width">
-              <input matInput [matDatepickerFilter]="myFilter" [min]="minDate" [matDatepicker]="picker" formControlName="startDate" placeholder="Choose a date" autocomplete="off">
+              <input matInput (dateChange)="displayEndDate()" [matDatepickerFilter]="myFilter" [min]="minDate" [matDatepicker]="picker" formControlName="startDate" placeholder="Choose a date" autocomplete="off">
               <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
               <mat-datepicker #picker></mat-datepicker>
             </mat-form-field>
+            <mat-card-subtitle>{{ endDateMessage }}</mat-card-subtitle>
           </div>
           <div class="form-element">
             <h3 class="form-element-header">Invite Friends</h3>

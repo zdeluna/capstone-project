@@ -36,6 +36,8 @@ export class CreateChallengeComponent implements OnInit {
     }
   ]
 
+  durationMessage: string = ''
+  endDateMessage: string = ''
   search = ''
   noMatch = false
   searchMatches: User[] = []
@@ -82,17 +84,15 @@ export class CreateChallengeComponent implements OnInit {
     challenge.measurement = this.form.value.measurement
     challenge.duration = this.form.value.duration
     challenge.startDate = this.form.value.startDate
-    challenge.invitees = this.form.value.invitees
-    this.dbService.addChallenge(challenge).subscribe(res => {
-      console.log(res)
-      this.router.navigate([`/challenges/${res['_id']}`])
+    this.dbService.addChallenge(challenge).subscribe(challenge => {
+      let participants = ['5c79ac775891120006658fee', '5c79ac955891120006658fef'] // <---- temp REMOVE THIS
+      if(this.form.value.invitees.length > 0) {
+        this.dbService.inviteParticipants(challenge['_id'], participants)
+        setTimeout(() => this.router.navigate([`/challenges/${challenge['_id']}`]), 2000) //have to do this bc no response is sent
+      } else {
+        this.router.navigate([`/challenges/${challenge['_id']}`])
+      }
     })
-    /* TODO:
-      * call formIsValid() (security for presentation-level attack)
-      ** if valid, call addChallenge from dbService
-      *** redirect to challenge page
-      ** if not valid, do nothing (should only happen under attack)
-    */
   }
   validMeasurementForActivity(activity: String, measurement: []): Boolean {
     let valid = false
@@ -118,7 +118,55 @@ export class CreateChallengeComponent implements OnInit {
 
   checkForDuration(): void {
     if(this.form.value.duration.length > 0) {
+      let d = this.form.value.duration
+      switch(d) {
+        case('weekend'):
+          this.durationMessage = 'Must begin on a Saturday'
+          break
+        case ('work-week'):
+          this.durationMessage = 'Must begin on a Monday'
+          break
+        case('full-week'):
+          this.durationMessage = 'Must begin on a Monday'
+          break
+        case('month'):
+          this.durationMessage = 'Must begin on the first of the month'
+          break
+        case('year'):
+          this.durationMessage = 'Must begin on the first of any month'
+          break
+        default:
+        this.durationMessage = ''
+      }
+
       this.form.controls.startDate.enable()
+    }
+  }
+
+  displayEndDate() {
+    if(this.form.value.startDate) {
+      let d = new Date(this.form.value.startDate)
+      let endDate: Date
+      switch(this.form.value.duration) {
+        case('weekend'):
+          endDate = new Date(`${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate() + 2}`)
+          break
+        case('work-week'):
+          endDate = new Date(`${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate() + 5}`)
+          break
+        case('full-week'):
+          endDate = new Date(`${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate() + 7}`)
+          break
+        case('month'):
+          endDate = new Date(`${d.getFullYear()}-${d.getMonth() + 2}-${d.getDate()}`)
+          break
+        case('year'):
+          endDate = new Date(`${d.getFullYear() + 1}-${d.getMonth() + 1}-${d.getDate()}`)
+          break
+        default:
+          endDate = new Date()
+      }
+      this.endDateMessage = `Ends on ${endDate.getMonth() + 1}/${endDate.getDate()}/${endDate.getFullYear()}`
     }
   }
 
@@ -128,8 +176,6 @@ export class CreateChallengeComponent implements OnInit {
     } else {
       return true
     }
-
-    return false
   }
 
   submitSearch() {
@@ -166,8 +212,20 @@ export class CreateChallengeComponent implements OnInit {
 
   myFilter = (d: Date): boolean => {
     const day = d.getDay();
-    // Prevent Saturday and Sunday from being selected.
-    return day !== 0 && day !== 6;
+    const date = d.getDate();
+    
+    switch(this.form.value.duration) {
+      case('weekend'):
+        return day === 6
+      case('work-week'):
+      case('full-week'):
+        return day === 1
+      case('month'):
+      case('year'):
+        return date === 1
+      default:
+        return true
+    }
   }
 
   clear(): void {
