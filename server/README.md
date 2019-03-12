@@ -131,7 +131,7 @@ Example:
 
 ### PATCH /users/:id
 
-`protected`
+#### Authorization: `token required`
 
 #### Parameters:
 
