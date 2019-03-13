@@ -11,52 +11,9 @@
   <!-- toolbar -->
   <app-toolbar></app-toolbar>
 
-  <!-- distance data -->
-  <div id='distance' class='rounded row-6'>  
-    <h3 class="text-left">Distance Totals: </h3>
-    <div class='another'>
-      <mat-grid-list 
-        cols='1'
-        rowHeight='4:1'
-        id='sport'
-        *ngFor='let activity of activities' 
-        class='rounded col-md-4'>
-          <mat-grid-tile>
-            <div class="data ">
-              <div>
-                <h3 class="row col-12">{{activity.name}} </h3>
-              </div>
-              <div> {{distanceTotalsTable[activity.name].Kilometers}} KM </div>
-              <div> {{distanceTotalsTable[activity.name].Miles}} Miles </div>
-              <div> {{distanceTotalsTable[activity.name].Steps}} Steps</div>
-            </div>
-          </mat-grid-tile>
-      </mat-grid-list>
-    </div>
-
-    <div class='space'>
-      <br>
-    </div>
-
-    <!-- time data -->
-    <div id='time' class='rounded row-6'>  
-      <h3 class="text-left">Time: </h3>
-      <div class='another'>
-        <mat-grid-list 
-          cols='1'
-          rowHeight='4:1'
-          id='sport'
-          *ngFor='let activity of activities' 
-          class='rounded col-md-4'>
-            <mat-grid-tile>
-              <h3>{{activity.name}}</h3>
-              <!-- <p>Total: {{sport.miles}} miles</p> -->
-            </mat-grid-tile>
-        </mat-grid-list>
-      </div>
-    </div>
-  </div>
-
+  <!-- activities data -->
+  <app-activities-data></app-activities-data>
+  
   <!-- not sure what si going here -->
   <div id='more' class='rounded row-6'>
       <div class='inside-more'>

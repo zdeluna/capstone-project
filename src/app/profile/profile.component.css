@@ -12,15 +12,9 @@
     margin-bottom: 30px;
 } */
 
-.another {
-     display: flex; 
-     flex-wrap: wrap;
-    justify-content: space-around; 
-    /* width: 70%; */
-    margin-bottom: 30px;
-}
 
-#achievments {
+
+/* #achievments {
     border: 1px dashed black;
     margin-bottom: 30px;
 }
@@ -29,11 +23,9 @@
     height: 50%;
     border-top: 1px dashed black;
     border-bottom: 1px dashed black;
-}
+} */
 
-.col-md-4 {
-    margin: 20px 5px 20px 0px;
-}
+
 
 /* #Running {
     border: 2px solid #93c47d;
@@ -48,30 +40,14 @@
     border: 2px solid #597eaa;
 } */
 
-#sport {
-    border: 2px solid rgb(19, 132, 150);
-}
+
 
 #more {
     background-color: coral;
 }
-#distance {
-    margin-bottom: 20px;
-}
+
 .inside-more {
     margin: 5px auto 5px auto;
 }
-.space {
-    background-color: white;
-}
 
-mat-grid-tile {
-    /* border: 1px dashed black; */
-    height: 100%;
-}
 
-.data {
-    display: flex;
-    flex-direction: column;
-    /* flex-wrap: wrap; */
-}
