@@ -63,6 +63,9 @@ export class UserService {
   setLastName(last: string) {
     this.user.lastName = last;
   }
+  setDOB(dob:string) {
+    this.user.dateOfBirth = dob;
+  }
 
   setUserDataFromDb(data: any) {
     this.setUsername(data['username']); 
@@ -74,5 +77,8 @@ export class UserService {
     if(!this.user.lastName)  
       this.setLastName(data['last_name']);
     this.setCurrentUserId(data['_id']);
+    this.setDOB(data['dateOfBirth']);
+    if(!this.user.dateOfBirth)
+      this.setDOB(data['date_of_birth']);
   }
 }

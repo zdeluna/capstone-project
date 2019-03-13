@@ -99,8 +99,11 @@ export class DatabaseService {
       username : new_user.username,
       first_name : new_user.firstName,
       last_name : new_user.lastName,
-      location : new_user.location
+      location : new_user.location,
+      date_of_birth : new_user.dateOfBirth
     }
+    console.log('sending dob: ' + edit.date_of_birth);
+    
     return this.http.patch(`${this.uri}/users/${id}`, edit/*new_user*/, this.httpOptions);
   }
 

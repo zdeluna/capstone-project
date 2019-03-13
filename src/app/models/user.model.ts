@@ -14,7 +14,7 @@ export class User {
     challenges?: string[] = [];
     pending_challenges?: string[] = [];
     location?: string;
-    dateOfBirth?: Date;
+    dateOfBirth?: string;
     activities?: Activity[];
     activity_types?: Activity_Type[] = [
       {name: 'Running'},
