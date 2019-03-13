@@ -78,7 +78,10 @@ export class ProfileComponent implements OnInit {
       this._dbService.setToken(token)
       this._dbService.editUser(this.new_profile, this.user.id)
       .subscribe(
-        data => console.log(data),
+        data => {
+          console.log(data);
+          this.user = {...this.new_profile}
+        },
         error => console.log(error)
       );
     }

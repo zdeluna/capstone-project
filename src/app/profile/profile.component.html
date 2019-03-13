@@ -21,7 +21,7 @@
       {{user | json}}
       <hr>
       <h5 *ngIf='!edit'>{{user.location}}</h5>
-      <input *ngIf='edit' class='shoop' type="text" placeholder="{{user.location.city}}, {{user.location.state}}" [disabled]='edit_btn_disabled'>
+      <input [(ngModel)]='new_profile.location' *ngIf='edit' class='shoop' type="text" placeholder="{{user.location}}" [disabled]='edit_btn_disabled'>
       <button 
         *ngIf='!edit'
         type='button'
