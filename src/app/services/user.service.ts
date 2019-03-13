@@ -53,4 +53,26 @@ export class UserService {
   getUsername() {
     return this.user.username;
   }
+
+  setLocation(location: string) {
+    this.user.location = location;
+  }
+  setFirstName(first: string) {
+    this.user.firstName = first;
+  }
+  setLastName(last: string) {
+    this.user.lastName = last;
+  }
+
+  setUserDataFromDb(data: any) {
+    this.setUsername(data['username']); 
+    this.setLocation(data['location']); 
+    this.setFirstName(data['firstName']);
+    if(!this.user.firstName) 
+      this.setFirstName(data['first_name'])
+    this.setLastName(data['lastName']);
+    if(!this.user.lastName)  
+      this.setLastName(data['last_name']);
+    this.setCurrentUserId(data['_id']);
+  }
 }

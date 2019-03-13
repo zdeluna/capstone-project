@@ -85,8 +85,7 @@ export class AuthService {
       this.dbService.getUser(JSON.parse(remembered).id)
       .subscribe(
         data => { 
-          this.userService.setUsername(data['username']); 
-          this.userService.setCurrentUserId(data['_id']);
+          this.userService.setUserDataFromDb(data);
           
           //here set token for session from local storage
           this.token = JSON.parse(remembered).token;

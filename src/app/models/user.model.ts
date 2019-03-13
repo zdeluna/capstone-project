@@ -13,7 +13,7 @@ export class User {
     pending_friends?: string[] = [];
     challenges?: string[] = [];
     pending_challenges?: string[] = [];
-    location?: string = 'Seattle, WA';
+    location?: string;
     dateOfBirth?: Date;
     activities?: Activity[];
     activity_types?: Activity_Type[] = [

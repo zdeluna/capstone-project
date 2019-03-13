@@ -95,7 +95,13 @@ export class DatabaseService {
   }
 
   editUser(new_user: User, id: string) {
-    return this.http.patch(`${this.uri}/users/${id}`, new_user, this.httpOptions);
+    let edit = {
+      username : new_user.username,
+      first_name : new_user.firstName,
+      last_name : new_user.lastName,
+      location : new_user.location
+    }
+    return this.http.patch(`${this.uri}/users/${id}`, edit/*new_user*/, this.httpOptions);
   }
 
   getCurrentUser() {

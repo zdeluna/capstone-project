@@ -5,6 +5,7 @@
   <h1 class='profile-name'>Profile</h1>
 
   <!-- gray part -->
+  <app-edit-profile></app-edit-profile>
   <div class='rounded header-col'>
     <div class='header-edit'>
       <h1 *ngIf='!edit'>{{user.username}}</h1>
@@ -16,12 +17,25 @@
     <div 
       class="b row col-12 justify-content-between">
       <hr>
+      NEW:
       {{new_profile | json}}
       <hr>
+      USER:
       {{user | json}}
       <hr>
-      <h5 *ngIf='!edit'>{{user.location}}</h5>
-      <input [(ngModel)]='new_profile.location' *ngIf='edit' class='shoop' type="text" placeholder="{{user.location}}" [disabled]='edit_btn_disabled'>
+      <div class='col-4'>
+        <h5 class='col-4' *ngIf='!edit'>{{user.location}}</h5>
+        <input [(ngModel)]='new_profile.location' *ngIf='edit' class='shoop' type="text" placeholder="{{user.location}}" [disabled]='edit_btn_disabled'>
+      </div>
+      <div class="col-8">
+        <h5 *ngIf='!edit'>{{user.firstName}} , {{user.lastName}}</h5>
+        <input [(ngModel)]='new_profile.firstName' *ngIf='edit' class='shoop col-8' type="text" placeholder="{{user.firstName}}" [disabled]='edit_btn_disabled'>
+        <input [(ngModel)]='new_profile.lastName' *ngIf='edit' class='shoop col-8' type="text" placeholder="{{user.lastName}}" [disabled]='edit_btn_disabled'>
+      </div>
+      <!-- <div class="col-4">
+        <h5 class='col-2' *ngIf='!edit'>{{user.lastName}}</h5>
+        <input [(ngModel)]='new_profile.lastName' *ngIf='edit' class='shoop' type="text" placeholder="{{user.lastName}}" [disabled]='edit_btn_disabled'>
+      </div> -->
       <button 
         *ngIf='!edit'
         type='button'

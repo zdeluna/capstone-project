@@ -43,6 +43,14 @@ export class ProfileComponent implements OnInit {
     this.new_profile = {...this.user}; 
     this.activities = this.user.activity_types;
 
+    //if values of null 
+    if(!this.userservice.user.location)
+      this.user.location = 'No location'
+    if(!this.userservice.user.firstName)
+      this.user.firstName = 'No First Name'
+    if(!this.userservice.user.lastName)
+      this.user.lastName = 'No Last Name'
+
     //these values should come from the user object
     //in the user service
     this.user.activity_types.map(activity => this.getActivities(activity));
@@ -79,8 +87,18 @@ export class ProfileComponent implements OnInit {
       this._dbService.editUser(this.new_profile, this.user.id)
       .subscribe(
         data => {
-          console.log(data);
-          this.user = {...this.new_profile}
+          console.log('new user' + JSON.stringify(data));
+          this._dbService.getUser(this.user.id)
+          .subscribe(
+            data => {
+              this.userservice.setUserDataFromDb(data);
+              console.log(this.userservice.user);
+              this.user = {...this.userservice.user} 
+            },
+            error => {
+              console.log(error);
+            }
+          )
         },
         error => console.log(error)
       );
