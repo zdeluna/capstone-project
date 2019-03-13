@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { User } from 'src/app/models/user.model';
 import { DatabaseService } from 'src/app/services/database.service';
 import { UserService } from 'src/app/services/user.service';
-// import { ActivityService } from 'src/app/services/activity.service';
 
 @Component({
   selector: 'app-edit-profile',
@@ -13,7 +12,6 @@ export class EditProfileComponent implements OnInit {
 
   constructor(
     private _userService: UserService,
-    // private _activityService: ActivityService,
     private _dbService: DatabaseService
   ) { }
 
@@ -37,7 +35,7 @@ export class EditProfileComponent implements OnInit {
     if(!this._userService.user.lastName)
       this.user.lastName = 'No Last Name'
     if(!this._userService.user.dateOfBirth)
-      this.age = 'No Date Of Birth'
+      this.age = 'No Age'
   }
 
   editProfile() {

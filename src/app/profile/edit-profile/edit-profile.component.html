@@ -1,9 +1,38 @@
 <div class='rounded header-col'>
-  <div class='header-edit'>
-    <h1 *ngIf='!edit'>{{user.username}}</h1>
-    <input [(ngModel)]='new_profile.username' *ngIf='edit' class='shoop' type="text" placeholder="{{user.username}}" [disabled]='edit_btn_disabled'>
-    <!-- <i *ngIf='edit' class="far fa-edit"></i> -->
-  
+  <div class='header-edit col-12'>
+    <div class="name-menu col-12">
+      <h1 *ngIf='!edit'>{{user.firstName}} {{user.lastName}}</h1>
+      <input [(ngModel)]='new_profile.username' *ngIf='edit' class='shoop' type="text" placeholder="{{user.username}}" [disabled]='edit_btn_disabled'>
+      <!-- <i *ngIf='edit' class="far fa-edit"></i> -->
+      <div class='menu-edit'>
+        <button class="navbar-toggler navbar-light static-top" type="button" data-toggle="collapse" data-target="#editMenu" aria-controls="editMenu" aria-expanded="true" aria-label="Toggle edit user">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse" id="editMenu">
+          <ul class="navbar-nav ">
+            <li *ngIf="!edit" class="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show">
+                <button 
+                *ngIf='!edit'
+                type='button'
+                class="btn btn-info btn-lg"
+                (click)='editProfile()'>
+                  Edit
+              </button>
+            </li>
+            <li *ngIf="edit"  class="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show">
+                <button 
+                *ngIf='edit'
+                type='button'
+                class="btn btn-info btn-lg"
+                (click)='saveProfile()'>
+                  Save
+              </button>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
     <img src={{user.photoURL}} 
     class="img-circle decision-button-svg">
     <div 
@@ -15,40 +44,25 @@
       USER:
       {{user | json}}
       <hr> -->
-      <div class="row col-12">
-        <div class='col-4'>
-          <h5 class='col-4' *ngIf='!edit'>{{user.location}}</h5>
+      <div class="row user-data col-12">
+        <div class='col-6'>
+          <h5 *ngIf='!edit'>Location: {{user.location}}</h5>
           <input [(ngModel)]='new_profile.location' *ngIf='edit' class='shoop' type="text" placeholder="{{user.location}}" [disabled]='edit_btn_disabled'>
         </div>
         <div class="col-6">
-          <h5 *ngIf='!edit'>{{user.firstName}} , {{user.lastName}}</h5>
+          <h5 *ngIf='!edit'>Email: {{user.username}}</h5>
           <input [(ngModel)]='new_profile.firstName' *ngIf='edit' class='shoop col-8' type="text" placeholder="{{user.firstName}}" [disabled]='edit_btn_disabled'>
           <input [(ngModel)]='new_profile.lastName' *ngIf='edit' class='shoop col-8' type="text" placeholder="{{user.lastName}}" [disabled]='edit_btn_disabled'>
         </div>
         <div class="col-6">
-          <h5 *ngIf='!edit'>{{age}}</h5>
+          <h5 *ngIf='!edit'>Age: {{age}}</h5>
           <input [(ngModel)]='new_profile.dateOfBirth' *ngIf='edit' class='shoop col-8' type="text" placeholder="{{user.dateOfBirth}}" [disabled]='edit_btn_disabled'>
         </div>
       </div>
     <!-- </div> -->
-  </div>
     <!-- <div class="col-4">
       <h5 class='col-2' *ngIf='!edit'>{{user.lastName}}</h5>
       <input [(ngModel)]='new_profile.lastName' *ngIf='edit' class='shoop' type="text" placeholder="{{user.lastName}}" [disabled]='edit_btn_disabled'>
     </div> -->
-    <button 
-      *ngIf='!edit'
-      type='button'
-      class="btn btn-info btn-sm"
-      (click)='editProfile()'>
-        Edit
-    </button>
-    <button 
-      *ngIf='edit'
-      type='button'
-      class="btn btn-info btn-sm"
-      (click)='saveProfile()'>
-        Save
-    </button>
   </div>
 </div>

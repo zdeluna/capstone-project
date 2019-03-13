@@ -1,6 +1,22 @@
 /* div {
     border: 1px dashed red;
+}
+
+button {
+    border: 1px dashed green;
 } */
+
+.name-menu {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.menu-edit {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+}
 
 /* 
 .header-col > h1, h6 {
@@ -58,4 +74,10 @@ img {
 
 .b {
     margin: 0 0 0 0;
+}
+
+.user-data {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap-reverse;
 }

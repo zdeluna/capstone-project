@@ -13,9 +13,7 @@ export class ToolbarComponent implements OnInit {
   }
 
   btnOptions: Array<String> = [
-    'General',
-    'Achievements',
-    'Current Challenges',
+    'Totals',
     'Records'
   ]
 
