@@ -3,9 +3,7 @@ import { Challenge } from '../models/challenge.model';
 import { User } from '../models/user.model';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { UserService } from './user.service';
-import { map, catchError } from 'rxjs/operators';
-import { Observable } from 'rxjs';
-import { pipeFromArray } from 'rxjs/internal/util/pipe';
+import { map } from 'rxjs/operators';
 import { Post } from '../models/post.model';
 
 @Injectable({
@@ -21,20 +19,16 @@ export class DatabaseService {
   uri = 'https://capstone-wazn.appspot.com/api'
   user: User = new User()
 
-
-  // token:string;
+  token:string;
   httpOptions = {
     headers: new HttpHeaders({
       'Content-Type':  'application/json',
       'Authorization': 'Bearer ' + this.userService.getToken()
     })
-  };
-
-  token:string;
-  // httpOptions = {}
-
+  }
 
   addChallenge(challenge: Challenge) {
+    console.log(this.httpOptions)
     let c = {
       name: challenge.name,
       activity: challenge.activity,
@@ -99,6 +93,7 @@ export class DatabaseService {
   }
 
   setToken(token: string) {
+    console.log("SETTING TOKEN")
     this.token = token
     this.httpOptions = {
       headers: new HttpHeaders({
@@ -106,38 +101,5 @@ export class DatabaseService {
         'Authorization': 'Bearer ' + this.token
       })
     }
-  }
-
-  getUserHardCoded(id: string): User {
-    let user = new User
-    let users: User[] = [{
-      id: "123456",
-      username: "testUser1",
-      firstName: "Test",
-      lastName: "User",
-      password: 'pw'
-    },
-    {
-      id: "654321",
-      username: "cpie19",
-      firstName: "Chris",
-      lastName: "Piemonte",
-      password: 'pw'
-    },
-    {
-      id: "987654",
-      username: "thehawk",
-      firstName: "Steve",
-      lastName: "Hawking",
-      password: 'pw'
-    }]
-
-    users.forEach(u => {
-      if(u.id === id) {
-        user = u
-      }
-    })
-    
-    return user
   }
 }

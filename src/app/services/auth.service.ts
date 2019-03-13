@@ -94,6 +94,7 @@ export class AuthService {
           //here set token for session from local storage
           this.token = JSON.parse(remembered).token;
           this.userService.setToken(this.token);
+          this.dbService.setToken(this.token)
 
           console.log('user was remembered');
           console.log('loaded: ' + JSON.stringify(this.userService.user));
