@@ -2,9 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import {User} from '../models/user.model';
 import { UserService } from '../services/user.service';
 import { ActivityService } from '../services/activity.service';
-import { Activity } from '../models/activity.model';
+// import { Activity } from '../models/activity.model';
 import { Activity_Type } from '../models/activity_type.model';
 //import { AuthService } from '../services/auth.service';
+//import * as _ from "lodash";
+import { DatabaseService } from '../services/database.service';
 
 @Component({
   selector: 'app-profile',
@@ -17,6 +19,7 @@ export class ProfileComponent implements OnInit {
   constructor(
     private userservice: UserService,
     private activityService: ActivityService,
+    private _dbService: DatabaseService
   ) { }
 
   btnOptions: Array<String> = [
@@ -31,22 +34,18 @@ export class ProfileComponent implements OnInit {
   activities: Object[] = [];
   distanceTotalsTable = {'Kilometers': 0, 'Miles': 0 };
   start: number = 0;
-  
+  new_profile: User;
 
   ngOnInit() {
 
-    //if user hit remember me on last session at login,
-    //loads user and navigates to home page skipping login
-    // this.authservice.loadRememberedUser()
     this.user = this.userservice.user;
+    //deep copy objectso edit input doesn't bind to both objects
+    this.new_profile = {...this.user}; 
     this.activities = this.user.activity_types;
 
     //these values should come from the user object
     //in the user service
-    this.user.activity_types.map(activity => this.assignSports(activity));
-
-    console.log(this.distanceTotalsTable['Biking'].Miles);
-    
+    this.user.activity_types.map(activity => this.getActivities(activity));
 
     this.activityService.getUserActivities()
     .subscribe(
@@ -65,11 +64,27 @@ export class ProfileComponent implements OnInit {
   }
 
   editProfile() {
-    this.edit = !this.edit;
-    this.edit_btn_disabled = !this.edit_btn_disabled;
+    this.edit = true;
+    this.edit_btn_disabled = false;
   }
 
-  assignSports(activity: Activity_Type) {
+  saveProfile() {
+    this.edit = false;
+    this.edit_btn_disabled = true;
+    if( JSON.stringify(this.new_profile) 
+    != JSON.stringify(this.user)) {
+      console.log('you changed it!');
+      let token = this.user.token;
+      this._dbService.setToken(token)
+      this._dbService.editUser(this.new_profile, this.user.id)
+      .subscribe(
+        data => console.log(data),
+        error => console.log(error)
+      );
+    }
+  }
+
+  getActivities(activity: Activity_Type) {
     this.distanceTotalsTable[activity.name] = {
       'Kilometers' : this.start, 
       'Miles': this.start,

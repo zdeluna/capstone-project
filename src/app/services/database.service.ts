@@ -94,6 +94,11 @@ export class DatabaseService {
     .pipe(map((res) => res));
   }
 
+  editUser(new_user: User, id: string) {
+    let edit = {username:  new_user.username}
+    return this.http.patch(`${this.uri}/users/${id}`, edit, this.httpOptions);
+  }
+
   getCurrentUser() {
     return this.getUser(this.userService.getCurrentUserId())
   }

@@ -1,4 +1,4 @@
-import {  UserLocation  } from './location.model';
+// import {  UserLocation  } from './location.model';
 import { Activity_Type } from './activity_type.model';
 import { Activity } from './activity.model';
 
@@ -13,10 +13,7 @@ export class User {
     pending_friends?: string[] = [];
     challenges?: string[] = [];
     pending_challenges?: string[] = [];
-    location?: UserLocation = {
-      city: "Seattle",
-      state: "WA"
-    };
+    location?: string = 'Seattle, WA';
     dateOfBirth?: Date;
     activities?: Activity[];
     activity_types?: Activity_Type[] = [

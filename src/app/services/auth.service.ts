@@ -80,14 +80,11 @@ export class AuthService {
   loadRememberedUser():void {
     console.log('Checking to see if user was remembered!!');
     
-    //either somethings in local storage or not and null
     let remembered: string = localStorage.getItem('loggedIn');
     if(this.isLoggedIn()) { 
       this.dbService.getUser(JSON.parse(remembered).id)
       .subscribe(
         data => { 
-          //should block until this is done
-
           this.userService.setUsername(data['username']); 
           this.userService.setCurrentUserId(data['_id']);
           

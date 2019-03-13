@@ -8,20 +8,33 @@
   <div class='rounded header-col'>
     <div class='header-edit'>
       <h1 *ngIf='!edit'>{{user.username}}</h1>
-      <input *ngIf='edit' class='shoop' type="text" placeholder="{{user.username}}" [disabled]='edit_btn_disabled'>
+      <input [(ngModel)]='new_profile.username' *ngIf='edit' class='shoop' type="text" placeholder="{{user.username}}" [disabled]='edit_btn_disabled'>
       <!-- <i *ngIf='edit' class="far fa-edit"></i> -->
     </div>
     <img src={{user.photoURL}} 
     class="img-circle decision-button-svg">
     <div 
       class="b row col-12 justify-content-between">
-      <h5 *ngIf='!edit'>{{user.location.city}}, {{user.location.state}}</h5>
+      <hr>
+      {{new_profile | json}}
+      <hr>
+      {{user | json}}
+      <hr>
+      <h5 *ngIf='!edit'>{{user.location}}</h5>
       <input *ngIf='edit' class='shoop' type="text" placeholder="{{user.location.city}}, {{user.location.state}}" [disabled]='edit_btn_disabled'>
       <button 
+        *ngIf='!edit'
         type='button'
         class="btn btn-info btn-sm"
         (click)='editProfile()'>
           Edit
+      </button>
+      <button 
+        *ngIf='edit'
+        type='button'
+        class="btn btn-info btn-sm"
+        (click)='saveProfile()'>
+          Save
       </button>
     </div>
   </div>

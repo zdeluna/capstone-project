@@ -8,6 +8,7 @@
 import { Injectable } from '@angular/core';
 import { User } from '../models/user.model';
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -24,6 +25,10 @@ export class UserService {
     
     this.user.password = form.value.password;
   }
+
+  // setUserDetailsFromDb(arr : Array<string>) {
+
+  // }
 
   getCurrentUserId() {
     return this.user.id;

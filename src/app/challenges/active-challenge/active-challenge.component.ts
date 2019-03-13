@@ -71,13 +71,16 @@ export class ActiveChallengeComponent implements OnInit {
         this.challengeIsOver = this.checkIfChallengeIsOver()
       })
     })
-    this.dbService.getCurrentUser().subscribe(res => {
-      this.user.id = this.userService.getCurrentUserId()
-      this.user.username = res['username']
-      this.user.firstName = res['first_name']
-      this.user.lastName = res['last_name']
-      this.user.password = res['password']
-    })
+    // this.dbService.getCurrentUser().subscribe(res => {
+    //   this.user.id = this.userService.getCurrentUserId()
+    //   this.user.username = res['username']
+    //   this.user.firstName = res['first_name']
+    //   this.user.lastName = res['last_name']
+    //   this.user.password = res['password']
+    // })
+    this.user = this.userService.user;
+    console.log(this.user.id);
+    
   }
 
   getParticipants(participants: string[]) {
