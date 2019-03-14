@@ -18,7 +18,7 @@ exports.createActivity = [
       // Change the date in milliseconds and change it to the MM_DD_YYYY format and compare it to the value that was passed in.
       return date.toISOString().slice(0, 10); // === dateValue;
     })
-    .withMessage("DATE_MUST_BE_IN_MM_DD_YYYY"),
+    .withMessage("DATE_MUST_BE_IN_MM-DD-YYYY"),
   check("measurement")
     .exists()
     .withMessage("MUST_CONTAIN_MEASUREMENT"),
@@ -56,7 +56,7 @@ exports.updateActivity = [
       return date.toISOString().slice(0, 10); // === dateValue;
     })
     .optional()
-    .withMessage("DATE_MUST_BE_IN_MM_DD_YYYY"),
+    .withMessage("DATE_MUST_BE_IN_MM-DD-YYYY"),
   check("measurement").optional(),
   check("units").optional(),
   check("value").optional(),

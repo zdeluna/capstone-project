@@ -110,20 +110,27 @@ Example:
 
 ```
 {
-    "friends": ["5be8d38a9d57d3088a747d8f"],
+    "friends": ["5c852ade63f7cc25ba67a5d8", "5c872ade63f7cc25ba67a5f6"],
     "pending_friends": [
         {
-            "user": "5c58d43a9de2d3088a747c9c",
+            "user": "5c852ade63f7cc25ba67a5f6",
             "status": 1
         }
     ],
-    "_id": "5c58d4379de2d3088a747c9b",
-    "username": "user1@gmail.com",
-    "password": "$2b$10$tFqOv3glwOlp4QB3pZJNOOVdGQSEpWmERQ8gVKUA0roFS7LhtJzM6",
-    "__v": 0,
-    "date_of_birth": "1987-04-05T06:00:00.000Z",
-    "first_name": "Zachary",
-    "last_name": "DeLuna"
+    "challenges": [
+        "5c882caeb76d723998384423"
+    ],
+    "conversations": [
+        "5c882d02b76d723998384426"
+    ],
+    "pending_challenges": [],
+    "records": [
+        "5c88274b71d95438e5f6e5c3"
+    ],
+    "_id": "5c88270a71d95438e5f6e5c0",
+    "username": "user1ZachTEST@gmail.com",
+    "password": "$2b$10$oa6AjgBXAO1o1sGwM9w9..r2A4ZpHu7Bnzcsl6jrJLJnTSLRDB7cO",
+    "__v": 0
 }
 ```
 
@@ -400,10 +407,10 @@ Response: 204 No Content
 
 #### Body Parameters:
 
-| Parameter   | Type     | Description            |
-| ----------- | -------- | ---------------------- |
-| `recipient` | `string` | The id of the recipent |
-| `content`   | `string` | The message content    |
+| Parameter   | Type     | Description             |
+| ----------- | -------- | ----------------------- |
+| `recipient` | `string` | The id of the recipient |
+| `content`   | `string` | The message content     |
 
 ## Get a conversation
 
@@ -624,10 +631,10 @@ Response: 200 OK
 
 #### Body Parameters:
 
-| Parameter | Type     | Description                                                           |
-| --------- | -------- | --------------------------------------------------------------------- |
-| `date`    | `string` | The date of the when the record was acheived formated as `MM-DD-YYYY` |
-| `type`    | `string` | The type of record                                                    |
+| Parameter | Type     | Description                                                            |
+| --------- | -------- | ---------------------------------------------------------------------- |
+| `date`    | `string` | The date of the when the record was achieved formatted as `MM-DD-YYYY` |
+| `type`    | `string` | The type of record                                                     |
 
 Response: 200 OK
 
@@ -649,7 +656,7 @@ Response: 200 OK
 
 | Parameter | Type     | Description                                                           |
 | --------- | -------- | --------------------------------------------------------------------- |
-| `date`    | `string` | The date of the when the record was acheived formated as `MM-DD-YYYY` |
+| `date`    | `string` | The date of the when the record was achieved formattedas `MM-DD-YYYY` |
 | `type`    | `string` | The type of record                                                    |
 
 Response: 200 OK

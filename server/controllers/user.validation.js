@@ -27,7 +27,7 @@ exports.update = [
       // Change the date in milliseconds and change it to the MM_DD_YYYY format and compare it to the value that was passed in.
       return date.toISOString().slice(0, 10); // === dateValue;
     })
-    .withMessage("DATE_OF_BIRTH_MUST_BE_IN_MM_DD_YYYY"),
+    .withMessage("DATE_OF_BIRTH_MUST_BE_IN_MM-DD-YYYY"),
   check("location").optional(),
 
   // Determine if there were errors in the request and then store them in the errors object
