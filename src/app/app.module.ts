@@ -32,6 +32,9 @@ import { AuthService } from './services/auth.service';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { CdkColumnDef } from '@angular/cdk/table';
 import { EditProfileComponent } from './profile/edit-profile/edit-profile.component';
+import { ToolbarComponent } from './profile/toolbar/toolbar.component';
+import { ActivitiesDataComponent } from './profile/activities-data/activities-data.component';
+import { DatePipe } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -50,6 +53,9 @@ import { EditProfileComponent } from './profile/edit-profile/edit-profile.compon
     AddActivityComponent,
     ViewActivityComponent,
     EditProfileComponent,
+    ToolbarComponent,
+    ActivitiesDataComponent,
+    EditProfileComponent
   ],
   imports: [
     BrowserModule,
@@ -80,7 +86,7 @@ import { EditProfileComponent } from './profile/edit-profile/edit-profile.compon
     ScrollDispatchModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: true })
   ],
-  providers: [AuthGuard, ResolveGuard, AuthService, CdkColumnDef],
+  providers: [AuthGuard, ResolveGuard, AuthService, CdkColumnDef, DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,4 +1,3 @@
-// import {  UserLocation  } from './location.model';
 import { Activity_Type } from './activity_type.model';
 import { Activity } from './activity.model';
 
@@ -14,7 +13,7 @@ export class User {
     challenges?: string[] = [];
     pending_challenges?: string[] = [];
     location?: string;
-    dateOfBirth?: string;
+    dateOfBirth?: Date;
     activities?: Activity[];
     activity_types?: Activity_Type[] = [
       {name: 'Running'},

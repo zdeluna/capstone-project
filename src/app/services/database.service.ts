@@ -7,6 +7,7 @@ import { map, catchError } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { pipeFromArray } from 'rxjs/internal/util/pipe';
 import { Post } from '../models/post.model';
+import { DatePipe } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,8 @@ export class DatabaseService {
 
   constructor (
     private http: HttpClient, 
-    private userService: UserService
+    private userService: UserService,
+    private DatePipe: DatePipe
     ) { }
 
   uri = 'https://capstone-wazn.appspot.com/api'
@@ -95,14 +97,20 @@ export class DatabaseService {
   }
 
   editUser(new_user: User, id: string) {
+    console.log('Date coming in: ' + new_user.dateOfBirth);
+    
+    let converted_date = 
+    this.DatePipe.transform(new_user.dateOfBirth, 'MM-dd-yyyy')
+    console.log('date being sent: ' + converted_date);
+    
     let edit = {
       username : new_user.username,
       first_name : new_user.firstName,
       last_name : new_user.lastName,
       location : new_user.location,
-      date_of_birth : new_user.dateOfBirth
+      date_of_birth : converted_date
     }
-    console.log('sending dob: ' + edit.date_of_birth);
+    console.log(edit);
     
     return this.http.patch(`${this.uri}/users/${id}`, edit/*new_user*/, this.httpOptions);
   }

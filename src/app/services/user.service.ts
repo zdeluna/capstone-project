@@ -63,7 +63,7 @@ export class UserService {
   setLastName(last: string) {
     this.user.lastName = last;
   }
-  setDOB(dob:string) {
+  setDOB(dob:Date) {
     this.user.dateOfBirth = dob;
   }
 
