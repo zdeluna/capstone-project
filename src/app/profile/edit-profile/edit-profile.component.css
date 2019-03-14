@@ -1,10 +1,11 @@
-/* div {
+ div {
     border: 1px dashed red;
 }
 
+
 button {
     border: 1px dashed green;
-} */
+} 
 
 .name-menu {
     display: flex;
@@ -14,7 +15,7 @@ button {
 
 .menu-edit {
     display: flex;
-    flex-direction: row;
+    flex-direction: row-reverse;
     justify-content: flex-start;
 }
 

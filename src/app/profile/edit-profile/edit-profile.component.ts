@@ -2,17 +2,20 @@ import { Component, OnInit } from '@angular/core';
 import { User } from 'src/app/models/user.model';
 import { DatabaseService } from 'src/app/services/database.service';
 import { UserService } from 'src/app/services/user.service';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-edit-profile',
   templateUrl: './edit-profile.component.html',
-  styleUrls: ['./edit-profile.component.css']
+  styleUrls: ['./edit-profile.component.css'],
+  providers: [DatePipe]
 })
 export class EditProfileComponent implements OnInit {
 
   constructor(
     private _userService: UserService,
-    private _dbService: DatabaseService
+    private _dbService: DatabaseService,
+    private DatePipe: DatePipe
   ) { }
 
   new_profile: User;
@@ -23,19 +26,11 @@ export class EditProfileComponent implements OnInit {
 
   ngOnInit() {
 
+   
     this.user = this._userService.user;
 
     //deep copy object so edit input doesn't bind to both objects
-    this.new_profile = {...this.user}; 
-      //if values are null 
-      if(!this._userService.user.location)
-      this.user.location = 'No location'
-    if(!this._userService.user.firstName)
-      this.user.firstName = 'No First Name'
-    if(!this._userService.user.lastName)
-      this.user.lastName = 'No Last Name'
-    if(!this._userService.user.dateOfBirth)
-      this.age = 'No Age'
+    this.copyValues()
   }
 
   editProfile() {
@@ -58,16 +53,9 @@ export class EditProfileComponent implements OnInit {
             getUserData => {
               this._userService.setUserDataFromDb(getUserData);
               console.log(this._userService.user);
-              this.user = {...this._userService.user} 
-              var today = new Date();
-              var birthDate = new Date(this.user.dateOfBirth);
-              this.age = today.getFullYear() - birthDate.getFullYear();
-              var m = today.getMonth() - birthDate.getMonth();
-              if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
-                  this.age--;
-              }
-              console.log('User age is: ' + this.age);
-              
+              this.copyValues();
+              // this.user = {...this._userService.user} 
+              // this.getDateFromDOB();
             },
             getUserError => {
               console.log(getUserError);
@@ -79,4 +67,29 @@ export class EditProfileComponent implements OnInit {
     }
   }
 
+  getDateFromDOB() {
+    var today = new Date();
+    var birthDate = new Date(this.user.dateOfBirth);
+    this.age = today.getFullYear() - birthDate.getFullYear();
+    var m = today.getMonth() - birthDate.getMonth();
+    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+        this.age--;
+    }
+    console.log('User age is: ' + this.age);
+  }
+
+
+  copyValues() {
+    this.new_profile = {...this.user}; 
+    //if values are null 
+    if(!this._userService.user.location)
+    this.user.location = 'Add Location'
+    if(!this._userService.user.firstName)
+      this.user.firstName = 'first name'
+    if(!this._userService.user.lastName)
+      this.user.lastName = 'Last Name'
+    if(!this._userService.user.dateOfBirth)
+      this.age = 'Add Age'
+    else  this.getDateFromDOB();
+  }
 }
