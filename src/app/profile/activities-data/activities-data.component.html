@@ -1,6 +1,6 @@
 <!-- distance data -->
 <div id='distance' class='rounded row-6'>  
-  <h3 class="text-left">Distance Totals: </h3>
+  <h2 class="text-left">Activity Session Totals: </h2>
   <div class='another'>
     <mat-grid-list 
       cols='1'
@@ -16,17 +16,18 @@
             <div> {{distanceTotalsTable[activity.name].Kilometers}} KM </div>
             <div> {{distanceTotalsTable[activity.name].Miles}} Miles </div>
             <div> {{distanceTotalsTable[activity.name].Steps}} Steps</div>
+            <div> {{distanceTotalsTable[activity.name].Minutes}} Minutes</div>
           </div>
         </mat-grid-tile>
     </mat-grid-list>
   </div>
 
-  <div class='space'>
+  <!-- <div class='space'>
     <br>
-  </div>
+  </div> -->
 
   <!-- time data -->
-  <div id='time' class='rounded row-6'>  
+  <!-- <div id='time' class='rounded row-6'>  
     <h3 class="text-left">Time: </h3>
     <div class='another'>
       <mat-grid-list 
@@ -37,9 +38,9 @@
         class='rounded col-md-4'>
           <mat-grid-tile>
             <h3>{{activity.name}}</h3>
-            <!-- <p>Total: {{sport.miles}} miles</p> -->
+            <p>Total: {{sport.miles}} miles</p> 
           </mat-grid-tile>
       </mat-grid-list>
     </div>
-  </div>
+  </div> -->
 </div>

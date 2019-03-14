@@ -3,9 +3,19 @@
 } */
 
 
-/* button {
+.editBtn {
     border: 1px dashed green;
-}  */
+    position: relative;
+    top: 3px;
+} 
+
+input {
+    border: 1px dashed darkblue;
+}
+
+.editInput {
+    border: 1px dashed firebrick;
+}
 
 .name-menu {
     display: flex;
@@ -48,9 +58,8 @@
 
 .shoop {
     background-color: whitesmoke;
-    border: none;
-    font-size: 2em;
-    
+    /* border: none; */
+    font-size: 1.5em;
 }
 
 .shoop::placeholder {

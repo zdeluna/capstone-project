@@ -7,10 +7,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { UserService } from './user.service';
-import { Router, Resolve, ActivatedRouteSnapshot } from '@angular/router';
+import { Router} from '@angular/router';
 import { DatabaseService } from './database.service';
 import { ActivityService } from './activity.service';
-import { Observable } from 'rxjs';
 
 @Injectable()
 export class AuthService {
@@ -117,6 +116,7 @@ export class AuthService {
     console.log('logging out!');
     this.setLoggedIn(false);
     localStorage.clear();
+    
   }
 
   //gets app ready after user logs in

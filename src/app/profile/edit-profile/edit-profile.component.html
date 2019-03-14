@@ -1,7 +1,7 @@
 <div class='rounded header-col'>
   <div class='header-edit col-12'>
     <div class="name-menu col-12">
-      <div class='col-10'>
+      <div class='editInput col-10'>
         <h1 *ngIf='!edit'>{{user.firstName}} {{user.lastName}}</h1>
         <input [(ngModel)]='new_profile.firstName' *ngIf='edit' class='shoop col-8' type="text" placeholder="{{user.firstName}}" [disabled]='edit_btn_disabled'>
         <input [(ngModel)]='new_profile.lastName' *ngIf='edit' class='shoop col-8' type="text" placeholder="{{user.lastName}}" [disabled]='edit_btn_disabled'>
@@ -12,26 +12,28 @@
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse" id="editMenu">
-          <ul class="navbar-nav ">
-            <li *ngIf="!edit" class="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show">
-                <button 
-                *ngIf='!edit'
-                type='button'
-                class="btn btn-info btn-lg"
-                (click)='editProfile()'>
-                  Edit
-              </button>
-            </li>
-            <li *ngIf="edit"  class="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show">
-                <button 
-                *ngIf='edit'
-                type='button'
-                class="btn btn-info btn-lg"
-                (click)='saveProfile()'>
-                  Save
-              </button>
-            </li>
-          </ul>
+          <div class='editBtnContainer'>
+            <ul class="navbar-nav ">
+              <li *ngIf="!edit" class="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show">
+                  <button 
+                  *ngIf='!edit'
+                  type='button'
+                  class="btn btn-info btn-lg editBtn"
+                  (click)='editProfile()'>
+                    Edit
+                </button>
+              </li>
+              <li *ngIf="edit"  class="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show">
+                  <button 
+                  *ngIf='edit'
+                  type='button'
+                  class="btn btn-info btn-lg editBtn"
+                  (click)='saveProfile()'>
+                    Save
+                </button>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
     </div>
@@ -50,15 +52,31 @@
       <div class="row user-data col-12">
         <div class='col-6'>
           <h5 *ngIf='!edit'>Location: {{user.location}}</h5>
-          <input [(ngModel)]='new_profile.location' *ngIf='edit' class='shoop' type="text" placeholder="{{user.location}}" [disabled]='edit_btn_disabled'>
+          <input [(ngModel)]='new_profile.location' *ngIf='edit' class='shoop' type="text" [disabled]='edit_btn_disabled'>
         </div>
         <div class="col-6">
           <h5 *ngIf='!edit'>Email: {{user.username}}</h5>
-          <input [(ngModel)]='new_profile.username' *ngIf='edit' class='shoop' type="text" placeholder="{{user.username}}" [disabled]='edit_btn_disabled'>
+          <input [(ngModel)]='new_profile.username' *ngIf='edit' class='shoop' type="email" [disabled]='edit_btn_disabled' required>
         </div>
         <div class="col-6">
           <h5 *ngIf='!edit'>Age: {{age}}</h5>
-          <input [(ngModel)]='new_profile.dateOfBirth' *ngIf='edit' class='shoop col-8' type="text" placeholder="{{age}}" [disabled]='edit_btn_disabled'>
+          <!-- <input [(ngModel)]='new_profile.dateOfBirth' *ngIf='edit' class='shoop col-8' type="text" [disabled]='edit_btn_disabled'> -->
+          <div *ngIf='edit' class='col-6'>
+              <h6 >
+                Date:
+              </h6>
+                <input 
+                  [(ngModel)]='new_profile.dateOfBirth'
+                  [disabled]='edit_btn_disabled'
+                  matInput 
+                  [matDatepicker]="picker" 
+                  placeholder="Date ex:2/4/2019">
+                  <mat-datepicker-toggle 
+                    matSuffix 
+                    [for]="picker">
+                  </mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </div>
         </div>
       </div>
     <!-- </div> -->
