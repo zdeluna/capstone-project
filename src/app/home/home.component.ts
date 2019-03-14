@@ -25,6 +25,7 @@ export class HomeComponent implements OnInit {
   categories: Object = []
   user: User = new User
   date = new Date();
+  mediumDate = 'mediumDate'
   
   ngOnInit() {
     //if logged in then load the user details 
