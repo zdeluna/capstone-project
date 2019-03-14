@@ -26,7 +26,6 @@ mat-grid-tile {
 .data {
     display: flex;
     flex-direction: column;
-    /* flex-wrap: wrap; */
 }
 
 .space {

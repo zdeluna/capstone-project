@@ -1,11 +1,11 @@
- div {
+ /* div {
     border: 1px dashed red;
-}
+} */
 
 
-button {
+/* button {
     border: 1px dashed green;
-} 
+}  */
 
 .name-menu {
     display: flex;
@@ -40,9 +40,9 @@ button {
 }
 
 
-img {
+.user-img {
     /* border: 1px dashed red; */
-    margin: 0 0 5px 0;
+    margin: 0 0 5px 100px;
     padding: 2px;
 }
 

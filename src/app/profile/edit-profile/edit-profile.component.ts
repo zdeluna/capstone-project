@@ -76,6 +76,7 @@ export class EditProfileComponent implements OnInit {
         this.age--;
     }
     console.log('User age is: ' + this.age);
+    return this.age;
   }
 
 
@@ -90,6 +91,6 @@ export class EditProfileComponent implements OnInit {
       this.user.lastName = 'Last Name'
     if(!this._userService.user.dateOfBirth)
       this.age = 'Add Age'
-    else  this.getDateFromDOB();
+    else  this.age = this.getDateFromDOB();
   }
 }

@@ -1,6 +1,11 @@
 <body>
   <div class ="jumbotron">
-      <h1 *ngIf="user" class='profile-name'>Welcome, {{user.username}}</h1>
+      <h1 *ngIf="user" class='profile-name'>
+        Welcome, 
+        {{user.firstName}}
+        <!-- {{user.lastName}} -->
+        {{user.username}}
+      </h1>
       <mat-spinner *ngIf='!user.username' style="margin:0 auto;"></mat-spinner>
       <p> {{date | date: mediumDate}} </p>
   </div>
