@@ -3,9 +3,7 @@ import { Challenge } from '../models/challenge.model';
 import { User } from '../models/user.model';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { UserService } from './user.service';
-import { map, catchError } from 'rxjs/operators';
-import { Observable } from 'rxjs';
-import { pipeFromArray } from 'rxjs/internal/util/pipe';
+import { map } from 'rxjs/operators';
 import { Post } from '../models/post.model';
 import { DatePipe } from '@angular/common';
 

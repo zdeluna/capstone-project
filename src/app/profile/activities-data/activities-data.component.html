@@ -1,6 +1,23 @@
 <!-- distance data -->
 <div id='distance' class='rounded row-6'>  
   <h2 class="text-left">Activity Session Totals: </h2>
+  <div class='btn-group col-4'>
+    <mat-radio-group class='moopy btn btn-info'>
+        <mat-radio-button
+          *ngFor='let date_options of date_range_options'
+          [value]='date_options'
+          [checked]="date_options == default"
+          class="moopy"
+          (change)='changeDateRange($event.value)'>
+            last {{date_options}} days
+        </mat-radio-button>
+    </mat-radio-group>
+  </div>
+  <hr>
+  Start Date: {{start_date}}
+  <hr>
+  End Date: {{end_date}}
+  <hr>
   <div class='another'>
     <mat-grid-list 
       cols='1'
@@ -22,25 +39,4 @@
     </mat-grid-list>
   </div>
 
-  <!-- <div class='space'>
-    <br>
-  </div> -->
-
-  <!-- time data -->
-  <!-- <div id='time' class='rounded row-6'>  
-    <h3 class="text-left">Time: </h3>
-    <div class='another'>
-      <mat-grid-list 
-        cols='1'
-        rowHeight='4:1'
-        id='sport'
-        *ngFor='let activity of activities' 
-        class='rounded col-md-4'>
-          <mat-grid-tile>
-            <h3>{{activity.name}}</h3>
-            <p>Total: {{sport.miles}} miles</p> 
-          </mat-grid-tile>
-      </mat-grid-list>
-    </div>
-  </div> -->
 </div>

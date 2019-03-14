@@ -44,19 +44,14 @@ export class ActivityService {
 
 
   //replace gets activities
-  getUserActivities() {
+  getUserActivities(start_date: Date, end_date: Date) {
 
     //create query for url
     let userID = this._user.getCurrentUserId();
     
-    //change to date picker later, hardcoded for now
-    let startDate = '2019-3-1';
-    let endDate = '2019-3-31';
-
-    // build url
-    // let type = "Running"
-    // let url = 
-    //   this._url + `?user_id=${userID}&type=${type}&start_date=${startDate}&end_date=${endDate}`;
+    // //change to date picker later, hardcoded for now
+    // let startDate = '2019-3-1';
+    // let endDate = '2019-3-31';
 
     //set token for auth
     let headers = this.getHeaders(this._user.getToken())
@@ -66,7 +61,7 @@ export class ActivityService {
 
     let join = []
     for(let activity of this._user.user.activity_types) {
-      let url = this._url + `?user_id=${userID}&type=${activity.name}&start_date=${startDate}&end_date=${endDate}`;
+      let url = this._url + `?user_id=${userID}&type=${activity.name}&start_date=${start_date}&end_date=${end_date}`;
       let req = this._http.get(url, headers);
       join.push(req)
     }

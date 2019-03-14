@@ -15,6 +15,11 @@ mat-grid-tile {
     height: 100%;
 }
 
+mat-radio-group {
+    display: flex;
+    flex-direction: row;
+}
+
 #sport {
     border: 2px solid rgb(19, 132, 150);
 }

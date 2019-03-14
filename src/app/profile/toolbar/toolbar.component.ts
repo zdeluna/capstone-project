@@ -12,6 +12,8 @@ export class ToolbarComponent implements OnInit {
   ngOnInit() {
   }
 
+  //isActive = 'true'
+
   btnOptions: Array<String> = [
     'Totals',
     'Records'

@@ -2,20 +2,19 @@ import { Component, OnInit } from '@angular/core';
 import { User } from 'src/app/models/user.model';
 import { DatabaseService } from 'src/app/services/database.service';
 import { UserService } from 'src/app/services/user.service';
-import { DatePipe } from '@angular/common';
+
 
 @Component({
   selector: 'app-edit-profile',
   templateUrl: './edit-profile.component.html',
   styleUrls: ['./edit-profile.component.css'],
-  providers: [DatePipe]
 })
 export class EditProfileComponent implements OnInit {
 
   constructor(
     private _userService: UserService,
     private _dbService: DatabaseService,
-    private DatePipe: DatePipe
+    // private DatePipe: DatePipe
   ) { }
 
   new_profile: User;

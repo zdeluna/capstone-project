@@ -12,6 +12,7 @@ import { Activity_Type } from 'src/app/models/activity_type.model';
 
 
 export class ActivitiesDataComponent implements OnInit {
+  
 
   constructor(
     private _userService: UserService,
@@ -21,17 +22,29 @@ export class ActivitiesDataComponent implements OnInit {
   user: User = new User;
   activities: Object[] = [];
   distanceTotalsTable = {};
-  start: number = 0;
-
+  start_totals: number = 0;
+  start_date: Date;
+  end_date: Date;
+  date: Date;
+  date_range_options: Array<number> = [30, 60];
+  date_option = 0;
+  date_range_value: number = this.date_range_options[this.date_option];
+  autoFocusResult: boolean;
+  default: number = 30;
+  
   ngOnInit() {
     this.user = this._userService.user;
     this.activities = this.user.activity_types;
 
+    this.autoFocusResult = true;
+
+    this.getDateRange(this.date_range_value);
+
     //get the user activity names to display
     this.user.activity_types.map(activity => this.getActivities(activity));
 
-    //get the user activity data to display
-    this._activityService.getUserActivities()
+    //get the user activity data to display //***************/WAS HERE*********************
+    this._activityService.getUserActivities(this.start_date, this.end_date)
     .subscribe(
       activitydata => { //data is an array of arrays of objects
         console.log(activitydata);
@@ -47,14 +60,28 @@ export class ActivitiesDataComponent implements OnInit {
     )
   }
 
-  
+  //got help here https://stackoverflow.com/questions/8842732/how-to-get-30-days-prior-to-current-date
+  getDateRange(val: number) {
+    var date_today = new Date()
+    var date_span = new Date().setDate(date_today.getDate()-val)
+    this.start_date = new Date(date_span)
+    this.end_date = new Date(new Date().setDate(date_today.getDate()))
+  }
+
+  changeDateRange() {
+    if(this.date_option) 
+      this.date_option = 0;
+    else this.date_option = 1;
+    this.date_range_value = this.date_range_options[this.date_option]
+    this.getDateRange(this.date_range_value)
+  }
 
   getActivities(activity: Activity_Type) {
     this.distanceTotalsTable[activity.name] = {
-      'Kilometers' : this.start, 
-      'Miles': this.start,
-      'Steps': this.start,
-      'Minutes' : this.start
+      'Kilometers' : this.start_totals, 
+      'Miles': this.start_totals,
+      'Steps': this.start_totals,
+      'Minutes' : this.start_totals
     };
   }
 
