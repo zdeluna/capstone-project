@@ -76,7 +76,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
     MatSortModule,
     HttpClientModule,
     ScrollDispatchModule,
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: true })
+    ServiceWorkerModule.register('src/ngsw-worker.js', { enabled: true })
   ],
   providers: [AuthGuard, ResolveGuard, AuthService],
   bootstrap: [AppComponent]

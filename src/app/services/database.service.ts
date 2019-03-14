@@ -43,12 +43,12 @@ export class DatabaseService {
     let status = {status: "0"}
 
     if(participants.length > 1) {
-      let url = `${this.uri}/challenges/${id}/participants/${participants.pop()}`
+      let url = `${this.uri}/challenges/${id}/participants/${participants.pop().id}`
       this.http.post(url, status, this.httpOptions).subscribe(() => {
         this.inviteParticipants(id, participants)
       })
     } else {
-      let url = `${this.uri}/challenges/${id}/participants/${participants.pop()}`
+      let url = `${this.uri}/challenges/${id}/participants/${participants.pop().id}`
       this.http.post(url, status, this.httpOptions)
     }
   }
@@ -58,16 +58,8 @@ export class DatabaseService {
   }
 
   deleteMessage(cId: string, message: Post) {
-    if(message.replies.length > 0) {
-      let replyToDelete = message.replies.pop()
-      let url = `${this.uri}/challenges/${cId}/messages/${replyToDelete.id}`
-      this.http.delete(url, this.httpOptions).subscribe(() => {
-        this.deleteMessage(cId, message)
-      })
-    } else {
-      let url = `${this.uri}/challenges/${cId}/messages/${message.id}`
-      return this.http.delete(url, this.httpOptions)
-    }
+    let url = `${this.uri}/challenges/${cId}/messages/${message.id}`
+    return this.http.delete(url, this.httpOptions)
   }
 
   getChallenge(id: string) {
@@ -93,7 +85,6 @@ export class DatabaseService {
   }
 
   setToken(token: string) {
-    console.log("SETTING TOKEN")
     this.token = token
     this.httpOptions = {
       headers: new HttpHeaders({

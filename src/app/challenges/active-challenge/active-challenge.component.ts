@@ -79,6 +79,7 @@ export class ActiveChallengeComponent implements OnInit {
       this.user.firstName = res['first_name']
       this.user.lastName = res['last_name']
       this.user.password = res['password']
+      this.user.friends = res['friends']
     })
   }
 

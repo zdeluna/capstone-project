@@ -33,7 +33,6 @@ export class MessageBoardComponent implements OnInit {
   }
 
   submitNewPost() {
-    console.log(this.challenge)
     let m = {
       content: this.form.value.message
     }

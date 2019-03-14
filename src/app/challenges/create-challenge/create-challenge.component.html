@@ -64,7 +64,7 @@
               <div *ngFor="let match of searchMatches" class="col-12 friends-row">
                 <p>{{ match.firstName }} {{ match.lastName }}</p>
                 <p>{{ match.username }}</p>
-                <button class="btn btn-light" type="button" (click)="inviteFriend(match.id)">Invite</button>
+                <button class="btn btn-light" type="button" (click)="inviteFriend(match)">Invite</button>
               </div>
             </div>
             <div class="col-12" [hidden]="!noMatch">Sorry, no matches for this search</div>
