@@ -35,12 +35,12 @@ const routes: Routes = [
   {
     path: 'challenges', 
     component: ChallengesPageComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard, ResolveGuard]
   },
   {
     path: 'challenges/create', 
     component: CreateChallengeComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard, ResolveGuard]
   },
   {
     path: 'challenges/:id', 

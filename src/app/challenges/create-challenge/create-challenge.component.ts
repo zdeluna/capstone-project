@@ -198,7 +198,7 @@ export class CreateChallengeComponent implements OnInit {
   }
 
   inviteFriend(id: string) {
-    this.invitedFriends.push(this.dbService.getUserHardCoded(id))
+    // this.invitedFriends.push(this.dbService.getUserHardCoded(id))
     this.form.controls.invitees.setValue(this.invitedFriends)
   }
 

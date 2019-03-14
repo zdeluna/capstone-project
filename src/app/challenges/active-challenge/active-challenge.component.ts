@@ -8,6 +8,7 @@ import { User } from 'src/app/models/user.model';
 import { SortService } from 'src/app/services/sort.service';
 import { UserService } from 'src/app/services/user.service';
 import { Post } from 'src/app/models/post.model';
+import { CdkColumnDef } from '@angular/cdk/table';
 
 export interface Leaderboard {
   user: User;
@@ -17,7 +18,8 @@ export interface Leaderboard {
 @Component({
   selector: 'app-active-challenge',
   templateUrl: './active-challenge.component.html',
-  styleUrls: ['./active-challenge.component.css']
+  styleUrls: ['./active-challenge.component.css'],
+  providers: [CdkColumnDef]
 })
 export class ActiveChallengeComponent implements OnInit {
 
