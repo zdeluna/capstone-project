@@ -13,11 +13,23 @@
           <div class="form-element">
             <h3 class="form-element-header">Activity</h3>
             <mat-radio-group (change)="checkForActivity()" class="radio-buttons" formControlName="activity">
-              <mat-radio-button value="Walking">Walking</mat-radio-button>
-              <mat-radio-button value="Running">Running</mat-radio-button>
-              <mat-radio-button value="Biking">Biking</mat-radio-button>
-              <mat-radio-button value="Swimming">Swimming</mat-radio-button>
-              <mat-radio-button value="Weight">Weight</mat-radio-button>
+              <div class="row full-width radio-buttons">
+                <div class="col-md-2">
+                  <mat-radio-button value="Walking">Walking</mat-radio-button>
+                </div>
+                <div class="col-md-2">
+                  <mat-radio-button value="Running">Running</mat-radio-button>
+                </div>
+                <div class="col-md-2">
+                  <mat-radio-button value="Biking">Biking</mat-radio-button>
+                </div>
+                <div class="col-md-2">
+                  <mat-radio-button value="Swimming">Swimming</mat-radio-button>
+                </div>
+                <div class="col-md-2">
+                  <mat-radio-button value="Weight">Weight</mat-radio-button>
+                </div>
+              </div>
             </mat-radio-group>
           </div>
           <div class="form-element">
@@ -33,11 +45,23 @@
           <div class="form-element">
             <h3 class="form-element-header">Duration</h3>
             <mat-radio-group class="radio-buttons" (change)="checkForDuration()" formControlName="duration">
-              <mat-radio-button value="weekend">Weekend</mat-radio-button>
-              <mat-radio-button value="work-week">Work Week</mat-radio-button>
-              <mat-radio-button value="full-week">Full Week</mat-radio-button>
-              <mat-radio-button value="month">Month</mat-radio-button>
-              <mat-radio-button value="year">Year</mat-radio-button>
+              <div class="row full-width radio-buttons">
+                <div class="col-md-2">
+                  <mat-radio-button value="weekend">Weekend</mat-radio-button>
+                </div>
+                <div class="col-md-2">
+                  <mat-radio-button value="work-week">Work Week</mat-radio-button>
+                </div>
+                <div class="col-md-2">
+                  <mat-radio-button value="full-week">Full Week</mat-radio-button>
+                </div>
+                <div class="col-md-2">
+                  <mat-radio-button value="month">Month</mat-radio-button>
+                </div>
+                <div class="col-md-2">
+                  <mat-radio-button value="year">Year</mat-radio-button>
+                </div>
+              </div>
             </mat-radio-group>
           </div>
           <div class="form-element">
@@ -52,12 +76,16 @@
           </div>
           <div class="form-element">
             <h3 class="form-element-header">Invite Friends</h3>
-            <form class="search" [formGroup]="friendSearch" (ngSubmit)="submitSearch()">
-              <mat-form-field class="add-entry" style="padding-right: 5px">
+            <form [formGroup]="friendSearch" (ngSubmit)="submitSearch()">
+              <mat-form-field class="add-entry">
                 <input matInput placeholder="Search friends by first name" type="text" formControlName="name" [(ngModel)]="search" autocomplete="off">
               </mat-form-field>
-              <button mat-stroked-button style="margin-right: 5px" class="btn btn-primary" type="Submit" [disabled]="!form.valid"> Search </button>
-              <button class="btn btn-light" type="button" [disabled]="friendSearch.value.name === undefined || friendSearch.value.name === ''" (click)="clearSearch()">Clear</button>
+              <div class="row" style="margin-top: 0px;">
+                <div class="col-12 full-width radio-buttons">
+                  <button mat-stroked-button class="btn btn-primary" type="Submit" [disabled]="!form.valid"> Search </button>
+                  <button class="btn btn-light" type="button" [disabled]="friendSearch.value.name === undefined || friendSearch.value.name === ''" (click)="clearSearch()">Clear</button>
+                </div>
+              </div>
             </form>
             
             <div *ngIf="searchMatches.length > 0">
