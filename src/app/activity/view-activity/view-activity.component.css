@@ -9,3 +9,8 @@ table {
 td {
     text-align: center;
 }
+
+mat-radio-group {
+    display: flex;
+    flex-direction: row;
+}

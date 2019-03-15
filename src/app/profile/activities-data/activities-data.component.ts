@@ -36,7 +36,7 @@ export class ActivitiesDataComponent implements OnInit {
     this.user = this._userService.user;
     this.activities = this.user.activity_types;
 
-    this.autoFocusResult = true;
+    this.autoFocusResult = true; //dont think I need this
 
     this.getDateRange(this.date_range_value);
 
