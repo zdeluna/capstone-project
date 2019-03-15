@@ -3,7 +3,6 @@ import { Location } from '@angular/common';
 import { ActivityService } from 'src/app/services/activity.service';
 import { Activity } from 'src/app/models/activity.model';
 import { UserService } from 'src/app/services/user.service';
-import { Activity_Type } from 'src/app/models/activity_type.model';
 import { MatSort, MatTableDataSource } from '@angular/material';
 
 @Component({

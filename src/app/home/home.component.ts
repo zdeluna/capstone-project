@@ -45,19 +45,19 @@ export class HomeComponent implements OnInit {
       view: 'Profile'
     },
     {
-      value: "search",  
-      location: "assets/flat-icons/magnifier.svg", 
-      view: 'Search'
-    },
-    {
       value: "challenges", 
       location: "assets/flat-icons/podium.svg", 
       view: 'Challenges'
     },
     {
-      value: "activity", 
+      value: "activity/add",  
       location: "assets/flat-icons/check-list.svg", 
-      view: 'Activities'
+      view: 'Add Activity Session'
+    },
+    {
+      value: "activity/view", 
+      location: "assets/flat-icons/magnifier.svg",
+      view: 'View Activity Sessions'
     }
     ];
 

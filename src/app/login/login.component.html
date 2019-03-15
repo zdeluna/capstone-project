@@ -35,12 +35,12 @@
         Please try a different login!
       </mat-error>
 
-      <div class="checkbox mb-3">
+      <!-- <div class="checkbox mb-3">
         <label>
           <input formControlName='rememberUser' name='rememberUser' type="checkbox" value="remember-me"> 
           Remember me
         </label>
-      </div>
+      </div> -->
 
       <button [disabled]='email.invalid || password.invalid' *ngIf='!submitted' id='sign-in-btn' class="btn btn-lg btn-primary btn-block border: 1px solid aqua;
       border-color: #00fff0;" type="submit">
