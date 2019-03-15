@@ -71,7 +71,11 @@ export class DatabaseService {
   }
 
   getExerciseByUserDateAndActivity(userId: string, startDate: Date, activity: string) {
-    //search db where user = userId startDate date >= startDate activity = activity
+    let endDate = new Date()
+    let start = `0${(startDate.getMonth() + 1)}-${startDate.getDate()}-${startDate.getFullYear()}`
+    let end = `0${(endDate.getMonth() + 1)}-${endDate.getDate()}-${endDate.getFullYear()}`
+
+    return this.http.get(`${this.uri}/activities/?user_id=${userId}&type=${activity}&start_date=${start}&end_date=${end}`)
   }
 
   getUser(id: string) {
