@@ -43,6 +43,8 @@ export class ActiveChallengeComponent implements OnInit {
   sortedParticipants: Leaderboard[] = []
   endDate: Date = new Date()
   replies = []
+  partOfChallenge = false
+  noMorePending = true
 
   ngOnInit() {
     this.participants = []
@@ -63,6 +65,8 @@ export class ActiveChallengeComponent implements OnInit {
         this.challenge.startDate = new Date(res['start_date'])
         this.challenge.messages = []
         
+        this.checkIfNoMorePending()
+        this.checkIfPartOfChallenge()
         this.setMessages(res['messages'])
         this.getParticipants(this.challenge.participants)
         this.getPendingParticipants(this.challenge.pendingParticipants)
@@ -94,14 +98,17 @@ export class ActiveChallengeComponent implements OnInit {
           lastName: "last"
         }
 
-        this.dbService.getExerciseByUserDateAndActivity(user.id, this.challenge.startDate, this.challenge.activity)
+        this.dbService.getExerciseByUserDateAndActivity(user.id, this.challenge.startDate, this.endDate, this.challenge.activity)
           .subscribe(res => {
-            console.log(res)
-            //add all activities
+            let total = 0
+
+            res.forEach(activity => {
+              total+= +(activity["value"])
+            })
 
             let p: Leaderboard = {
               user: user,
-              activityTotal: Math.ceil(Math.random() * (150 - 0))
+              activityTotal: total
             }
 
             this.participants.push(p)
@@ -124,7 +131,7 @@ export class ActiveChallengeComponent implements OnInit {
 
         let p: Leaderboard = {
           user: user,
-          activityTotal: Math.ceil(Math.random() * (150 - 0))
+          activityTotal: 0
         }
         this.pendingParticipants.push(p)
       })
@@ -177,8 +184,19 @@ export class ActiveChallengeComponent implements OnInit {
     this.location.back()
   }
 
+  checkIfPartOfChallenge() {
+    this.challenge.participants.forEach(p =>{
+      if(this.userService.getCurrentUserId() == p) {
+        this.partOfChallenge = true
+      }
+    })
+  }
+
+  checkIfNoMorePending() {
+    this.noMorePending = this.challenge.pendingParticipants.length == 0
+  }
+
   checkIfChallengeIsOver() {
-    // return new Date() > this.endDate
-    return false
+    return new Date() > this.endDate
   }
 }
