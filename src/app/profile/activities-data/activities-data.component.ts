@@ -29,7 +29,7 @@ export class ActivitiesDataComponent implements OnInit {
   date_range_options: Array<number> = [30, 60];
   date_option = 0;
   date_range_value: number = this.date_range_options[this.date_option];
-  autoFocusResult: boolean;
+  autoFocusResult: boolean; //dont think I need this take out
   default: number = 30;
   
   ngOnInit() {
@@ -41,9 +41,13 @@ export class ActivitiesDataComponent implements OnInit {
     this.getDateRange(this.date_range_value);
 
     //get the user activity names to display
-    this.user.activity_types.map(activity => this.getActivities(activity));
+    this.user.activity_types.map(activity => this.initActivities(activity));
 
-    //get the user activity data to display //***************/WAS HERE*********************
+    this.getActivityTotals()
+  }
+
+  getActivityTotals() {
+    //get the user activity data to display
     this._activityService.getUserActivities(this.start_date, this.end_date)
     .subscribe(
       activitydata => { //data is an array of arrays of objects
@@ -74,9 +78,11 @@ export class ActivitiesDataComponent implements OnInit {
     else this.date_option = 1;
     this.date_range_value = this.date_range_options[this.date_option]
     this.getDateRange(this.date_range_value)
+    this.user.activity_types.map(activity => this.initActivities(activity));
+    this.getActivityTotals()
   }
 
-  getActivities(activity: Activity_Type) {
+  initActivities(activity: Activity_Type) {
     this.distanceTotalsTable[activity.name] = {
       'Kilometers' : this.start_totals, 
       'Miles': this.start_totals,
