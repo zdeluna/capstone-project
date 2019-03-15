@@ -67,7 +67,7 @@ export class DatabaseService {
   }
 
   getExampleChallenge() {
-    return this.http.get(`${this.uri}/challenges/5c686d1315a6850006405ab1`, this.httpOptions)
+    return this.http.get(`${this.uri}/challenges/5c82e1fdaeaa110005c6b28f`, this.httpOptions)
   }
 
   getExerciseByUserDateAndActivity(userId: string, startDate: Date, activity: string) {
@@ -75,7 +75,7 @@ export class DatabaseService {
     let start = `0${(startDate.getMonth() + 1)}-${startDate.getDate()}-${startDate.getFullYear()}`
     let end = `0${(endDate.getMonth() + 1)}-${endDate.getDate()}-${endDate.getFullYear()}`
 
-    return this.http.get(`${this.uri}/activities/?user_id=${userId}&type=${activity}&start_date=${start}&end_date=${end}`)
+    return this.http.get(`${this.uri}/activities/?user_id=${userId}&type=${activity}&start_date=${start}&end_date=${end}`, this.httpOptions)
   }
 
   getUser(id: string) {

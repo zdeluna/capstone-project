@@ -94,12 +94,19 @@ export class ActiveChallengeComponent implements OnInit {
           lastName: "last"
         }
 
-        let p: Leaderboard = {
-          user: user,
-          activityTotal: Math.ceil(Math.random() * (150 - 0))
-        }
-        this.participants.push(p)
-        this.sortedParticipants = this.sortService.sortByActivityTotal(this.participants)
+        this.dbService.getExerciseByUserDateAndActivity(user.id, this.challenge.startDate, this.challenge.activity)
+          .subscribe(res => {
+            console.log(res)
+            //add all activities
+
+            let p: Leaderboard = {
+              user: user,
+              activityTotal: Math.ceil(Math.random() * (150 - 0))
+            }
+
+            this.participants.push(p)
+            this.sortedParticipants = this.sortService.sortByActivityTotal(this.participants)
+          })
       })
     })
   }
@@ -171,6 +178,7 @@ export class ActiveChallengeComponent implements OnInit {
   }
 
   checkIfChallengeIsOver() {
-    return new Date() > this.endDate
+    // return new Date() > this.endDate
+    return false
   }
 }
