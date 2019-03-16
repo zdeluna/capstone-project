@@ -6,6 +6,10 @@
    margin-bottom: 30px;
 }
 
+.above-toolbar {
+    margin: 0 0 30px 0;
+}
+
 .col-md-4 {
     margin: 20px 5px 20px 0px;
 }
@@ -34,6 +38,6 @@ mat-radio-group {
     margin: 0 0 10px 0;
 }
 
-.space {
-    background-color: white;
+.end {
+    margin: 0 0 2px 0;
 }

@@ -4,18 +4,18 @@
 
 
 .editBtn {
-    border: 1px dashed green;
+    /* border: 1px dashed green; */
     position: relative;
     top: 3px;
 } 
 
-input {
+/* input {
     border: 1px dashed darkblue;
-}
+} */
 
-.editInput {
+/* .editInput {
     border: 1px dashed firebrick;
-}
+} */
 
 .name-menu {
     display: flex;

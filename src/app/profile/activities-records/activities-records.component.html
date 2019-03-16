@@ -1,6 +1,6 @@
 <!-- distance data -->
 <div id='distance' class='rounded row-6'>  
-    <h2 class="text-left">Activity Session Totals: </h2>
+    <h2 class="above-toolbar text-left">Activity Session High Values: </h2>
     <div class='btn-group col-4'>
       <mat-radio-group class='moopy btn btn-outline-info'>
           <mat-radio-button
@@ -28,12 +28,13 @@
           <mat-grid-tile>
             <div class="data text-center">
               <div>
-                <h3 class="row col-12">{{activity.name}} </h3>
+                <h3 class="tile-name row col-12">{{activity.name}} </h3>
               </div>
-              <div> {{distanceTotalsTable[activity.name].Kilometers}} KM </div>
-              <div> {{distanceTotalsTable[activity.name].Miles}} Miles </div>
-              <div> {{distanceTotalsTable[activity.name].Steps}} Steps</div>
-              <div> {{distanceTotalsTable[activity.name].Minutes}} Minutes</div>
+              <div class='tile-data'> {{distanceTotalsTable[activity.name].Kilometers}} KM </div>
+              <div class='tile-data'> {{distanceTotalsTable[activity.name].Miles}} Miles </div>
+              <div class='tile-data'> {{distanceTotalsTable[activity.name].Steps}} Steps</div>
+              <div class='tile-data'> {{distanceTotalsTable[activity.name].Minutes}} Minutes</div>
+              <!-- <div class='end'><br></div> -->
             </div>
           </mat-grid-tile>
       </mat-grid-list>
