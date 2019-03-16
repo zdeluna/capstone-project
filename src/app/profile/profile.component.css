@@ -50,4 +50,16 @@
     margin: 5px auto 5px auto;
 }
 
+.btn-group {
+    display: flex; 
+    flex-direction: row;
+    margin: 0 0 20px 0;
+}
+
+
+.btn-group > .btn {
+    /* border-radius: 0; */
+    flex: 1;
+}
+
 

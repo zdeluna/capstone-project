@@ -5,13 +5,13 @@ import { ActivityService } from 'src/app/services/activity.service';
 import { Activity_Type } from 'src/app/models/activity_type.model';
 
 @Component({
-  selector: 'app-activities-data',
-  templateUrl: './activities-data.component.html',
-  styleUrls: ['./activities-data.component.css']
+  selector: 'app-activities-totals',
+  templateUrl: './activities-totals.component.html',
+  styleUrls: ['./activities-totals.component.css']
 })
 
 
-export class ActivitiesDataComponent implements OnInit {
+export class ActivitiesTotalsComponent implements OnInit {
   
 
   constructor(
@@ -29,14 +29,11 @@ export class ActivitiesDataComponent implements OnInit {
   date_range_options: Array<number> = [30, 60];
   date_option = 0;
   date_range_value: number = this.date_range_options[this.date_option];
-  autoFocusResult: boolean; //dont think I need this take out
   default: number = 30;
   
   ngOnInit() {
     this.user = this._userService.user;
     this.activities = this.user.activity_types;
-
-    this.autoFocusResult = true; //dont think I need this
 
     this.getDateRange(this.date_range_value);
 

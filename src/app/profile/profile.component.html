@@ -9,10 +9,32 @@
 
 
   <!-- toolbar -->
-  <app-toolbar></app-toolbar>
+  <!-- <app-toolbar></app-toolbar> -->
+  <div
+    class='btn-group'>
+      <button 
+        type="button" 
+        class="btn btn-info {{isActive1}}"
+        (click)='changeToTotals()'>
+          <!-- {{option}} -->
+          Totals
+      </button>
+      <button 
+      type="button" 
+      class="btn btn-info {{isActive2}}"
+      (click)='changeToRecords()'>
+        <!-- {{option}} -->
+        Records
+    </button>
+  </div>
 
   <!-- activities data -->
-  <app-activities-data></app-activities-data>
+  <div *ngIf='active1'>
+    <app-activities-totals></app-activities-totals>
+  </div>
+  <div *ngIf='active2'>
+    <app-activities-records></app-activities-records>
+  </div>
   
   <!-- not sure what si going here -->
   <!-- <div id='more' class='rounded row-6'>

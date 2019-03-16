@@ -33,8 +33,9 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { CdkColumnDef } from '@angular/cdk/table';
 import { EditProfileComponent } from './profile/edit-profile/edit-profile.component';
 import { ToolbarComponent } from './profile/toolbar/toolbar.component';
-import { ActivitiesDataComponent } from './profile/activities-data/activities-data.component';
+import { ActivitiesTotalsComponent } from './profile/activities-totals/activities-totals.component';
 import { DatePipe } from '@angular/common';
+import { ActivitiesRecordsComponent } from './profile/activities-records/activities-records.component';
 
 @NgModule({
   declarations: [
@@ -54,8 +55,9 @@ import { DatePipe } from '@angular/common';
     ViewActivityComponent,
     EditProfileComponent,
     ToolbarComponent,
-    ActivitiesDataComponent,
-    EditProfileComponent
+    ActivitiesTotalsComponent,
+    EditProfileComponent,
+    ActivitiesRecordsComponent
   ],
   imports: [
     BrowserModule,

@@ -9,10 +9,18 @@ export class ToolbarComponent implements OnInit {
 
   constructor() { }
 
+  isActive1 = 'active';
+  isActive2 = ''
+
   ngOnInit() {
   }
 
-  //isActive = 'true'
+  changeOptions() {
+    let temp = this.isActive1;
+    this.isActive1 = this.isActive2;
+    this.isActive2 = temp;
+  }
+
 
   btnOptions: Array<String> = [
     'Totals',
