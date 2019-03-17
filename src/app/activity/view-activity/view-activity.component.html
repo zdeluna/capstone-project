@@ -3,23 +3,26 @@
     <h1>All Activities</h1>
     <button (click)='back()' class="btn btn-info">Back</button>
   </div>
-  <div class='btn-group col-4'>
+  <div class='btn-group col-8'>
     <mat-radio-group class='moopy btn btn-outline-info'>
+      <div class="date_header">
+        <h6>Days Back: </h6>
+      </div>
       <mat-radio-button
             *ngFor='let date_options of date_range_options'
             [value]='date_options'
             [checked]="date_options == default"
             class="moopy"
             (change)='changeDateRange($event.value)'>
-              last {{date_options}} days
+              {{date_options}}
       </mat-radio-button>
     </mat-radio-group>
   </div>
-    <!-- <hr>
-  Start Date: {{start_date}}
+    <hr>
+  Start Date: {{start_date | date: mediumDate}}
   <hr>
-  End Date: {{end_date}}
-  <hr> -->
+  End Date: {{end_date | date: mediumDate}}
+  <hr>
   <div>
     <mat-spinner *ngIf='!activities' style="margin:0 auto;"></mat-spinner>
   </div>

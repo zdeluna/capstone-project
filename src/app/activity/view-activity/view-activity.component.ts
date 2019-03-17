@@ -1,8 +1,7 @@
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Location } from '@angular/common';
 import { ActivityService } from 'src/app/services/activity.service';
 import { Activity } from 'src/app/models/activity.model';
-import { UserService } from 'src/app/services/user.service';
 import { MatSort, MatTableDataSource } from '@angular/material';
 
 @Component({
@@ -10,22 +9,21 @@ import { MatSort, MatTableDataSource } from '@angular/material';
   templateUrl: './view-activity.component.html',
   styleUrls: ['./view-activity.component.css']
 })
-export class ViewActivityComponent implements OnInit, AfterViewInit {
+export class ViewActivityComponent implements OnInit{
 
   constructor(
     private location: Location,
     private activityService: ActivityService,
-    private userService: UserService
   ) { }
 
   error: boolean = false;
   activities: Array<Activity> = [];
   displayedColumns: string[] = ['type', 'measurement', 'value', 'units', 'date', 'description'];
   dataSource : MatTableDataSource<Activity>;
-  date_range_options: Array<number> = [30, 60, 120];
+  date_range_options: Array<number | string> = ['All time', 30, 60, 120];
   date_option = 0;
-  date_range_value: number = this.date_range_options[this.date_option];
-  default: number = 30;
+  date_range_value: number | string = this.date_range_options[this.date_option];
+  default: number | string = 'All time';
   start_date: Date
   end_date: Date
 
@@ -34,12 +32,6 @@ export class ViewActivityComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     this.getDateRange(this.date_range_value);
     this.getActivities();
-    // this.dataSource = this.activities;
-  }
-
-  ngAfterViewInit() {
-    // this.dataSource = this.activities;
-    // this.dataSource.sort = this.sort;
   }
 
   back() {
@@ -47,23 +39,28 @@ export class ViewActivityComponent implements OnInit, AfterViewInit {
    }
 
   //got help here https://stackoverflow.com/questions/8842732/how-to-get-30-days-prior-to-current-date
-  getDateRange(val: number) {
+  getDateRange(val: any) {
+    if(val == 'All time') {
+      val = <number>10000
+    }
     var date_today = new Date()
     var date_span = new Date().setDate(date_today.getDate()-val)
     this.start_date = new Date(date_span)
     this.end_date = new Date(new Date().setDate(date_today.getDate()))
   }
 
-  changeDateRange(val: number) {
+  changeDateRange(val: number | string) {
     console.log(val);
-    if(val == 30)
-      this.date_option = 0
-    else if(val == 60)
+    if (val == 'All time')
+     this.date_option = 0
+    else if(val == 30)
       this.date_option = 1
-    else if(val == 120)
+    else if(val == 60)
       this.date_option = 2
+    else if(val == 120)
+      this.date_option = 3
     else
-      console.log('huh?');
+      console.log('Error val: ' + val);
 
     this.date_range_value = this.date_range_options[this.date_option]
     this.getDateRange(this.date_range_value)
@@ -71,6 +68,7 @@ export class ViewActivityComponent implements OnInit, AfterViewInit {
   }
 
    getActivities(){ 
+    this.activities = []
     this.activityService
     .getUserActivities(this.start_date, this.end_date)
     .subscribe(
@@ -79,12 +77,10 @@ export class ViewActivityComponent implements OnInit, AfterViewInit {
         let indexCounter = 0;
         for(var activityType = 0; activityType < activityData.length; activityType++)
         {        
-          // console.log(data[activityType]); //for every activity array in data array
-  
+          // console.log(activityData[activityType]); //for every activity array in data array
           for( var activity in activityData[activityType]) { //for every activity in array
             // console.log('index: ' + activity);     
-            // console.log(data[activityType][activity]);
-          
+            // console.log(activityData[activityType][activity]);
             this.activities[indexCounter] = activityData[activityType][activity];
             indexCounter++;
         }
@@ -93,16 +89,13 @@ export class ViewActivityComponent implements OnInit, AfterViewInit {
       console.log(this.activities);
       this.dataSource = new MatTableDataSource(this.activities);
       this.dataSource.sort = this.sort;
-      // this.dataSource.data = this.activities;
-      // this.dataSource.sort = this.sort;
-     
       },
       activityError => {
         this.error = true;
         console.log(activityError);
       },
       () => {
-        console.log('Completed');
+        console.log('Get activities Completed!!');
       }
     )
    }
