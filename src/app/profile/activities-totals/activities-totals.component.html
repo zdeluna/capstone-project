@@ -33,10 +33,10 @@
             <div>
               <h3 class="row col-12">{{activity.name}} </h3>
             </div>
-            <div> {{distanceTotalsTable[activity.name].Kilometers}} KM </div>
-            <div> {{distanceTotalsTable[activity.name].Miles}} Miles </div>
-            <div> {{distanceTotalsTable[activity.name].Steps}} Steps</div>
-            <div> {{distanceTotalsTable[activity.name].Minutes}} Minutes</div>
+            <div *ngIf='distanceTotalsTable[activity.name].Kilometers'> {{distanceTotalsTable[activity.name].Kilometers}} KM </div>
+            <div *ngIf='distanceTotalsTable[activity.name].Miles'> {{distanceTotalsTable[activity.name].Miles}} Miles </div>
+            <div *ngIf='distanceTotalsTable[activity.name].Steps'> {{distanceTotalsTable[activity.name].Steps}} Steps</div>
+            <div *ngIf='distanceTotalsTable[activity.name].Minutes'> {{distanceTotalsTable[activity.name].Minutes}} Minutes</div>
           </div>
         </mat-grid-tile>
     </mat-grid-list>
