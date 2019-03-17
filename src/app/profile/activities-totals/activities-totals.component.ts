@@ -26,9 +26,9 @@ export class ActivitiesTotalsComponent implements OnInit {
   start_date: Date;
   end_date: Date;
   date: Date;
-  date_range_options: Array<number> = [30, 60, 120];
+  date_range_options: Array<number | string> = [30, 60, 120, 'All time'];
   date_option = 0;
-  date_range_value: number = this.date_range_options[this.date_option];
+  date_range_value: number | string = this.date_range_options[this.date_option];
   default: number = 30;
   
   ngOnInit() {
@@ -62,7 +62,10 @@ export class ActivitiesTotalsComponent implements OnInit {
   }
 
   //got help here https://stackoverflow.com/questions/8842732/how-to-get-30-days-prior-to-current-date
-  getDateRange(val: number) {
+  getDateRange(val: any) {
+    if(val == 'All time') {
+      val = <number>10000;
+    }
     var date_today = new Date()
     var date_span = new Date().setDate(date_today.getDate()-val)
     this.start_date = new Date(date_span)
@@ -77,8 +80,10 @@ export class ActivitiesTotalsComponent implements OnInit {
       this.date_option = 1
     else if(val == 120)
       this.date_option = 2
+    else if(val == 'All time')
+      this.date_option = 3
     else
-      console.log('huh?');
+      console.log('error val is: ' + val)
       
 
     this.date_range_value = this.date_range_options[this.date_option]

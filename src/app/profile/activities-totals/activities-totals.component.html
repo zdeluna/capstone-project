@@ -1,15 +1,18 @@
 <!-- distance data -->
-<div id='distance' class='rounded row-6'>  
+<div id='distance' class='data-container rounded row-6'>  
   <h2 class="above-toolbar text-left">Activity Session Totals: </h2>
-  <div class='btn-group col-4'>
+  <div class='dates btn-group col-8'>
     <mat-radio-group class='moopy btn btn-outline-info'>
+      <div class="date_header">
+        <h6>Days back: </h6>
+      </div>
         <mat-radio-button
           *ngFor='let date_options of date_range_options'
           [value]='date_options'
           [checked]="date_options == default"
           class="moopy"
           (change)='changeDateRange($event.value)'>
-            last {{date_options}} days
+           {{date_options}}
         </mat-radio-button>
     </mat-radio-group>
   </div>
