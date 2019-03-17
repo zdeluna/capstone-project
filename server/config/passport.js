@@ -85,35 +85,3 @@ passport.use(
     }
   )
 );
-
-passport.use(
-  new googleStrategy(
-    {
-      clientID: process.env.GOOGLE_CLIENT_ID,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      //callbackURL: "https://capstone-wazn.appspot.com/api/google/callback",
-      callbackURL: "http://localhost:5000/api/google/callback",
-      scope: "email"
-    },
-    function(accessToken, refreshToken, profile, callBack) {
-      User.findOne({ providerId: profile.id }, function(err, user) {
-        if (err) return callBack(err);
-        if (!user) {
-          user = new User({
-            email: profile.emails[0].value,
-            first_name: profile.name.givenName,
-            last_name: profile.name.familyName,
-            provider: "google",
-            providerId: profile.id
-          });
-
-          user.save(function(err) {
-            return callBack(err, user);
-          });
-        }
-
-        return callBack(null, user);
-      });
-    }
-  )
-);

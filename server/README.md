@@ -82,10 +82,6 @@ Example Response:
 }
 ```
 
-## Login using Google Oauth2
-
-### POST login/google
-
 ---
 
 ## Get all user entities
