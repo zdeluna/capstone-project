@@ -583,7 +583,8 @@
 							"    pm.response.to.have.status(200);",
 							"});",
 							"",
-							"pm.environment.set(\"token1\", pm.response.json().token);"
+							"pm.environment.set(\"token1\", pm.response.json().token);",
+							""
 						],
 						"type": "text/javascript"
 					}
@@ -1105,9 +1106,6 @@
 					}
 				}
 			],
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
 			"request": {
 				"auth": {
 					"type": "bearer",
@@ -1122,14 +1120,8 @@
 				"method": "GET",
 				"header": [],
 				"body": {
-					"mode": "urlencoded",
-					"urlencoded": [
-						{
-							"key": "id",
-							"value": "{{user1ID}}",
-							"type": "text"
-						}
-					]
+					"mode": "raw",
+					"raw": ""
 				},
 				"url": {
 					"raw": "{{host}}/users/:id",
@@ -1495,9 +1487,6 @@
 					}
 				}
 			],
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
 			"request": {
 				"auth": {
 					"type": "bearer",
@@ -1518,7 +1507,10 @@
 						"value": "application/x-www-form-urlencoded"
 					}
 				],
-				"body": {},
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
 				"url": {
 					"raw": "{{host}}/users/:id",
 					"host": [
@@ -1557,9 +1549,6 @@
 					}
 				}
 			],
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
 			"request": {
 				"auth": {
 					"type": "bearer",
@@ -1580,7 +1569,10 @@
 						"value": "application/x-www-form-urlencoded"
 					}
 				],
-				"body": {},
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
 				"url": {
 					"raw": "{{host}}/users/:id",
 					"host": [
@@ -1691,9 +1683,6 @@
 					}
 				}
 			],
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
 			"request": {
 				"auth": {
 					"type": "bearer",
@@ -1715,14 +1704,8 @@
 					}
 				],
 				"body": {
-					"mode": "urlencoded",
-					"urlencoded": [
-						{
-							"key": "status",
-							"value": "0",
-							"type": "text"
-						}
-					]
+					"mode": "raw",
+					"raw": ""
 				},
 				"url": {
 					"raw": "{{host}}/users/:id",
@@ -1762,9 +1745,6 @@
 					}
 				}
 			],
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
 			"request": {
 				"auth": {
 					"type": "bearer",
@@ -1785,7 +1765,10 @@
 						"value": "application/x-www-form-urlencoded"
 					}
 				],
-				"body": {},
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
 				"url": {
 					"raw": "{{host}}/users/:id",
 					"host": [
@@ -4808,9 +4791,6 @@
 					}
 				}
 			],
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
 			"request": {
 				"auth": {
 					"type": "bearer",
@@ -4832,43 +4812,8 @@
 					}
 				],
 				"body": {
-					"mode": "urlencoded",
-					"urlencoded": [
-						{
-							"key": "description",
-							"value": "Running around the lake",
-							"type": "text"
-						},
-						{
-							"key": "type",
-							"value": "BIKING",
-							"type": "text"
-						},
-						{
-							"key": "date",
-							"value": "03-01-2019",
-							"type": "text",
-							"disabled": true
-						},
-						{
-							"key": "measurement",
-							"value": "TIME",
-							"type": "text",
-							"disabled": true
-						},
-						{
-							"key": "units",
-							"value": "kilometers",
-							"type": "text",
-							"disabled": true
-						},
-						{
-							"key": "value",
-							"value": "10",
-							"type": "text",
-							"disabled": true
-						}
-					]
+					"mode": "raw",
+					"raw": ""
 				},
 				"url": {
 					"raw": "{{host}}/activities",
@@ -5561,9 +5506,6 @@
 					}
 				}
 			],
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
 			"request": {
 				"auth": {
 					"type": "bearer",
@@ -5585,43 +5527,8 @@
 					}
 				],
 				"body": {
-					"mode": "urlencoded",
-					"urlencoded": [
-						{
-							"key": "description",
-							"value": "Running around the lake",
-							"type": "text"
-						},
-						{
-							"key": "type",
-							"value": "BIKING",
-							"type": "text"
-						},
-						{
-							"key": "date",
-							"value": "03-01-2019",
-							"type": "text",
-							"disabled": true
-						},
-						{
-							"key": "measurement",
-							"value": "TIME",
-							"type": "text",
-							"disabled": true
-						},
-						{
-							"key": "units",
-							"value": "kilometers",
-							"type": "text",
-							"disabled": true
-						},
-						{
-							"key": "value",
-							"value": "10",
-							"type": "text",
-							"disabled": true
-						}
-					]
+					"mode": "raw",
+					"raw": ""
 				},
 				"url": {
 					"raw": "{{host}}/activities",
@@ -5652,9 +5559,6 @@
 					}
 				}
 			],
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
 			"request": {
 				"auth": {
 					"type": "bearer",
@@ -5676,43 +5580,8 @@
 					}
 				],
 				"body": {
-					"mode": "urlencoded",
-					"urlencoded": [
-						{
-							"key": "description",
-							"value": "Running around the lake",
-							"type": "text"
-						},
-						{
-							"key": "type",
-							"value": "BIKING",
-							"type": "text"
-						},
-						{
-							"key": "date",
-							"value": "03-01-2019",
-							"type": "text",
-							"disabled": true
-						},
-						{
-							"key": "measurement",
-							"value": "TIME",
-							"type": "text",
-							"disabled": true
-						},
-						{
-							"key": "units",
-							"value": "kilometers",
-							"type": "text",
-							"disabled": true
-						},
-						{
-							"key": "value",
-							"value": "10",
-							"type": "text",
-							"disabled": true
-						}
-					]
+					"mode": "raw",
+					"raw": ""
 				},
 				"url": {
 					"raw": "{{host}}/activities/?user_id={{user1ID}}&type=RUNNING",
@@ -5754,9 +5623,6 @@
 					}
 				}
 			],
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
 			"request": {
 				"auth": {
 					"type": "bearer",
@@ -5778,43 +5644,8 @@
 					}
 				],
 				"body": {
-					"mode": "urlencoded",
-					"urlencoded": [
-						{
-							"key": "description",
-							"value": "Running around the lake",
-							"type": "text"
-						},
-						{
-							"key": "type",
-							"value": "BIKING",
-							"type": "text"
-						},
-						{
-							"key": "date",
-							"value": "03-01-2019",
-							"type": "text",
-							"disabled": true
-						},
-						{
-							"key": "measurement",
-							"value": "TIME",
-							"type": "text",
-							"disabled": true
-						},
-						{
-							"key": "units",
-							"value": "kilometers",
-							"type": "text",
-							"disabled": true
-						},
-						{
-							"key": "value",
-							"value": "10",
-							"type": "text",
-							"disabled": true
-						}
-					]
+					"mode": "raw",
+					"raw": ""
 				},
 				"url": {
 					"raw": "{{host}}/activities/?user_id={{user1ID}}&type=RUNNING&start_date=2019-03-01&end_date=2019-03-31",
@@ -6389,9 +6220,6 @@
 					}
 				}
 			],
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
 			"request": {
 				"auth": {
 					"type": "bearer",
@@ -6413,14 +6241,8 @@
 					}
 				],
 				"body": {
-					"mode": "urlencoded",
-					"urlencoded": [
-						{
-							"key": "type",
-							"value": "30,000 Steps In A Day",
-							"type": "text"
-						}
-					]
+					"mode": "raw",
+					"raw": ""
 				},
 				"url": {
 					"raw": "{{host}}/records/:id",
