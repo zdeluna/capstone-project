@@ -1,5 +1,6 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {User} from '../models/user.model';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-profile',
@@ -9,7 +10,9 @@ import {User} from '../models/user.model';
 
 export class ProfileComponent implements OnInit {
   
-  constructor() { }
+  constructor(
+    private location: Location
+  ) { }
 
   user: User = new User;
   isActive1 = 'active';
@@ -36,6 +39,10 @@ export class ProfileComponent implements OnInit {
 
     this.active2 = true;
     this.active1 = false;
+  }
+
+  back() {
+    this.location.back();
   }
 
 

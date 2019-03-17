@@ -22,10 +22,9 @@ export class ViewActivityComponent implements OnInit, AfterViewInit {
   activities: Array<Activity> = [];
   displayedColumns: string[] = ['type', 'measurement', 'value', 'units', 'date', 'description'];
   dataSource : MatTableDataSource<Activity>;
-  date_range_options: Array<number> = [30, 60];
+  date_range_options: Array<number> = [30, 60, 120];
   date_option = 0;
   date_range_value: number = this.date_range_options[this.date_option];
-  autoFocusResult: boolean; //dont think I need this take out
   default: number = 30;
   start_date: Date
   end_date: Date
@@ -55,10 +54,17 @@ export class ViewActivityComponent implements OnInit, AfterViewInit {
     this.end_date = new Date(new Date().setDate(date_today.getDate()))
   }
 
-  changeDateRange() {
-    if(this.date_option) 
-      this.date_option = 0;
-    else this.date_option = 1;
+  changeDateRange(val: number) {
+    console.log(val);
+    if(val == 30)
+      this.date_option = 0
+    else if(val == 60)
+      this.date_option = 1
+    else if(val == 120)
+      this.date_option = 2
+    else
+      console.log('huh?');
+
     this.date_range_value = this.date_range_options[this.date_option]
     this.getDateRange(this.date_range_value)
     this.getActivities()

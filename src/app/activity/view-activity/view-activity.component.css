@@ -14,3 +14,7 @@ mat-radio-group {
     display: flex;
     flex-direction: row;
 }
+
+.header {
+    margin: 0 0 10px 0;
+}
