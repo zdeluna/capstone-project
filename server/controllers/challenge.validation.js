@@ -33,7 +33,7 @@ exports.createChallenge = [
       // Change the date in milliseconds and change it to the MM_DD_YYYY format and compare it to the value that was passed in.
       return date.toISOString().slice(0, 10); // === dateValue;
     })
-    .withMessage("START_DATE_MUST_BE_IN_MM_DD_YYYY"),
+    .withMessage("START_DATE_MUST_BE_IN_MM-DD-YYYY"),
   check("activity").exists(),
   check("measurement").exists(),
   check("duration").exists(),
@@ -96,7 +96,7 @@ exports.updateChallenge = [
       return date.toISOString().slice(0, 10); // === dateValue;
     })
     .optional()
-    .withMessage("START_DATE_MUST_BE_IN_MM_DD_YYYY"),
+    .withMessage("START_DATE_MUST_BE_IN_MM-DD-YYYY"),
   check("activity").optional(),
   check("measurement").optional(),
   check("duration").optional(),

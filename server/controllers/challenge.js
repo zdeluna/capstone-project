@@ -297,6 +297,7 @@ const createChallengeRequest = async (challengeID, participantID) => {
 exports.createChallenge = async (req, res) => {
   try {
     let validatedFields = matchedData(req, { includeOptionals: false });
+    let userID = req.user._id;
 
     // Add the user who created the challenge as a participant
     let participants = [];
@@ -304,6 +305,13 @@ exports.createChallenge = async (req, res) => {
     validatedFields.participants = participants;
 
     let challenge = await createEntityInDB(challengeModel, validatedFields);
+
+    // Update the challenges id to the challenges field for user
+    await userModel.findOneAndUpdate(
+      { _id: userID },
+      { $push: { challenges: challenge._id } }
+    );
+
     let formattedChallenge = await formatContentsinChallenge(challenge);
 
     res.status(200).json(formattedChallenge);
