@@ -3,8 +3,15 @@
     flex-wrap: wrap;
    justify-content: space-around; 
    /* width: 70%; */
-   margin-bottom: 30px;
+   margin: 30px auto 30px auto;
+   height: 500px;
+   overflow-y: hidden;
+   border: 2px solid rgb(19, 132, 150);;
 }
+
+.another:hover {
+    overflow-y: scroll;
+  }
 
 .above-toolbar {
     margin: 0 0 30px 0;

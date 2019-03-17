@@ -18,6 +18,10 @@ export class User {
     activity_types?: Activity_Type[] = [
       {name: 'Running'},
       {name: 'Biking'},
+      {name: 'Walking'},
+      {name: 'Basketball'},
+      {name: 'Soccer'},
+      {name: 'Golfing'},
       {name: 'Elliptical'},
       {name: 'Rowing'}
     ];
