@@ -7,10 +7,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { UserService } from './user.service';
-import { Router, Resolve, ActivatedRouteSnapshot } from '@angular/router';
+import { Router} from '@angular/router';
 import { DatabaseService } from './database.service';
 import { ActivityService } from './activity.service';
-import { Observable } from 'rxjs';
 
 @Injectable()
 export class AuthService {
@@ -20,7 +19,6 @@ export class AuthService {
     private userService: UserService,
     private router: Router,
     private dbService: DatabaseService,
-    private activityService: ActivityService,
   ) { }
 
 
@@ -80,16 +78,13 @@ export class AuthService {
   loadRememberedUser():void {
     console.log('Checking to see if user was remembered!!');
     
-    //either somethings in local storage or not and null
     let remembered: string = localStorage.getItem('loggedIn');
-    if(this.isLoggedIn()) { 
+    let rememberMe : boolean = JSON.parse(remembered).val == 'true'
+    if(this.isLoggedIn() && rememberMe) { 
       this.dbService.getUser(JSON.parse(remembered).id)
       .subscribe(
         data => { 
-          //should block until this is done
-
-          this.userService.setUsername(data['username']); 
-          this.userService.setCurrentUserId(data['_id']);
+          this.userService.setUserDataFromDb(data);
           
           //here set token for session from local storage
           this.token = JSON.parse(remembered).token;
@@ -107,6 +102,11 @@ export class AuthService {
           this.router.navigate(['/login']);
         }
       )
+    }
+    else {
+      console.log('not remembered so loggin out!');
+      this.logout()
+      // this.router.navigate(['/login']);
     }
   }
 
@@ -137,21 +137,25 @@ export class AuthService {
 
     //puts id and token in local storage if user wants remembered
     //so that the user can be re-loaded after exit
-    // if(this.rememberMe) {
-      localStorage.setItem(
-        'loggedIn', 
-        JSON.stringify({ 
-          val: 'true', 
-          id: data['user_id'],
-          token: data['token']
-        })
-      );
-    // }
+    if(this.rememberMe) {
+      this.setLocalStorage(data, 'true')
+    } else this.setLocalStorage(data, 'false')
 
     console.log('user loggedIn: ' + JSON.stringify(this.userService.user));
     
 
     this.router.navigate(['/home']);
+  }
+
+  setLocalStorage(data: any, rememberMe: string) {
+    localStorage.setItem(
+      'loggedIn', 
+      JSON.stringify({ 
+        val: rememberMe, 
+        id: data['user_id'],
+        token: data['token']
+      })
+    );
   }
 
   fillUserObjectFromDb(data: any) {

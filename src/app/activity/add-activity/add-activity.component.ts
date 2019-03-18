@@ -104,7 +104,7 @@ export class AddActivityComponent implements OnInit {
     //got help here https://stackoverflow.com/questions/54576074/angular-7-reactive-forms-how-to-format-date-as-yyyy-mm-dd
     this.activityForm.value.date = this.DatePipe.transform(
       this.activityForm.value.date,
-      'MM-dd-yyyy' //still not perfect
+      'MM-dd-yyyy' 
     );
     console.log(this.activityForm.value);
 

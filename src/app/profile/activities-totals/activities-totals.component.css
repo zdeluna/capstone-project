@@ -1,0 +1,69 @@
+.another {
+    display: flex; 
+    flex-wrap: wrap;
+   justify-content: space-around; 
+   /* width: 70%; */
+   margin: 30px auto 30px auto;
+   height: 500px;
+   overflow-y: hidden;
+   /* border: 2px solid rgb(19, 132, 150); */
+}
+
+.another:hover {
+    overflow-y: scroll;
+  }
+
+.above-toolbar {
+    margin: 0 0 30px 0;
+}
+
+.col-md-4 {
+    margin: 20px 5px 20px 0px;
+}
+
+mat-grid-tile {
+    /* border: 1px dashed black; */
+    height: 100%;
+}
+
+mat-radio-group {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    /* padding: 5px 0 0 0; */
+}
+mat-radio-button {
+    padding: 5px 0 0 0;
+}
+/* 
+.dates {
+    width: 75%;
+} */
+
+.date_header {
+    /* border: 1px dashed red; */
+    text-align: center;
+    padding: 6px 0 0 0;
+}
+
+/* .data-container {
+    
+} */
+
+#sport {
+    border: 2px solid rgb(19, 132, 150);
+}
+
+#distance {
+    margin-bottom: 20px;
+}
+
+.data {
+    display: flex;
+    flex-direction: column;
+    margin: 0 0 10px 0;
+}
+
+.end {
+    margin: 0 0 2px 0;
+}

@@ -5,6 +5,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { UserService } from './user.service';
 import { map } from 'rxjs/operators';
 import { Post } from '../models/post.model';
+import { DatePipe } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,8 @@ export class DatabaseService {
 
   constructor (
     private http: HttpClient, 
-    private userService: UserService
+    private userService: UserService,
+    private DatePipe: DatePipe
     ) { }
 
   uri = 'https://capstone-wazn.appspot.com/api'
@@ -81,6 +83,30 @@ export class DatabaseService {
     //got help from https://stackoverflow.com/questions/50203241/angular-5-to-6-upgrade-property-map-does-not-exist-on-type-observable
     return this.http.get<any>(`${this.uri}/users/${id}`, this.httpOptions)
     .pipe(map((res) => res));
+  }
+
+  editUser(new_user: User, id: string) {
+    console.log('Date coming in: ' + new_user.dateOfBirth);
+    
+    let converted_date = 
+    this.DatePipe.transform(new_user.dateOfBirth, 'MM-dd-yyyy')
+    console.log('date being sent: ' + converted_date);
+    
+    let edit = {
+      username : new_user.username,
+      first_name : new_user.firstName,
+      last_name : new_user.lastName,
+      location : new_user.location,
+      date_of_birth : converted_date
+    }
+    Object.keys(edit).forEach((key) => {
+      if(!edit[key]) {
+        delete edit[key];
+      }
+    });
+    console.log(edit);
+    
+    return this.http.patch(`${this.uri}/users/${id}`, edit/*new_user*/, this.httpOptions);
   }
 
   getCurrentUser() {

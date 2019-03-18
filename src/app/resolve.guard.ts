@@ -25,7 +25,8 @@ canActivate(): Observable<boolean> {
       return this.dbService.getUser(JSON.parse(remembered).id)
       .pipe(map(
           data => {
-              this.userService.setCurrentUserId(data['_id']);
+              this.userService.setUserDataFromDb(data);
+              this.userService.user.password = data['password'];
               this.userService.setToken(JSON.parse(remembered).token);
               return true;
           }

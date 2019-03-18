@@ -77,6 +77,7 @@ export class ActiveChallengeComponent implements OnInit {
         this.challengeIsOver = this.checkIfChallengeIsOver()
       })
     })
+
     this.dbService.getCurrentUser().subscribe(res => {
       this.user.id = this.userService.getCurrentUserId()
       this.user.username = res['username']
@@ -85,6 +86,7 @@ export class ActiveChallengeComponent implements OnInit {
       this.user.password = res['password']
       this.user.friends = res['friends']
     })
+
   }
 
   getParticipants(participants: string[]) {

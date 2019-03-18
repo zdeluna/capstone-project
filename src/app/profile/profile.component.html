@@ -2,91 +2,47 @@
 <body>
 
   <!-- profile header -->
-  <h1 class='profile-name'>Profile</h1>
-
-  <!-- gray part -->
-  <div class='rounded header-col'>
-    <div class='header-edit'>
-      <h1 *ngIf='!edit'>{{user.username}}</h1>
-      <input *ngIf='edit' class='shoop' type="text" placeholder="{{user.username}}" [disabled]='edit_btn_disabled'>
-      <!-- <i *ngIf='edit' class="far fa-edit"></i> -->
-    </div>
-    <img src={{user.photoURL}} 
-    class="img-circle decision-button-svg">
-    <div 
-      class="b row col-12 justify-content-between">
-      <h5 *ngIf='!edit'>{{user.location.city}}, {{user.location.state}}</h5>
-      <input *ngIf='edit' class='shoop' type="text" placeholder="{{user.location.city}}, {{user.location.state}}" [disabled]='edit_btn_disabled'>
-      <button 
-        type='button'
-        class="btn btn-info btn-sm"
-        (click)='editProfile()'>
-          Edit
-      </button>
-    </div>
+  <div class="header">
+    <h1 class='profile-name'>Profile</h1>
+    <button (click)='back()' class="btn btn-info">Back</button>
   </div>
 
+  <!-- gray part -->
+  <app-edit-profile></app-edit-profile>
+
+
   <!-- toolbar -->
+  <!-- <app-toolbar></app-toolbar> -->
   <div
     class='btn-group'>
       <button 
-      *ngFor='let option of btnOptions'
         type="button" 
-        class="btn btn-info">
-          {{option}}
+        class="btn btn-info {{isActive1}}"
+        (click)='changeToTotals()'>
+          <!-- {{option}} -->
+          Totals
       </button>
+      <button 
+      type="button" 
+      class="btn btn-info {{isActive2}}"
+      (click)='changeToRecords()'>
+        <!-- {{option}} -->
+        Records
+    </button>
   </div>
 
-  <!-- distance data -->
-  <div id='distance' class='rounded row-6'>  
-    <h3 class="text-left">Distance Totals: </h3>
-    <div class='another'>
-      <mat-grid-list 
-        cols='1'
-        rowHeight='4:1'
-        id='sport'
-        *ngFor='let activity of activities' 
-        class='rounded col-md-4'>
-          <mat-grid-tile>
-            <div class="data ">
-              <div>
-                <h3 class="row col-12">{{activity.name}} </h3>
-              </div>
-              <div> {{distanceTotalsTable[activity.name].Kilometers}} KM </div>
-              <div> {{distanceTotalsTable[activity.name].Miles}} Miles </div>
-              <div> {{distanceTotalsTable[activity.name].Steps}} Steps</div>
-            </div>
-          </mat-grid-tile>
-      </mat-grid-list>
-    </div>
-
-    <div class='space'>
-      <br>
-    </div>
-
-    <!-- time data -->
-    <div id='time' class='rounded row-6'>  
-      <h3 class="text-left">Time: </h3>
-      <div class='another'>
-        <mat-grid-list 
-          cols='1'
-          rowHeight='4:1'
-          id='sport'
-          *ngFor='let activity of activities' 
-          class='rounded col-md-4'>
-            <mat-grid-tile>
-              <h3>{{activity.name}}</h3>
-              <!-- <p>Total: {{sport.miles}} miles</p> -->
-            </mat-grid-tile>
-        </mat-grid-list>
-      </div>
-    </div>
+  <!-- activities data -->
+  <div *ngIf='active1'>
+    <app-activities-totals></app-activities-totals>
   </div>
-
+  <div *ngIf='active2'>
+    <app-activities-records></app-activities-records>
+  </div>
+  
   <!-- not sure what si going here -->
-  <div id='more' class='rounded row-6'>
+  <!-- <div id='more' class='rounded row-6'>
       <div class='inside-more'>
         <h3>More Here!</h3>
       </div>
-  </div>
+  </div> -->
 </body>

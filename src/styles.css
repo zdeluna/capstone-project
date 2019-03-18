@@ -91,13 +91,18 @@
   text-align: center;
 }
 .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
-  border-color: #5bc0de !important;
+  border-color: rgb(19, 132, 150)  !important;
 }
 .mat-radio-button.mat-accent .mat-radio-inner-circle{
-  background-color: #5bc0de !important;
+  background-color: rgb(19, 132, 150)  !important;
 }
 
 .mat-grid-tile .mat-figure {
   /* justify-content: start !important ;
   align-items: flex-start !important;  */
 } 
+
+
+.moopy .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-inner-circle .mat-radio-outer-circle  {
+  background-color: rgb(255, 255, 255) !important;
+}

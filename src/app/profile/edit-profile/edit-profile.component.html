@@ -1,0 +1,98 @@
+<div class='rounded header-col'>
+  <div class='header-edit col-12'>
+    <div class="name-menu col-12">
+      <div class='editInput col-10'>
+        <h1 *ngIf='!edit'>{{user.firstName}} {{user.lastName}}</h1>
+        <div *ngIf='edit'>
+            <h6>
+              First and Last Name
+            </h6>
+          </div>
+        <input [(ngModel)]='new_profile.firstName' *ngIf='edit' class='shoop col-8' type="text" placeholder="{{user.firstName}}" [disabled]='edit_btn_disabled'>
+        <input [(ngModel)]='new_profile.lastName' *ngIf='edit' class='shoop col-8' type="text" placeholder="{{user.lastName}}" [disabled]='edit_btn_disabled'>
+      </div>
+      <!-- <i *ngIf='edit' class="far fa-edit"></i> -->
+      <div class='menu-edit'>
+        <button class="navbar-toggler navbar-light static-top" type="button" data-toggle="collapse" data-target="#editMenu" aria-controls="editMenu" aria-expanded="true" aria-label="Toggle edit user">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse" id="editMenu">
+          <div class='editBtnContainer'>
+            <ul class="navbar-nav ">
+              <li *ngIf="!edit" class="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show">
+                  <button 
+                  *ngIf='!edit'
+                  type='button'
+                  class="btn btn-info btn-lg editBtn"
+                  (click)='editProfile()'>
+                    Edit
+                </button>
+              </li>
+              <li *ngIf="edit"  class="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show">
+                  <button 
+                  *ngIf='edit'
+                  type='button'
+                  class="btn btn-info btn-lg saveBtn"
+                  (click)='saveProfile()'>
+                    Save
+                </button>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+    <!-- <img src={{user.photoURL}} 
+    class="user-img img-circle decision-button-svg"> -->
+    <div 
+      class="b row col-12 justify-content-between">
+      <hr>
+      <!-- NEW:
+      {{new_profile | json}}
+      <hr>
+      USER:
+      {{user | json}} -->
+      <hr>
+      <div class="row user-data col-12">
+        <div class='col-6'>
+          <div *ngIf='edit'>
+            <h6>
+              Location
+            </h6>
+          </div>
+          <h5 *ngIf='!edit'>Location: {{user.location}}</h5>
+          <input [(ngModel)]='new_profile.location' *ngIf='edit' class='shoop' type="text" [disabled]='edit_btn_disabled' placeholder="Add location">
+        </div>
+        <div class="col-6">
+          <div *ngIf='edit'>
+            <h6>
+              Email
+            </h6>
+          </div>
+          <h5 *ngIf='!edit'>Email: {{user.username}}</h5>
+          <input [(ngModel)]='new_profile.username' *ngIf='edit' class='shoop' type="email" [disabled]='edit_btn_disabled' required>
+        </div>
+        <div class="col-6">
+          <h5 *ngIf='!edit'>Age: {{age}}</h5>
+          <div *ngIf='edit' class='col-6'>
+            <h6 >
+              Birth Date:
+            </h6>
+            <input 
+              [(ngModel)]='new_profile.dateOfBirth'
+              [disabled]='edit_btn_disabled'
+              matInput 
+              [matDatepicker]="picker" 
+              placeholder="Date ex:2/4/2019"
+              class="date">
+            <mat-datepicker-toggle 
+              matSuffix 
+              [for]="picker">
+            </mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

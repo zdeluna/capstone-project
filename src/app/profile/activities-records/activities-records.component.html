@@ -1,0 +1,47 @@
+<!-- distance data -->
+<div id='distance' class='rounded row-6'>  
+    <h2 class="above-toolbar text-left">Single Activity Session High Values: </h2>
+    <div class='dates btn-group col-8'>
+      <mat-radio-group class='moopy btn btn-outline-info'>
+        <div class="date_header">
+          <h6>Days Back: </h6>
+        </div>
+        <mat-radio-button
+          *ngFor='let date_options of date_range_options'
+          [value]='date_options'
+          [checked]="date_options == default"
+          class="moopy"
+          (change)='changeDateRange($event.value)'>
+            {{date_options}}
+        </mat-radio-button>
+      </mat-radio-group>
+    </div>
+    <!-- <hr>
+    Start Date: {{start_date}}
+    <hr>
+    End Date: {{end_date}}
+    <hr> -->
+    <div class='rounded another'>
+      <mat-grid-list 
+        cols='1'
+        rowHeight='4:1'
+        id='sport'
+        *ngFor='let activity of activities' 
+        class='rounded col-md-4'>
+          <mat-grid-tile>
+            <div class="data text-center">
+              <div>
+                <h3 class="tile-name row col-12">{{activity.name}} </h3>
+              </div>
+              <div class='tile-data'> {{distanceTotalsTable[activity.name].Kilometers}} KM </div>
+              <div class='tile-data'> {{distanceTotalsTable[activity.name].Miles}} Miles </div>
+              <div class='tile-data'> {{distanceTotalsTable[activity.name].Steps}} Steps</div>
+              <div class='tile-data'> {{distanceTotalsTable[activity.name].Minutes}} Minutes</div>
+              <!-- <div class='end'><br></div> -->
+            </div>
+          </mat-grid-tile>
+      </mat-grid-list>
+    </div>
+  
+  </div>
+  

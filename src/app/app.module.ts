@@ -3,10 +3,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule, MatFormFieldModule, MatInputModule, MatOptionModule, MatSelectModule, MatListModule, MatRadioModule, MatSliderModule, MatCardModule, MatDatepickerModule, MatNativeDateModule, MatProgressBarModule, MatProgressSpinnerModule, MatSortModule } from '@angular/material';
-import {ScrollDispatchModule} from '@angular/cdk/scrolling';
-import {MatButtonToggleModule} from '@angular/material/button-toggle';
-import {MatTableModule} from '@angular/material/table';
-import {MatGridListModule} from '@angular/material/grid-list';
+import { ScrollDispatchModule } from '@angular/cdk/scrolling';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatTableModule } from '@angular/material/table';
+import { MatGridListModule } from '@angular/material/grid-list';
 import { HttpClientModule } from '@angular/common/http';
 import { AngularFireModule } from '@angular/fire';  
 import { environment } from '../environments/environment'; 
@@ -22,15 +22,20 @@ import { ChallengesPageComponent } from './challenges/challenges-page/challenges
 import { MessageBoardComponent } from './challenges/message-board/message-board.component';
 import { MessageBoardReplyComponent } from './challenges/message-board/message-board-reply/message-board-reply.component';
 import { CompletedChallengeComponent } from './challenges/completed-challenge/completed-challenge.component';
-
 import { AuthGuard } from './auth.guard';
 import { ActivityComponent } from './activity/activity.component';
-import {MatCheckboxModule} from '@angular/material/checkbox';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { AddActivityComponent } from './activity/add-activity/add-activity.component';
 import { ViewActivityComponent } from './activity/view-activity/view-activity.component';
 import { ResolveGuard } from './resolve.guard';
 import { AuthService } from './services/auth.service';
 import { ServiceWorkerModule } from '@angular/service-worker';
+import { CdkColumnDef } from '@angular/cdk/table';
+import { EditProfileComponent } from './profile/edit-profile/edit-profile.component';
+import { ToolbarComponent } from './profile/toolbar/toolbar.component';
+import { ActivitiesTotalsComponent } from './profile/activities-totals/activities-totals.component';
+import { DatePipe } from '@angular/common';
+import { ActivitiesRecordsComponent } from './profile/activities-records/activities-records.component';
 
 @NgModule({
   declarations: [
@@ -48,6 +53,11 @@ import { ServiceWorkerModule } from '@angular/service-worker';
     CompletedChallengeComponent,
     AddActivityComponent,
     ViewActivityComponent,
+    EditProfileComponent,
+    ToolbarComponent,
+    ActivitiesTotalsComponent,
+    EditProfileComponent,
+    ActivitiesRecordsComponent
   ],
   imports: [
     BrowserModule,
@@ -78,7 +88,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
     ScrollDispatchModule,
     ServiceWorkerModule.register('src/ngsw-worker.js', { enabled: environment.production })
   ],
-  providers: [AuthGuard, ResolveGuard, AuthService],
+  providers: [AuthGuard, ResolveGuard, AuthService, CdkColumnDef, DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

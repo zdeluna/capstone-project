@@ -1,94 +1,20 @@
 /* div {
     border: 1px dashed red;
 } */
-/* 
-.header-col > h1, h6 {
-    border: 1px dashed red;
-} */
 
-img {
-    /* border: 1px dashed red; */
-    margin: 0 0 5px 0;
-    padding: 2px;
-}
-
-.shoop {
-    background-color: whitesmoke;
-    border: none;
-    font-size: 2em;
-    
-}
-
-.shoop::placeholder {
-    color: grey;
-    font-weight: bold; 
-}
-
-.header-col{
-    margin-bottom: 30px;
-    margin-top: 30px;
-    padding: 10px;
-    background-color: whitesmoke;
-}
-
-.header-col > h1 {
-    margin: 0 0 0 0;
-}
-
-.header-col > h6 {
-    padding: 0 0 0 0;
-}
-
-.header-edit {
-    display: flex;
-    flex-direction: row;
-    /* margin-bottom: 0; */
-    /* border: 1px solid black; */
-}
-
-.b {
-    margin: 0 0 0 0;
-}
-
-.fa-edit {
-    /* border: 1px solid red; */
-    position: relative;
-    margin: 1px;
-    padding: 1px;
-    top: 1.5em;
-}
-
-.btn-group {
+/* .row-6 {
     display: flex; 
-    flex-direction: row;
-    margin: 0 0 20px 0;
-}
-
-
-.btn-group>.btn {
-    /* border-radius: 0; */
-    flex: 1;
-}
-
-.row-6 {
-    /* display: flex; */
-    /* flex-wrap: wrap; */
-    /* justify-content: left; */
+    flex-wrap: wrap;
+     justify-content: left;
     text-align: center;
     padding: 5px;
-    /* background-color: whitesmoke; */
+    background-color: whitesmoke;
     margin-bottom: 30px;
-}
+} */
 
-.another {
-     display: flex; 
-     flex-wrap: wrap;
-    justify-content: space-around; 
-    /* width: 70%; */
-    margin-bottom: 30px;
-}
 
-#achievments {
+
+/* #achievments {
     border: 1px dashed black;
     margin-bottom: 30px;
 }
@@ -97,11 +23,9 @@ img {
     height: 50%;
     border-top: 1px dashed black;
     border-bottom: 1px dashed black;
-}
+} */
 
-.col-md-4 {
-    margin: 20px 5px 20px 0px;
-}
+
 
 /* #Running {
     border: 2px solid #93c47d;
@@ -116,34 +40,25 @@ img {
     border: 2px solid #597eaa;
 } */
 
-#sport {
-    border: 2px solid rgb(19, 132, 150);
-}
+
 
 #more {
     background-color: coral;
 }
-#distance {
-    margin-bottom: 20px;
-}
+
 .inside-more {
     margin: 5px auto 5px auto;
 }
-.space {
-    background-color: white;
+
+.btn-group {
+    display: flex; 
+    flex-direction: row;
+    margin: 0 0 20px 0;
 }
 
-mat-grid-tile {
-    /* border: 1px dashed black; */
-    height: 100%;
+
+.btn-group > .btn {
+    /* border-radius: 0; */
+    flex: 1;
 }
 
-.data > div {
-    /* border: 1px dashed black; */
-}
-
-.data {
-    display: flex;
-    flex-direction: column;
-    /* flex-wrap: wrap; */
-}

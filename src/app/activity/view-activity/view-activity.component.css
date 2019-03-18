@@ -9,3 +9,21 @@ table {
 td {
     text-align: center;
 }
+
+mat-radio-group {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+mat-radio-button {
+    padding: 5px 0 0 0;
+}
+.date_header {
+    /* border: 1px dashed red; */
+    text-align: center;
+    padding: 6px 0 0 0;
+}
+
+.header {
+    margin: 0 0 10px 0;
+}
