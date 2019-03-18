@@ -1,24 +1,24 @@
 <body>
   <div class ="jumbotron">
       <h1 *ngIf="user" class='profile-name'>
-        Welcome, 
-        {{user.firstName}}!
-        <!-- {{user.lastName}} -->
+        <div class="welcome-name-container">
+          <div class="welcome-container">
+            Welcome,
+          </div>
+          <div *ngIf='user.firstName' class="user-first-name-container">
+            {{user.firstName}}
+          </div>
+          <div *ngIf='!user.firstName' style='position: relative; top: 30px;' class="col-8">
+              <h1>
+                (Add name)
+              </h1>
+          </div>
+        </div>
       </h1>
       <mat-spinner *ngIf='!user.username' style="margin:0 auto;"></mat-spinner>
-      {{user.username}}
+      {{user.username}} 
       <p> {{date | date: mediumDate}} </p>
   </div>
-
-  <!-- <div class="row-6 list-group" id='challenges'>
-    <ul>
-      <li class="list-group-item list-group-item-primary">
-        <h3>Challenges snapshot:</h3>
-      </li>
-      <li class="list-group-item">No current challenges</li>
-      <li class="list-group-item">No upcoming challenges</li>
-    </ul>
-  </div> -->
 
   <div class ="row">
     <div *ngFor="let category of categories" class="col-6 decision-button">

@@ -16,3 +16,13 @@
 .col-6 {
     padding: 10px;
 }
+
+.welcome-name-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+
+.user-first-name-container {
+    padding: 0 0 0 20px;
+}

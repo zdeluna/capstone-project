@@ -108,6 +108,11 @@ export class DatabaseService {
       location : new_user.location,
       date_of_birth : converted_date
     }
+    Object.keys(edit).forEach((key) => {
+      if(!edit[key]) {
+        delete edit[key];
+      }
+    });
     console.log(edit);
     
     return this.http.patch(`${this.uri}/users/${id}`, edit/*new_user*/, this.httpOptions);
