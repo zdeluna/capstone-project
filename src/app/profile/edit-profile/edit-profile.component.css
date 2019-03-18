@@ -9,6 +9,12 @@
     top: 3px;
 } 
 
+.saveBtn {
+    /* border: 1px dashed green; */
+    position: relative;
+    top: 30px;
+} 
+
 /* input {
     border: 1px dashed darkblue;
 } */
@@ -90,4 +96,10 @@
     display: flex;
     flex-direction: row;
     flex-wrap: wrap-reverse;
+}
+
+.date {
+    background: whitesmoke;
+    color: black;
+    /* font-weight: bold;  */
 }

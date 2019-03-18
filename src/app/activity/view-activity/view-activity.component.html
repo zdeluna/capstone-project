@@ -3,11 +3,13 @@
     <h1>All Activities</h1>
     <button (click)='back()' class="btn btn-info">Back</button>
   </div>
+
   <div class='btn-group col-8'>
     <mat-radio-group class='moopy btn btn-outline-info'>
       <div class="date_header">
         <h6>Days Back: </h6>
       </div>
+
       <mat-radio-button
             *ngFor='let date_options of date_range_options'
             [value]='date_options'
@@ -18,19 +20,23 @@
       </mat-radio-button>
     </mat-radio-group>
   </div>
-    <hr>
+
+  <!-- <hr>
   Start Date: {{start_date | date: mediumDate}}
   <hr>
   End Date: {{end_date | date: mediumDate}}
-  <hr>
+  <hr> -->
+
   <div>
     <mat-spinner *ngIf='!activities' style="margin:0 auto;"></mat-spinner>
   </div>
+  
   <div class='row'>
     <!-- got help with table from:
     https://material.angular.io/components/sort/overview
-   https://getbootstrap.com/docs/4.0/content/tables/
-   https://embed.plnkr.co/SVWgs38PWGsIJP3nyQEc/ -->
+    https://getbootstrap.com/docs/4.0/content/tables/
+    https://embed.plnkr.co/SVWgs38PWGsIJP3nyQEc/ 
+    -->
     <table 
       mat-table
       [dataSource]='dataSource'
@@ -95,19 +101,14 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr> 
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
-
-
-
-    <!-- <ul *ngFor='let activity of activities'>
-      <li>{{activity.type}}</li>
-      <li>{{activity.measurement}}</li>
-      <li>{{activity.value}} {{activity.units}}</li>
-      <li>{{activity.date | date: mediumDate}}</li>
-      <li>Description: {{activity.description}}</li>
-    </ul> -->
   </div>
+
   <mat-error *ngIf='error'>
-    No activities posted! Add an activity to see it here!
+    Error getting activities! Try again... 
+  </mat-error>
+
+  <mat-error *ngIf='no_activities'>
+    No activity sessions submitted!! Go to add new activity to see it here!
   </mat-error>
 
 </div>

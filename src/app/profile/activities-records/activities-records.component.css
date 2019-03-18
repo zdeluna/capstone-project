@@ -6,7 +6,7 @@
    margin: 30px auto 30px auto;
    height: 500px;
    overflow-y: hidden;
-   border: 2px solid rgb(19, 132, 150);
+   /* border: 2px solid rgb(19, 132, 150); */
 }
 
 .another:hover {

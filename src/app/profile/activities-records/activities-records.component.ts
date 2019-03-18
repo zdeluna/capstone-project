@@ -64,7 +64,7 @@ export class ActivitiesRecordsComponent implements OnInit {
   //got help here https://stackoverflow.com/questions/8842732/how-to-get-30-days-prior-to-current-date
   getDateRange(val: any) {
     if(val == 'All time') {
-      val = <number>10000;
+      val = <number>100000;
     }
     var date_today = new Date()
     var date_span = new Date().setDate(date_today.getDate()-val)

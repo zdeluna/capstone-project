@@ -14,7 +14,6 @@ export class EditProfileComponent implements OnInit {
   constructor(
     private _userService: UserService,
     private _dbService: DatabaseService,
-    // private DatePipe: DatePipe
   ) { }
 
   new_profile: User;
@@ -23,12 +22,8 @@ export class EditProfileComponent implements OnInit {
   edit: boolean = false;
   user: User = new User;
 
-  ngOnInit() {
-
-   
+  ngOnInit() {  
     this.user = this._userService.user;
-
-    //deep copy object so edit input doesn't bind to both objects
     this.copyValues()
   }
 
@@ -53,8 +48,6 @@ export class EditProfileComponent implements OnInit {
               this._userService.setUserDataFromDb(getUserData);
               console.log(this._userService.user);
               this.copyValues();
-              // this.user = {...this._userService.user} 
-              // this.getDateFromDOB();
             },
             getUserError => {
               console.log(getUserError);
@@ -66,12 +59,13 @@ export class EditProfileComponent implements OnInit {
     }
   }
 
+  //got help from https://stackoverflow.com/questions/43252308/how-to-get-age-from-date-string-using-angular-2
   getDateFromDOB() {
-    var today = new Date();
-    var birthDate = new Date(this.user.dateOfBirth);
-    this.age = today.getFullYear() - birthDate.getFullYear();
-    var m = today.getMonth() - birthDate.getMonth();
-    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+    var date_today = new Date();
+    var birth_date = new Date(this.user.dateOfBirth);
+    this.age = date_today.getFullYear() - birth_date.getFullYear();
+    var month = date_today.getMonth() - birth_date.getMonth();
+    if (month < 0 || (month === 0 && date_today.getDate() < birth_date.getDate())) {
         this.age--;
     }
     console.log('User age is: ' + this.age);
@@ -80,7 +74,9 @@ export class EditProfileComponent implements OnInit {
 
 
   copyValues() {
+    //deep copy object so edit input doesn't bind to both objects
     this.new_profile = {...this.user}; 
+
     //if values are null 
     if(!this._userService.user.location)
     this.user.location = 'Add Location'

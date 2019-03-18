@@ -26,6 +26,7 @@ export class ViewActivityComponent implements OnInit{
   default: number | string = 'All time';
   start_date: Date
   end_date: Date
+  no_activities: boolean = true;
 
   @ViewChild(MatSort) sort: MatSort;
 
@@ -34,14 +35,10 @@ export class ViewActivityComponent implements OnInit{
     this.getActivities();
   }
 
-  back() {
-    this.location.back();
-   }
-
   //got help here https://stackoverflow.com/questions/8842732/how-to-get-30-days-prior-to-current-date
   getDateRange(val: any) {
     if(val == 'All time') {
-      val = <number>10000
+      val = <number>100000
     }
     var date_today = new Date()
     var date_span = new Date().setDate(date_today.getDate()-val)
@@ -86,7 +83,10 @@ export class ViewActivityComponent implements OnInit{
         }
       }
 
-      console.log(this.activities);
+      // console.log('Activities' + this.activities);
+      if (!Array.isArray(this.activities) || !this.activities.length) {
+        this.no_activities = true;
+      } else { this.no_activities = false; }
       this.dataSource = new MatTableDataSource(this.activities);
       this.dataSource.sort = this.sort;
       },
@@ -98,6 +98,10 @@ export class ViewActivityComponent implements OnInit{
         console.log('Get activities Completed!!');
       }
     )
+   }
+
+   back() {
+    this.location.back();
    }
 
 }
