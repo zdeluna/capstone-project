@@ -65,18 +65,6 @@ export class CreateChallengeComponent implements OnInit {
     })
   }
 
-  logIt() {}
-
-  formIsValid(): void {
-    /* TODO:
-      * verify activity is selected and valid
-      * verify measurement is selected and valid
-      * verify duration is selected and valid
-      * 
-      * If false, 'Create' button on form will be disabled
-    */
-  }
-
   submitForm(): void {
     let challenge = new Challenge()
     challenge.name = `${this.form.value.activity} ${this.form.value.measurement} Challenge`
