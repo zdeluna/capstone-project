@@ -33,14 +33,9 @@ const routes: Routes = [
     canActivate: [AuthGuard, ResolveGuard]
   },
   {
-    path: 'challenges', 
-    component: ChallengesPageComponent,
-    canActivate: [AuthGuard]
-  },
-  {
     path: 'challenges/create', 
     component: CreateChallengeComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard, ResolveGuard]
   },
   {
     path: 'challenges/:id', 

@@ -21,20 +21,16 @@ export class DatabaseService {
   uri = 'https://capstone-wazn.appspot.com/api'
   user: User = new User()
 
-
-  // token:string;
+  token:string;
   httpOptions = {
     headers: new HttpHeaders({
       'Content-Type':  'application/json',
       'Authorization': 'Bearer ' + this.userService.getToken()
     })
-  };
-
-  token:string;
-  // httpOptions = {}
-
+  }
 
   addChallenge(challenge: Challenge) {
+    console.log(this.httpOptions)
     let c = {
       name: challenge.name,
       activity: challenge.activity,
@@ -49,12 +45,12 @@ export class DatabaseService {
     let status = {status: "0"}
 
     if(participants.length > 1) {
-      let url = `${this.uri}/challenges/${id}/participants/${participants.pop()}`
+      let url = `${this.uri}/challenges/${id}/participants/${participants.pop().id}`
       this.http.post(url, status, this.httpOptions).subscribe(() => {
         this.inviteParticipants(id, participants)
       })
     } else {
-      let url = `${this.uri}/challenges/${id}/participants/${participants.pop()}`
+      let url = `${this.uri}/challenges/${id}/participants/${participants.pop().id}`
       this.http.post(url, status, this.httpOptions)
     }
   }
@@ -64,16 +60,8 @@ export class DatabaseService {
   }
 
   deleteMessage(cId: string, message: Post) {
-    if(message.replies.length > 0) {
-      let replyToDelete = message.replies.pop()
-      let url = `${this.uri}/challenges/${cId}/messages/${replyToDelete.id}`
-      this.http.delete(url, this.httpOptions).subscribe(() => {
-        this.deleteMessage(cId, message)
-      })
-    } else {
-      let url = `${this.uri}/challenges/${cId}/messages/${message.id}`
-      return this.http.delete(url, this.httpOptions)
-    }
+    let url = `${this.uri}/challenges/${cId}/messages/${message.id}`
+    return this.http.delete(url, this.httpOptions)
   }
 
   getChallenge(id: string) {
@@ -81,11 +69,14 @@ export class DatabaseService {
   }
 
   getExampleChallenge() {
-    return this.http.get(`${this.uri}/challenges/5c686d1315a6850006405ab1`, this.httpOptions)
+    return this.http.get(`${this.uri}/challenges/5c82e1fdaeaa110005c6b28f`, this.httpOptions)
   }
 
-  getExerciseByUserDateAndActivity(userId: string, startDate: Date, activity: string) {
-    //search db where user = userId startDate date >= startDate activity = activity
+  getExerciseByUserDateAndActivity(userId: string, startDate: Date, endDate: Date, activity: string) {
+    let start = `0${(startDate.getMonth() + 1)}-${startDate.getDate()}-${startDate.getFullYear()}`
+    let end = `0${(endDate.getMonth() + 1)}-${endDate.getDate()}-${endDate.getFullYear()}`
+
+    return this.http.get<any[]>(`${this.uri}/activities/?user_id=${userId}&type=${activity}&start_date=${start}&end_date=${end}`, this.httpOptions)
   }
 
   getUser(id: string) {
@@ -130,38 +121,5 @@ export class DatabaseService {
         'Authorization': 'Bearer ' + this.token
       })
     }
-  }
-
-  getUserHardCoded(id: string): User {
-    let user = new User
-    let users: User[] = [{
-      id: "123456",
-      username: "testUser1",
-      firstName: "Test",
-      lastName: "User",
-      password: 'pw'
-    },
-    {
-      id: "654321",
-      username: "cpie19",
-      firstName: "Chris",
-      lastName: "Piemonte",
-      password: 'pw'
-    },
-    {
-      id: "987654",
-      username: "thehawk",
-      firstName: "Steve",
-      lastName: "Hawking",
-      password: 'pw'
-    }]
-
-    users.forEach(u => {
-      if(u.id === id) {
-        user = u
-      }
-    })
-    
-    return user
   }
 }

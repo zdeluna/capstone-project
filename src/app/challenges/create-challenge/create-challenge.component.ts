@@ -5,6 +5,7 @@ import { Challenge } from 'src/app/models/challenge.model';
 import { DatabaseService } from 'src/app/services/database.service';
 import { User } from 'src/app/models/user.model';
 import { Router } from '@angular/router';
+import { UserService } from 'src/app/services/user.service';
 
 export interface Measurement {
   view: string;
@@ -18,24 +19,13 @@ export interface Measurement {
 })
 export class CreateChallengeComponent implements OnInit {
 
-  constructor(private location: Location, private dbService: DatabaseService, private router: Router) { }
+  constructor(private location: Location,
+    private dbService: DatabaseService,
+    private router: Router,
+    private userService: UserService) { }
 
-  tempFriends: User[] = [{
-      id: "123456",
-      username: "testUser1",
-      firstName: "Test",
-      lastName: "User",
-      password: 'pw'
-    },
-    {
-      id: "654321",
-      username: "cpie19",
-      firstName: "Chris",
-      lastName: "Piemonte",
-      password: 'pw'
-    }
-  ]
-
+  user: User = new User
+  friends: User[] = []
   durationMessage: string = ''
   endDateMessage: string = ''
   search = ''
@@ -63,18 +53,16 @@ export class CreateChallengeComponent implements OnInit {
   })
 
   ngOnInit() {
-  }
+    this.dbService.getCurrentUser().subscribe(res => {
+      this.user.id = this.userService.getCurrentUserId()
+      this.user.username = res['username']
+      this.user.firstName = res['first_name']
+      this.user.lastName = res['last_name']
+      this.user.password = res['password']
+      this.user.friends = res['friends']
 
-  logIt() {}
-
-  formIsValid(): void {
-    /* TODO:
-      * verify activity is selected and valid
-      * verify measurement is selected and valid
-      * verify duration is selected and valid
-      * 
-      * If false, 'Create' button on form will be disabled
-    */
+      this.setFriends()
+    })
   }
 
   submitForm(): void {
@@ -85,9 +73,8 @@ export class CreateChallengeComponent implements OnInit {
     challenge.duration = this.form.value.duration
     challenge.startDate = this.form.value.startDate
     this.dbService.addChallenge(challenge).subscribe(challenge => {
-      let participants = ['5c79ac775891120006658fee', '5c79ac955891120006658fef'] // <---- temp REMOVE THIS
       if(this.form.value.invitees.length > 0) {
-        this.dbService.inviteParticipants(challenge['_id'], participants)
+        this.dbService.inviteParticipants(challenge['_id'], this.form.value.invitees)
         setTimeout(() => this.router.navigate([`/challenges/${challenge['_id']}`]), 2000) //have to do this bc no response is sent
       } else {
         this.router.navigate([`/challenges/${challenge['_id']}`])
@@ -178,10 +165,25 @@ export class CreateChallengeComponent implements OnInit {
     }
   }
 
+  setFriends() {
+    this.user.friends.forEach(f => {
+      this.dbService.getUser(f).subscribe(res => {
+        let u: User = new User
+        u.id = res['_id']
+        u.username = res['username']
+        u.firstName = res['first_name']
+        u.lastName = res['last_name']
+        u.password = res['password']
+
+        this.friends.push(u)
+      })
+    })
+  }
+
   submitSearch() {
     this.noMatch = false
     this.searchMatches = []
-    this.tempFriends.forEach(friend => {
+    this.friends.forEach(friend => {
       if(friend.firstName === this.friendSearch.value.name) {
         this.searchMatches.push(friend)
       }
@@ -197,8 +199,8 @@ export class CreateChallengeComponent implements OnInit {
     this.noMatch = false
   }
 
-  inviteFriend(id: string) {
-    this.invitedFriends.push(this.dbService.getUserHardCoded(id))
+  inviteFriend(friend: User) {
+    this.invitedFriends.push(friend)
     this.form.controls.invitees.setValue(this.invitedFriends)
   }
 

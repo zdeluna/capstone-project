@@ -33,7 +33,6 @@ export class MessageBoardComponent implements OnInit {
   }
 
   submitNewPost() {
-    console.log(this.challenge)
     let m = {
       content: this.form.value.message
     }
@@ -94,7 +93,6 @@ export class MessageBoardComponent implements OnInit {
   }
 
   thisUserPosted(post: Post) {
-    // return post.user == this.user.username
-    return true
+    return post.user == this.user.username
   }
 }

@@ -19,7 +19,7 @@ export class MessageBoardReplyComponent implements OnInit {
   @Input() challengeIsOver: Boolean
   @Input() user: User
   @Input() challenge: Challenge
-  @Input() post: Post[] = []
+  @Input() post: Post = new Post
   @Input() shouldBeGray: Boolean
 
   formReply = new FormGroup({

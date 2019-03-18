@@ -82,10 +82,6 @@ Example Response:
 }
 ```
 
-## Login using Google Oauth2
-
-### POST login/google
-
 ---
 
 ## Get all user entities
@@ -110,26 +106,35 @@ Example:
 
 ```
 {
-    "friends": ["5be8d38a9d57d3088a747d8f"],
+    "friends": ["5c852ade63f7cc25ba67a5d8", "5c872ade63f7cc25ba67a5f6"],
     "pending_friends": [
         {
-            "user": "5c58d43a9de2d3088a747c9c",
+            "user": "5c852ade63f7cc25ba67a5f6",
             "status": 1
         }
     ],
-    "_id": "5c58d4379de2d3088a747c9b",
-    "username": "user1@gmail.com",
-    "password": "$2b$10$tFqOv3glwOlp4QB3pZJNOOVdGQSEpWmERQ8gVKUA0roFS7LhtJzM6",
-    "__v": 0,
-    "date_of_birth": "1987-04-05T06:00:00.000Z",
-    "first_name": "Zachary",
-    "last_name": "DeLuna"
+    "challenges": [
+        "5c882caeb76d723998384423"
+    ],
+    "conversations": [
+        "5c882d02b76d723998384426"
+    ],
+    "pending_challenges": [],
+    "records": [
+        "5c88274b71d95438e5f6e5c3"
+    ],
+    "_id": "5c88270a71d95438e5f6e5c0",
+    "username": "user1ZachTEST@gmail.com",
+    "password": "$2b$10$oa6AjgBXAO1o1sGwM9w9..r2A4ZpHu7Bnzcsl6jrJLJnTSLRDB7cO",
+    "__v": 0
 }
 ```
 
-## Update an authenticated user using user id
+## Update a user
 
 ### PATCH /users/:id
+
+#### Authorization: `token required`
 
 #### Parameters:
 
@@ -137,7 +142,7 @@ Example:
 | --------- | ------------------ |
 | `id`      | The id of the user |
 
-Body Parameters - All optional
+#### Body Parameters
 
 | Parameter       | Type     | Description                             |
 | --------------- | -------- | --------------------------------------- |
@@ -146,11 +151,13 @@ Body Parameters - All optional
 | `location`      | `string` | The city, state where the user resides  |
 | `date_of_birth` | `string` | DOB of user - Formatted as `MM/DD/YYYY` |
 
-Response 200 OK
+Response: 200 OK
 
 ## Send/Accept/Reject a friend request
 
 ### PATCH /users/:userID/friends/:friendID
+
+#### Authorization: `token required`
 
 #### Parameters:
 
@@ -177,6 +184,8 @@ Other codes that are only seen in /users/:id GET requests
 ## Delete an authenticated user using user id
 
 ### DELETE /users/:id
+
+#### Authorization: `token required`
 
 #### Parameters:
 
@@ -243,7 +252,9 @@ Example:
 
 ## Post a new challenge
 
-### POST /challenges/
+### POST /challenges
+
+#### Authorization: `token required`
 
 #### Body Parameters:
 
@@ -279,6 +290,8 @@ Example:
 
 ### DELETE /challenges/:id
 
+#### Authorization: `token required`
+
 #### Parameters:
 
 | Parameter | Description             |
@@ -290,6 +303,8 @@ Response: 204 No Content
 ## Invite a participant to the challenge
 
 ### POST /challenges/:challengeID/participants/:participantID
+
+#### Authorization: `token required`
 
 #### Parameters:
 
@@ -313,6 +328,8 @@ Response: 204 No Content
 
 ### DELETE /challenges/:challengeID/participants/:participantID
 
+#### Authorization: `token required`
+
 #### Parameters:
 
 | Parameter       | Description               |
@@ -323,6 +340,8 @@ Response: 204 No Content
 ## Write a message on the message board of a challenge
 
 ### POST /challenges/:id/messages
+
+#### Authorization: `token required`
 
 #### Parameters:
 
@@ -343,6 +362,8 @@ Response: 200 OK
 
 ### PATCH /challenges/:challengeID/messages/:messageID
 
+#### Authorization: `token required`
+
 #### Parameters:
 
 | Parameter       | Description               |
@@ -361,6 +382,8 @@ Response: 200 OK
 
 ### DELETE /challenges/:challengeID/messages/:messageID
 
+#### Authorization: `token required`
+
 #### Parameters:
 
 | Parameter     | Description             |
@@ -374,18 +397,22 @@ Response: 204 No Content
 
 ## Create a new conversation
 
-### POST /conversations/
+### POST /conversations
+
+#### Authorization: `token required`
 
 #### Body Parameters:
 
-| Parameter   | Type     | Description            |
-| ----------- | -------- | ---------------------- |
-| `recipient` | `string` | The id of the recipent |
-| `content`   | `string` | The message content    |
+| Parameter   | Type     | Description             |
+| ----------- | -------- | ----------------------- |
+| `recipient` | `string` | The id of the recipient |
+| `content`   | `string` | The message content     |
 
 ## Get a conversation
 
 ### GET /conversations/:id
+
+#### Authorization: `token required`
 
 #### Parameters:
 
@@ -430,6 +457,8 @@ Example:
 
 ### DELETE /conversations/:conversationID/messages/:messageID
 
+#### Authorization: `token required`
+
 #### Parameters:
 
 | Parameter        | Description                |
@@ -440,6 +469,8 @@ Example:
 ## Update a message
 
 ### PATCH /conversations/:conversationID/messages/:messageID
+
+#### Authorization: `token required`
 
 #### Parameters
 
@@ -460,6 +491,8 @@ Response: 200 OK
 
 ### DELETE /conversations/:conversationID/participants
 
+#### Authorization: `token required`
+
 #### Parameters:
 
 | Parameter        | Type     | Description                |
@@ -471,6 +504,8 @@ Response: 200 OK
 ## Delete a message
 
 ### DELETE /conversations/:conversationID/messages/:messageID
+
+#### Authorization: `token required`
 
 #### Parameters:
 
@@ -485,7 +520,9 @@ Response: 200 OK
 
 ## Post a new activity
 
-### POST /activities/
+### POST /activities
+
+#### Authorization: `token required`
 
 #### Body Parameters:
 
@@ -503,6 +540,8 @@ Response: 200 OK
 ## Update an activity
 
 ### PATCH /activities/:id
+
+#### Authorization: `token required`
 
 #### Parameters:
 
@@ -526,6 +565,8 @@ Reponse: 200 OK
 ## Get an activity
 
 ### GET /activities/:id
+
+#### Authorization: `token required`
 
 #### Parameters:
 
@@ -553,13 +594,17 @@ Example:
 
 ## Get all activities
 
-### GET /activities/
+### GET /activities
+
+#### Authorization: `token required`
 
 Response: 200 OK
 
 ## Make a query of activities
 
 ### GET /activities/?user_id={{userID}}&type={{type}}&start_date={start_date}&end_date={end_date}
+
+#### Authorization: `token required`
 
 #### Query Parameters:
 
@@ -578,20 +623,22 @@ Response: 200 OK
 
 ## Create a new record
 
-### POST /records/
+### POST /records
 
 #### Body Parameters:
 
-| Parameter | Type     | Description                                                           |
-| --------- | -------- | --------------------------------------------------------------------- |
-| `date`    | `string` | The date of the when the record was acheived formated as `MM-DD-YYYY` |
-| `type`    | `string` | The type of record                                                    |
+| Parameter | Type     | Description                                                            |
+| --------- | -------- | ---------------------------------------------------------------------- |
+| `date`    | `string` | The date of the when the record was achieved formatted as `MM-DD-YYYY` |
+| `type`    | `string` | The type of record                                                     |
 
 Response: 200 OK
 
 ## Update a new record
 
 ### PATCH /records/:id
+
+#### Authorization: `token required`
 
 #### Parameter:
 
@@ -605,7 +652,7 @@ Response: 200 OK
 
 | Parameter | Type     | Description                                                           |
 | --------- | -------- | --------------------------------------------------------------------- |
-| `date`    | `string` | The date of the when the record was acheived formated as `MM-DD-YYYY` |
+| `date`    | `string` | The date of the when the record was achieved formattedas `MM-DD-YYYY` |
 | `type`    | `string` | The type of record                                                    |
 
 Response: 200 OK
@@ -613,6 +660,8 @@ Response: 200 OK
 ## Get a record
 
 ### GET /records/:id
+
+#### Authorization: `token required`
 
 #### Parameter:
 
@@ -638,6 +687,8 @@ Example:
 
 ### DELETE /records/:id
 
+#### Authorization: `token required`
+
 #### Parameter:
 
 | Parameter | Description          |
@@ -645,3 +696,11 @@ Example:
 | `id`      | The id of the record |
 
 Response: 204
+
+# Testing on Postman
+
+1. Download Postman at https://www.getpostman.com
+
+2. Select Import and import the file in the folder server/tests "Capstone-API.postman_collection.json"
+
+3. Click "Manage Environment" in top right corner and import environment found in server/tests "CapstoneEnv.postman_environment.json"

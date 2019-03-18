@@ -52,7 +52,7 @@
   </div>
 </div>
 
-<div class="row">
+<div class="row" [hidden]="!partOfChallenge">
   <div class="col-12">
     <mat-card>
       <mat-card-content>
@@ -76,13 +76,11 @@
             <tr>
               <th mat-header-cell> Username </th>
               <th mat-header-cell> Total </th>
-              <th mat-header-cell> </th>
             </tr>
           
             <tr *ngFor="let p of participants">
               <td mat-cell>{{ p.user.username }}</td>
               <td mat-cell>{{ p.activityTotal }}</td>
-              <td mat-cell style="text-align: right"><button mat-stroked-button> Visit Profile </button></td>
             </tr>
           </table>
       </mat-card-content>
@@ -90,7 +88,7 @@
   </div>
 </div>
 
-<div class="row">
+<div class="row" [hidden]="noMorePending">
   <div class="col-12">
     <mat-card>
       <mat-card-content>
@@ -99,14 +97,10 @@
         <table matSort style="width:100%;">
             <tr>
               <th mat-header-cell> Username </th>
-              <th mat-header-cell> Total </th>
-              <th mat-header-cell> </th>
             </tr>
           
             <tr *ngFor="let p of pendingParticipants">
               <td mat-cell>{{ p.user.username }}</td>
-              <td mat-cell>{{ p.activityTotal }}</td>
-              <td mat-cell style="text-align: right"><button mat-stroked-button> Visit Profile </button></td>
             </tr>
           </table>
       </mat-card-content>

@@ -1,0 +1,6701 @@
+{
+	"info": {
+		"_postman_id": "d1ffb4bd-ca7a-4db1-b833-c31000283025",
+		"name": "Capstone-API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get the number of users before user creation",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "5a8e7e2f-ef51-4de2-9db2-fabdaef6fb51",
+						"exec": [
+							"pm.environment.set(\"numberOfUsersPre\", pm.response.json().length);",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{host}}/users",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create a new user (user1) using local strategy",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "e04a5d44-a825-447a-bc62-53f8e3a8a642",
+						"exec": [
+							"pm.environment.set('user1UserName', 'user1ZachTEST@gmail.com');",
+							"pm.environment.set('user1Password', '123456');"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "77bd248b-9f9d-427e-84fb-185e7dda2418",
+						"exec": [
+							"pm.test(\"Confirm you receive a status code 200 after registering a new user\", function () {",
+							"   ",
+							"    pm.response.to.have.status(200);",
+							"    pm.environment.set(\"user1ID\", pm.response.json().user._id);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "username",
+							"value": "{{user1UserName}}",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "{{user1Password}}",
+							"type": "text"
+						},
+						{
+							"key": "",
+							"value": "",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "{{host}}/signup",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"signup"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create a new user (user2) using local strategy",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "5843eb9d-e5d6-4bbe-b003-1df32fdabab6",
+						"exec": [
+							"pm.environment.set('user2UserName', 'user2ZachTEST@gmail.com');",
+							"pm.environment.set('user2Password', '123456');"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "1739f39b-0614-47b2-9068-ef04f659fbb4",
+						"exec": [
+							"pm.test(\"Confirm you receive a status code 200 after registering a new user\", function () {",
+							"   ",
+							"    pm.response.to.have.status(200);",
+							"    pm.environment.set(\"user2ID\", pm.response.json().user._id);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "username",
+							"value": "{{user2UserName}}",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "{{user2Password}}",
+							"type": "text"
+						},
+						{
+							"key": "",
+							"value": "",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "{{host}}/signup",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"signup"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Check to make sure number of users increased by 2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "5a8e7e2f-ef51-4de2-9db2-fabdaef6fb51",
+						"exec": [
+							"pm.test(\"Confirm that 2 users were added\", function () {",
+							"    var numberOfUsers = pm.environment.get(\"numberOfUsersPre\") + 2;",
+							"    var response = pm.response.json()",
+							"    pm.expect(response.length).to.equal(numberOfUsers);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{host}}/users",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create a new user (user3) using local strategy",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "e04a5d44-a825-447a-bc62-53f8e3a8a642",
+						"exec": [
+							"pm.environment.set('user3UserName', 'user3ZachTEST@gmail.com');",
+							"pm.environment.set('user3Password', '123456');"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "77bd248b-9f9d-427e-84fb-185e7dda2418",
+						"exec": [
+							"pm.test(\"Confirm you receive a status code 200 after registering a new user\", function () {",
+							"   ",
+							"    pm.response.to.have.status(200);",
+							"    pm.environment.set(\"user3ID\", pm.response.json().user._id);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "username",
+							"value": "{{user3UserName}}",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "{{user3Password}}",
+							"type": "text"
+						},
+						{
+							"key": "",
+							"value": "",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "{{host}}/signup",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"signup"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create a new user (user4) using local strategy",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "e04a5d44-a825-447a-bc62-53f8e3a8a642",
+						"exec": [
+							"pm.environment.set('user4UserName', 'user4ZachTEST@gmail.com');",
+							"pm.environment.set('user4Password', '123456');"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "77bd248b-9f9d-427e-84fb-185e7dda2418",
+						"exec": [
+							"pm.test(\"Confirm you receive a status code 200 after registering a new user\", function () {",
+							"   ",
+							"    pm.response.to.have.status(200);",
+							"    pm.environment.set(\"user4ID\", pm.response.json().user._id);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "username",
+							"value": "{{user4UserName}}",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "{{user4Password}}",
+							"type": "text"
+						},
+						{
+							"key": "",
+							"value": "",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "{{host}}/signup",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"signup"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User registers with email that already exists",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "1f24fe5f-3085-48cc-b4e4-ae22bd6e445e",
+						"exec": [
+							"pm.test(\"Confirm you receive a status code 422 after signing up with an username that already exists\", function () {",
+							"   ",
+							"    pm.response.to.have.status(422);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "username",
+							"value": "{{user1Email}}",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "{{user1ID}}",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{host}}/signup",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"signup"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User registers with username that is not an email",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "a584da63-2190-427a-99ea-1358d18dff17",
+						"exec": [
+							"pm.test(\"Confirm you receive a status code 422 after signing up with a username that is not an email\", function () {",
+							"   ",
+							"    pm.response.to.have.status(422);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "username",
+							"value": "user1",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "123456",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{host}}/signup",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"signup"
+					],
+					"query": [
+						{
+							"key": "email",
+							"value": "",
+							"disabled": true
+						},
+						{
+							"key": "password",
+							"value": "123456",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User registers with short password",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "a584da63-2190-427a-99ea-1358d18dff17",
+						"exec": [
+							"pm.test(\"Confirm you receive a status code 422 after signing up with a password that is less than 6 characters\", function () {",
+							"   ",
+							"    pm.response.to.have.status(422);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "username",
+							"value": "user2@gmail.com",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "12345",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{host}}/signup",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"signup"
+					],
+					"query": [
+						{
+							"key": "email",
+							"value": "",
+							"disabled": true
+						},
+						{
+							"key": "password",
+							"value": "123456",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Log in as new user (user1)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "16ff3a99-02d9-4674-925f-0774039656b3",
+						"exec": [
+							"pm.test(\"Confirm you receive a status code 200 after loggin in with correct credientials for user1\", function () {",
+							"   ",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.environment.set(\"token1\", pm.response.json().token);",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "username",
+							"value": "{{user1UserName}}",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "{{user1Password}}",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{host}}/login",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Log in as new user (user2)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "16ff3a99-02d9-4674-925f-0774039656b3",
+						"exec": [
+							"pm.test(\"Confirm you receive a status code 200 after loggin in with correct credientials for user2\", function () {",
+							"   ",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.environment.set(\"token2\", pm.response.json().token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "username",
+							"value": "{{user2UserName}}",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "{{user2Password}}",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{host}}/login",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Log in as new user (user3)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "16ff3a99-02d9-4674-925f-0774039656b3",
+						"exec": [
+							"pm.test(\"Confirm you receive a status code 200 after loggin in with correct credientials for user3\", function () {",
+							"   ",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.environment.set(\"token3\", pm.response.json().token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "username",
+							"value": "{{user3UserName}}",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "{{user3Password}}",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{host}}/login",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Log in as new user (user4)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "16ff3a99-02d9-4674-925f-0774039656b3",
+						"exec": [
+							"pm.test(\"Confirm you receive a status code 200 after loggin in with correct credientials for user3\", function () {",
+							"   ",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.environment.set(\"token4\", pm.response.json().token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "username",
+							"value": "{{user4UserName}}",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "{{user4Password}}",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{host}}/login",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Log in as new user with wrong password",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "16ff3a99-02d9-4674-925f-0774039656b3",
+						"exec": [
+							"pm.test(\"Confirm you receive a status code 422 after loggin in with wrong password\", function () {",
+							"   ",
+							"    pm.response.to.have.status(422);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "username",
+							"value": "{{user1UserName}}",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "123456789",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{host}}/login",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update a user's first and last name",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d5b822d1-8362-41e0-ba73-8fa7ec3e1995",
+						"exec": [
+							"pm.test(\"Confirm when you edit a user you get a 200 status code\", function() {",
+							"    pm.response.to.have.status(200);",
+							"    ",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "first_name",
+							"value": "Zachary",
+							"type": "text"
+						},
+						{
+							"key": "last_name",
+							"value": "DeLuna",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{host}}/users/:id",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"users",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "{{user1ID}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get user entity and check first and last name",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "5a8e7e2f-ef51-4de2-9db2-fabdaef6fb51",
+						"exec": [
+							"pm.test(\"Confirm that the contents of first and last name are correct after update\", function () {",
+							"   ",
+							"    var jsonData = pm.response.json();",
+							"    ",
+							"    pm.expect(jsonData.first_name).to.eql(\"Zachary\");",
+							"    pm.expect(jsonData.last_name).to.eql(\"DeLuna\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{host}}/users/:id",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"users",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "{{user1ID}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get user entity of a user that doesn't exist",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "5a8e7e2f-ef51-4de2-9db2-fabdaef6fb51",
+						"exec": [
+							"pm.test(\"Confirm that a status code of 404 in the response of getting a user that doesn't exist\", function () {",
+							"   ",
+							"pm.response.to.have.status(404);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{host}}/users/:id",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"users",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "5c58b12925f7e2066fe01432"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update a user's date of birth",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "date_of_birth",
+							"value": "04-05-1987",
+							"type": "text"
+						},
+						{
+							"key": "",
+							"value": "",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "{{host}}/users/:id",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"users",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "{{user1ID}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get user entity and check date of birth",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "5a8e7e2f-ef51-4de2-9db2-fabdaef6fb51",
+						"exec": [
+							"pm.test(\"Confirm that the date of birth field is correct\", function () {",
+							"   ",
+							"    var jsonData = pm.response.json();",
+							"    var date_of_birth = jsonData.date_of_birth.slice(0, 10);",
+							"    ",
+							"    pm.expect(date_of_birth).to.eql(\"1987-04-05\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{host}}/users/:id",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"users",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "{{user1ID}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User1 sends a friend request to user2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "5a8e7e2f-ef51-4de2-9db2-fabdaef6fb51",
+						"exec": [
+							"pm.test(\"Confirm that you receive a status code of 200 when a friend request is sent\", function () {",
+							"   ",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "status",
+							"value": "0",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{host}}/users/:user1/friends/:user2",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"users",
+						":user1",
+						"friends",
+						":user2"
+					],
+					"variable": [
+						{
+							"key": "user1",
+							"value": "{{user1ID}}"
+						},
+						{
+							"key": "user2",
+							"value": "{{user2ID}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Make sure the friendship is in pending_friendships for User1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "5a8e7e2f-ef51-4de2-9db2-fabdaef6fb51",
+						"exec": [
+							"pm.test(\"Confirm that user 1 has a pending friend\", function () {",
+							"   ",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.pending_friends[0].user).to.eql(pm.environment.get(\"user2ID\"));",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{host}}/users/:id",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"users",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "{{user1ID}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Make sure the friendship is in pending_friendships for User2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "5a8e7e2f-ef51-4de2-9db2-fabdaef6fb51",
+						"exec": [
+							"pm.test(\"Confirm that user 2 has a pending friend\", function () {",
+							"   ",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.pending_friends[0].user).to.eql(pm.environment.get(\"user1ID\"));",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token2}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{host}}/users/:id",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"users",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "{{user2ID}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User1 sends a another friend request to user2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "5a8e7e2f-ef51-4de2-9db2-fabdaef6fb51",
+						"exec": [
+							"pm.test(\"Confirm that you receive a status code of 422 when a friend request is sent that has already been sent\", function () {",
+							"   ",
+							"    pm.response.to.have.status(422);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "status",
+							"value": "0",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{host}}/users/:user1/friends/:user2",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"users",
+						":user1",
+						"friends",
+						":user2"
+					],
+					"variable": [
+						{
+							"key": "user1",
+							"value": "{{user1ID}}"
+						},
+						{
+							"key": "user2",
+							"value": "{{user2ID}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User2 accepts the friend request from User1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "5a8e7e2f-ef51-4de2-9db2-fabdaef6fb51",
+						"exec": [
+							"pm.test(\"Confirm that you receive a status code of 200 when a friend request is sent\", function () {",
+							"   ",
+							"    pm.response.to.have.status(200);",
+							"    ",
+							"    ",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token2}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "status",
+							"value": "3",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{host}}/users/:user1/friends/:user2",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"users",
+						":user1",
+						"friends",
+						":user2"
+					],
+					"variable": [
+						{
+							"key": "user1",
+							"value": "{{user2ID}}"
+						},
+						{
+							"key": "user2",
+							"value": "{{user1ID}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Check User 1 to make sure User 2's id is listed as a friend",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "5a8e7e2f-ef51-4de2-9db2-fabdaef6fb51",
+						"exec": [
+							"pm.test(\"Confirm that user 2 is friends with user 1\", function () {",
+							"   ",
+							"    var jsonData = pm.response.json();",
+							"    ",
+							"    pm.expect(jsonData.friends[0]).to.eql(pm.environment.get(\"user2ID\"));",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{host}}/users/:id",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"users",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "{{user1ID}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Check User 2 to make sure User 1's id is listed as a friend",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "5a8e7e2f-ef51-4de2-9db2-fabdaef6fb51",
+						"exec": [
+							"pm.test(\"Confirm that user 1 is friends with user 2\", function () {",
+							"   ",
+							"    var jsonData = pm.response.json();",
+							"    ",
+							"    pm.expect(jsonData.friends[0]).to.eql(pm.environment.get(\"user1ID\"));",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token2}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{host}}/users/:id",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"users",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "{{user2ID}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User1 removes User2 as friends",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "5a8e7e2f-ef51-4de2-9db2-fabdaef6fb51",
+						"exec": [
+							"pm.test(\"Confirm that you receive a status code of 204 when a friend request is sent\", function () {",
+							"   ",
+							"    pm.response.to.have.status(204);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "status",
+							"value": "1",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{host}}/users/:user1/friends/:user2",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"users",
+						":user1",
+						"friends",
+						":user2"
+					],
+					"variable": [
+						{
+							"key": "user1",
+							"value": "{{user1ID}}"
+						},
+						{
+							"key": "user2",
+							"value": "{{user2ID}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Check User 1 to make sure User 2's id isn't listed as a friend",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "5a8e7e2f-ef51-4de2-9db2-fabdaef6fb51",
+						"exec": [
+							"pm.test(\"Confirm that user 2 is not friends with user 1\", function () {",
+							"   ",
+							"    var jsonData = pm.response.json();",
+							"    ",
+							"    pm.expect(jsonData.friends[0]).to.not.eql(pm.environment.get(\"user1ID\"));",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{host}}/users/:id",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"users",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "{{user1ID}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Check User 2 to make sure User 1's id is not listed as a friend",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "5a8e7e2f-ef51-4de2-9db2-fabdaef6fb51",
+						"exec": [
+							"pm.test(\"Confirm that user 2 is not friends with user 1\", function () {",
+							"   ",
+							"    var jsonData = pm.response.json();",
+							"    ",
+							"    pm.expect(jsonData.friends[0]).to.not.eql(pm.environment.get(\"user1ID\"));",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token2}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{host}}/users/:id",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"users",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "{{user2ID}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User1 sends another friend request to user2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "5a8e7e2f-ef51-4de2-9db2-fabdaef6fb51",
+						"exec": [
+							"pm.test(\"Confirm that you receive a status code of 200 when a friend request is sent\", function () {",
+							"   ",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "status",
+							"value": "0",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{host}}/users/:user1/friends/:user2",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"users",
+						":user1",
+						"friends",
+						":user2"
+					],
+					"variable": [
+						{
+							"key": "user1",
+							"value": "{{user1ID}}"
+						},
+						{
+							"key": "user2",
+							"value": "{{user2ID}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User2 rejects the friend request from User1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "5a8e7e2f-ef51-4de2-9db2-fabdaef6fb51",
+						"exec": [
+							"pm.test(\"Confirm that you receive a status code of 200 when a friend request is rejected\", function () {",
+							"   ",
+							"    ",
+							"    ",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token2}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "status",
+							"value": "4",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{host}}/users/:user1/friends/:user2",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"users",
+						":user1",
+						"friends",
+						":user2"
+					],
+					"variable": [
+						{
+							"key": "user1",
+							"value": "{{user2ID}}"
+						},
+						{
+							"key": "user2",
+							"value": "{{user1ID}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Make sure the friendship is not in pending_friendships for User1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "5a8e7e2f-ef51-4de2-9db2-fabdaef6fb51",
+						"exec": [
+							"pm.test(\"Confirm that user 1 has a pending friend\", function () {",
+							"   ",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.pending_friends.length).to.equal(0);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{host}}/users/:id",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"users",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "{{user1ID}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Make sure the friendship is not in pending_friendships for User2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "5a8e7e2f-ef51-4de2-9db2-fabdaef6fb51",
+						"exec": [
+							"pm.test(\"Confirm that user 1 has a pending friend\", function () {",
+							"   ",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.pending_friends.length).to.equal(0);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{host}}/users/:id",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"users",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "{{user2ID}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User1 will create a challenge",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "bb7c5eff-6b7a-40b0-a07f-8190b188d295",
+						"exec": [
+							"pm.environment.set(\"challenge1ID\", pm.response.json()._id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "name",
+							"value": "Work Challenge",
+							"type": "text"
+						},
+						{
+							"key": "start_date",
+							"value": "02-17-2019",
+							"type": "text"
+						},
+						{
+							"key": "activity",
+							"value": "WALK",
+							"type": "text"
+						},
+						{
+							"key": "measurement",
+							"value": "KM",
+							"type": "text"
+						},
+						{
+							"key": "duration",
+							"value": "2",
+							"type": "text"
+						},
+						{
+							"key": "participants",
+							"value": "",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "{{host}}/challenges",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"challenges"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User1 will update the activity",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "bb7c5eff-6b7a-40b0-a07f-8190b188d295",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "activity",
+							"value": "RUN",
+							"type": "text"
+						},
+						{
+							"key": "name",
+							"value": "School challenge",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{host}}/challenges/:challengeID",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"challenges",
+						":challengeID"
+					],
+					"variable": [
+						{
+							"key": "challengeID",
+							"value": "{{challenge1ID}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Check to make sure activity was updated",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "4806795f-08f0-4498-ad1c-5f647197f44c",
+						"exec": [
+							"pm.test(\"Confirm the challenge activity was updated\", function () {",
+							"   ",
+							"    var jsonData = pm.response.json();",
+							"    ",
+							"    pm.expect(jsonData.activity).to.eql(\"RUN\");",
+							"    ",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{host}}/challenges/:challengeID",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"challenges",
+						":challengeID"
+					],
+					"variable": [
+						{
+							"key": "challengeID",
+							"value": "{{challenge1ID}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User1 will invite User2 to a challenge",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "status",
+							"value": "0",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{host}}/challenges/:challengeID/participants/:participantID",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"challenges",
+						":challengeID",
+						"participants",
+						":participantID"
+					],
+					"variable": [
+						{
+							"key": "challengeID",
+							"value": "{{challenge1ID}}"
+						},
+						{
+							"key": "participantID",
+							"value": "{{user2ID}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Check to make sure user2 was invited",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "4806795f-08f0-4498-ad1c-5f647197f44c",
+						"exec": [
+							"pm.test(\"Confirm user 2 is listed as a participant\", function () {",
+							"   ",
+							"    var jsonData = pm.response.json();",
+							"    ",
+							"    pm.expect(jsonData.pending_participants[0].user).to.eql(pm.environment.get(\"user2ID\"));",
+							"    ",
+							"    pm.expect(jsonData.pending_participants[0].status).to.eql(1);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{host}}/challenges/:challengeID",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"challenges",
+						":challengeID"
+					],
+					"variable": [
+						{
+							"key": "challengeID",
+							"value": "{{challenge1ID}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User1 will invite User2 to a challenge again",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "be52a2ec-3f37-4e17-8696-2466bf7a5cd0",
+						"exec": [
+							"pm.test(\"Confirm you receive a status code 422 after trying to invite the same user to a challenge when a request is already pending\", function () {",
+							"   ",
+							"    pm.response.to.have.status(422);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "status",
+							"value": "0",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{host}}/challenges/:challengeID/participants/:participantID",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"challenges",
+						":challengeID",
+						"participants",
+						":participantID"
+					],
+					"variable": [
+						{
+							"key": "challengeID",
+							"value": "{{challenge1ID}}"
+						},
+						{
+							"key": "participantID",
+							"value": "{{user2ID}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User2 will accept the challenge",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "status",
+							"value": "2",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{host}}/challenges/:challengeID/participants/:participantID",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"challenges",
+						":challengeID",
+						"participants",
+						":participantID"
+					],
+					"variable": [
+						{
+							"key": "challengeID",
+							"value": "{{challenge1ID}}"
+						},
+						{
+							"key": "participantID",
+							"value": "{{user2ID}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Check to make sure user2 is listed as a participant",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "5a8e7e2f-ef51-4de2-9db2-fabdaef6fb51",
+						"exec": [
+							"pm.test(\"Confirm user 2 is listed as a participant\", function () {",
+							"   ",
+							"    var jsonData = pm.response.json();",
+							"    ",
+							"    pm.expect(jsonData.participants[1]).to.eql(pm.environment.get(\"user2ID\"));",
+							"});",
+							"",
+							"pm.test(\"Confirm that there aren't any pending participants\", function () {",
+							"   ",
+							"    var jsonData = pm.response.json();",
+							"    ",
+							"    pm.expect(jsonData.pending_participants.length).to.eql(0);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "{{host}}/challenges/:challengeID",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"challenges",
+						":challengeID"
+					],
+					"variable": [
+						{
+							"key": "challengeID",
+							"value": "{{challenge1ID}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User2 will try to accept the challenge again",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ec0a7293-b0e0-4bd2-b647-8cd4efadbfc2",
+						"exec": [
+							"pm.test(\"Confirm you receive a status code 422 after trying to add a participant that is already a participant in the challenge\", function () {",
+							"   ",
+							"    pm.response.to.have.status(422);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "status",
+							"value": "2",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{host}}/challenges/:challengeID/participants/:participantID",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"challenges",
+						":challengeID",
+						"participants",
+						":participantID"
+					],
+					"variable": [
+						{
+							"key": "challengeID",
+							"value": "{{challenge1ID}}"
+						},
+						{
+							"key": "participantID",
+							"value": "{{user2ID}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User1 will write a message on the challenge message board",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "bb7c5eff-6b7a-40b0-a07f-8190b188d295",
+						"exec": [
+							"pm.environment.set(\"challengeMessageID1\", pm.response.json().messages[0]._id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "content",
+							"value": "Test message",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{host}}/challenges/:id/messages",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"challenges",
+						":id",
+						"messages"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "{{challenge1ID}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Check to make sure message is listed in challenge",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "5a8e7e2f-ef51-4de2-9db2-fabdaef6fb51",
+						"exec": [
+							"pm.test(\"Confirm sender ID is in message field of challenge\", function () {",
+							"   ",
+							"    var jsonData = pm.response.json();",
+							"    ",
+							"    pm.expect(jsonData.messages[0].sender).to.eql(pm.environment.get(\"user1ID\"));",
+							"});",
+							"",
+							"pm.test(\"Confirm message content is in message field of challenge\", function () {",
+							"   ",
+							"    var jsonData = pm.response.json();",
+							"    ",
+							"    pm.expect(jsonData.messages[0].content).to.eql(\"Test message\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "{{host}}/challenges/:challengeID",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"challenges",
+						":challengeID"
+					],
+					"variable": [
+						{
+							"key": "challengeID",
+							"value": "{{challenge1ID}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User1 will update their message on the message board",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "5a8e7e2f-ef51-4de2-9db2-fabdaef6fb51",
+						"exec": [
+							"pm.test(\"Confirm message content is in message field of challenge\", function () {",
+							"   ",
+							"    var jsonData = pm.response.json();",
+							"    ",
+							"    pm.expect(jsonData.messages[0].content).to.eql(\"Updated message\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "content",
+							"value": "Updated message",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{host}}/challenges/:challengeID/messages/:messageID",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"challenges",
+						":challengeID",
+						"messages",
+						":messageID"
+					],
+					"variable": [
+						{
+							"key": "challengeID",
+							"value": "{{challenge1ID}}"
+						},
+						{
+							"key": "messageID",
+							"value": "{{challengeMessageID1}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User2 will write a message on the challenge message board replying to User 1's message",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "bb7c5eff-6b7a-40b0-a07f-8190b188d295",
+						"exec": [
+							"pm.test(\"Confirm the message is in replies of the first message\", function () {",
+							"   ",
+							"    var jsonData = pm.response.json();",
+							"    pm.environment.set(\"challengeMessageID2\", pm.response.json().messages[1]._id);",
+							"    ",
+							"    pm.expect(jsonData.messages[0].replies[0]).to.eql(pm.environment.get(\"challengeMessageID2\"));",
+							"    ",
+							"    pm.environment.set(\"numChallengeMessages\", pm.response.json().messages.length);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token2}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "content",
+							"value": "Hi, from user 2",
+							"type": "text"
+						},
+						{
+							"key": "reply",
+							"value": "{{challengeMessageID1}}",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{host}}/challenges/:id/messages",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"challenges",
+						":id",
+						"messages"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "{{challenge1ID}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete User'2 message using User 1's token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "bb7c5eff-6b7a-40b0-a07f-8190b188d295",
+						"exec": [
+							"pm.test(\"Confirm you receive a status code 403 after trying to delete a message with the credientials of another user\", function () {",
+							"   ",
+							"    pm.response.to.have.status(403);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{host}}/challenges/:challengeID/messages/:messageID",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"challenges",
+						":challengeID",
+						"messages",
+						":messageID"
+					],
+					"variable": [
+						{
+							"key": "challengeID",
+							"value": "{{challenge1ID}}"
+						},
+						{
+							"key": "messageID",
+							"value": "{{challengeMessageID2}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete user'2 message using correct token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "bb7c5eff-6b7a-40b0-a07f-8190b188d295",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token2}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{host}}/challenges/:challengeID/messages/:messageID",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"challenges",
+						":challengeID",
+						"messages",
+						":messageID"
+					],
+					"variable": [
+						{
+							"key": "challengeID",
+							"value": "{{challenge1ID}}"
+						},
+						{
+							"key": "messageID",
+							"value": "{{challengeMessageID2}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Check to make sure User'2 message was deleted",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "4806795f-08f0-4498-ad1c-5f647197f44c",
+						"exec": [
+							"pm.test(\"Confirm user 2's message was deleted\", function () {",
+							"   ",
+							"    var jsonData = pm.response.json();",
+							"    ",
+							"    pm.expect(jsonData.messages[0].sender).to.eql(pm.environment.get(\"user1ID\"));",
+							"    ",
+							"    pm.expect(jsonData.messages.length).to.eql(1);",
+							"    ",
+							"    pm.expect(jsonData.messages[0].replies.length).to.eql(0);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{host}}/challenges/:challengeID",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"challenges",
+						":challengeID"
+					],
+					"variable": [
+						{
+							"key": "challengeID",
+							"value": "{{challenge1ID}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Remove User2 from the challenge",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "status",
+							"value": "2",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{host}}/challenges/:challengeID/participants/:participantID",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"challenges",
+						":challengeID",
+						"participants",
+						":participantID"
+					],
+					"variable": [
+						{
+							"key": "challengeID",
+							"value": "{{challenge1ID}}"
+						},
+						{
+							"key": "participantID",
+							"value": "{{user2ID}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Check to make sure user2 is listed as a participant",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "5a8e7e2f-ef51-4de2-9db2-fabdaef6fb51",
+						"exec": [
+							"pm.test(\"Confirm user 2 is listed as a participant\", function () {",
+							"   ",
+							"    var jsonData = pm.response.json();",
+							"    ",
+							"    pm.expect(jsonData.participants[1]).to.not.eql(pm.environment.get(\"user2ID\"));",
+							"});",
+							"",
+							"pm.test(\"Confirm that there aren't any pending participants\", function () {",
+							"   ",
+							"    var jsonData = pm.response.json();",
+							"    ",
+							"    pm.expect(jsonData.pending_participants.length).to.eql(0);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "{{host}}/challenges/:challengeID",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"challenges",
+						":challengeID"
+					],
+					"variable": [
+						{
+							"key": "challengeID",
+							"value": "{{challenge1ID}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete a challenge with credientials of a user that is a participant",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "4133fc71-8ef9-49d8-b441-376f6fa51997",
+						"exec": [
+							"pm.test(\"Confirm you receive a status code 204 after trying to delete a challenge with correct credientials\", function () {",
+							"   ",
+							"    pm.response.to.have.status(204);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{host}}/challenges/:id",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"challenges",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "{{challenge1ID}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User1 will create another challenge",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "bb7c5eff-6b7a-40b0-a07f-8190b188d295",
+						"exec": [
+							"pm.environment.set(\"challenge2ID\", pm.response.json()._id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "name",
+							"value": "Work Challenge",
+							"type": "text"
+						},
+						{
+							"key": "start_date",
+							"value": "02-17-2019",
+							"type": "text"
+						},
+						{
+							"key": "activity",
+							"value": "WALK",
+							"type": "text"
+						},
+						{
+							"key": "measurement",
+							"value": "KM",
+							"type": "text"
+						},
+						{
+							"key": "duration",
+							"value": "2",
+							"type": "text"
+						},
+						{
+							"key": "participants",
+							"value": "",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "{{host}}/challenges",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"challenges"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User1 will invite User2 to a challenge",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "status",
+							"value": "0",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{host}}/challenges/:challengeID/participants/:participantID",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"challenges",
+						":challengeID",
+						"participants",
+						":participantID"
+					],
+					"variable": [
+						{
+							"key": "challengeID",
+							"value": "{{challenge2ID}}"
+						},
+						{
+							"key": "participantID",
+							"value": "{{user2ID}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User2 will reject the challenge",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token2}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "status",
+							"value": "3",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{host}}/challenges/:challengeID/participants/:participantID",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"challenges",
+						":challengeID",
+						"participants",
+						":participantID"
+					],
+					"variable": [
+						{
+							"key": "challengeID",
+							"value": "{{challenge2ID}}"
+						},
+						{
+							"key": "participantID",
+							"value": "{{user2ID}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Check to make sure user2 is not a participant",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "7aa059b8-5c02-4779-9011-58ebb98f1020",
+						"exec": [
+							"pm.test(\"Confirm user 2 is not listed as a participant\", function () {",
+							"   ",
+							"    var jsonData = pm.response.json();",
+							"    ",
+							"    pm.expect(jsonData.participants[0]).to.not.eql(pm.environment.get(\"user2ID\"));",
+							"});",
+							"",
+							"pm.test(\"Confirm that there aren't any pending challenges\", function (){",
+							"   ",
+							"    var jsonData = pm.response.json();",
+							"    ",
+							"    pm.expect(jsonData.pending_participants).to.eql([]);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{host}}/challenges/:challengeID",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"challenges",
+						":challengeID"
+					],
+					"variable": [
+						{
+							"key": "challengeID",
+							"value": "{{challenge2ID}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete a challenge with credientials of a user that is not a participant",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "4133fc71-8ef9-49d8-b441-376f6fa51997",
+						"exec": [
+							"pm.test(\"Confirm you receive a status code 403 after trying to delete a challenge without credientials of a user in that a participant of the challenge\", function () {",
+							"   ",
+							"    pm.response.to.have.status(403);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token2}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{host}}/challenges/:id",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"challenges",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "{{challenge2ID}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete a challenge with correct credientials (challenge #2)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "4133fc71-8ef9-49d8-b441-376f6fa51997",
+						"exec": [
+							"pm.test(\"Confirm you receive a status code 204 after trying to delete a challenge with correct credientials\", function () {",
+							"   ",
+							"    pm.response.to.have.status(204);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{host}}/challenges/:id",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"challenges",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "{{challenge2ID}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User1 will send User2 and User3 a message",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "bb7c5eff-6b7a-40b0-a07f-8190b188d295",
+						"exec": [
+							"pm.test(\"Confirm you receive a status code 200 after creating a new conversation\", function () {",
+							"   ",
+							"    pm.response.to.have.status(200);",
+							"    pm.environment.set(\"conversation1ID\", pm.response.json()._id);",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"content\": \"Hi, how are you\",\n\t\"recipient\": [\"{{user2ID}}\",\"{{user3ID}}\"]\n}\n\t"
+				},
+				"url": {
+					"raw": "{{host}}/conversations",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"conversations"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Check conversation to see if message content is stored",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "5a8e7e2f-ef51-4de2-9db2-fabdaef6fb51",
+						"exec": [
+							"pm.test(\"Confirm sender ID is in message field of conversation\", function () {",
+							"   ",
+							"    var jsonData = pm.response.json();",
+							"    ",
+							"    pm.expect(jsonData.messages[0].sender).to.eql(pm.environment.get(\"user1ID\"));",
+							"});",
+							"",
+							"pm.test(\"Confirm message content is in message field of conversation\", function () {",
+							"   ",
+							"    var jsonData = pm.response.json();",
+							"    ",
+							"    pm.expect(jsonData.messages[0].content).to.eql(\"Hi, how are you\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "{{host}}/conversations/:conversationID",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"conversations",
+						":conversationID"
+					],
+					"variable": [
+						{
+							"key": "conversationID",
+							"value": "{{conversation1ID}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User2 will send User1 and User3 a message",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "bb7c5eff-6b7a-40b0-a07f-8190b188d295",
+						"exec": [
+							"pm.test(\"Confirm you receive a status code 200 after updating a new conversation\", function () {",
+							"   ",
+							"    pm.response.to.have.status(200);",
+							"    pm.environment.set(\"message1ID\", pm.response.json().messages[1]._id);",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token2}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"content\": \"I am doing well, how are you user 3\"\n}\n\t"
+				},
+				"url": {
+					"raw": "{{host}}/conversations/:conversationID",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"conversations",
+						":conversationID"
+					],
+					"variable": [
+						{
+							"key": "conversationID",
+							"value": "{{conversation1ID}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User4 will send User1 and User3 a message  when not a participant in conversation",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "bb7c5eff-6b7a-40b0-a07f-8190b188d295",
+						"exec": [
+							"pm.test(\"Confirm you receive a status code 403 after trying to send a message in conversation where user isn't a participant\", function () {",
+							"   ",
+							"    pm.response.to.have.status(403);",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token4}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"content\": \"I am doing well, how are you user 3\"\n}\n\t"
+				},
+				"url": {
+					"raw": "{{host}}/conversations/:conversationID",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"conversations",
+						":conversationID"
+					],
+					"variable": [
+						{
+							"key": "conversationID",
+							"value": "{{conversation1ID}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Check conversation to see if message content is stored",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "5a8e7e2f-ef51-4de2-9db2-fabdaef6fb51",
+						"exec": [
+							"pm.test(\"Confirm sender ID is in message field of challenge\", function () {",
+							"   ",
+							"    var jsonData = pm.response.json();",
+							"    ",
+							"    pm.expect(jsonData.messages[1].sender).to.eql(pm.environment.get(\"user2ID\"));",
+							"});",
+							"",
+							"pm.test(\"Confirm message content is in message field of conversation\", function () {",
+							"   ",
+							"    var jsonData = pm.response.json();",
+							"    ",
+							"    pm.expect(jsonData.messages[1].content).to.eql(\"I am doing well, how are you user 3\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "{{host}}/conversations/:conversationID",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"conversations",
+						":conversationID"
+					],
+					"variable": [
+						{
+							"key": "conversationID",
+							"value": "{{conversation1ID}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User2 will update the message sent but not have anything in the field content",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "bb7c5eff-6b7a-40b0-a07f-8190b188d295",
+						"exec": [
+							"pm.test(\"Confirm you receive a status code 422 after trying to update a message in conversation where the content field is not included \", function () {",
+							"   ",
+							"    pm.response.to.have.status(422);",
+							"});",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token2}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{host}}/conversations/:conversationID/messages/:messageID",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"conversations",
+						":conversationID",
+						"messages",
+						":messageID"
+					],
+					"variable": [
+						{
+							"key": "conversationID",
+							"value": "{{conversation1ID}}"
+						},
+						{
+							"key": "messageID",
+							"value": "{{message1ID}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User2 will update the message sent",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "bb7c5eff-6b7a-40b0-a07f-8190b188d295",
+						"exec": [
+							"pm.test(\"Confirm updated message content is in message field of conversation\", function () {",
+							"   ",
+							"    var jsonData = pm.response.json();",
+							"    ",
+							"    pm.expect(jsonData.messages[1].content).to.eql(\"I am doing really well, how are you user 3\");",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token2}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"content\": \"I am doing really well, how are you user 3\"\n}\n\t"
+				},
+				"url": {
+					"raw": "{{host}}/conversations/:conversationID/messages/:messageID",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"conversations",
+						":conversationID",
+						"messages",
+						":messageID"
+					],
+					"variable": [
+						{
+							"key": "conversationID",
+							"value": "{{conversation1ID}}"
+						},
+						{
+							"key": "messageID",
+							"value": "{{message1ID}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User1 will try to update the message sent by User2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "bb7c5eff-6b7a-40b0-a07f-8190b188d295",
+						"exec": [
+							"pm.test(\"Confirm you receive a status code 403 after trying to see a conversation where user isn't a participant\", function () {",
+							"   ",
+							"    pm.response.to.have.status(403);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"content\": \"I am doing really well, how are you user 3\"\n}\n\t"
+				},
+				"url": {
+					"raw": "{{host}}/conversations/:conversationID/messages/:messageID",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"conversations",
+						":conversationID",
+						"messages",
+						":messageID"
+					],
+					"variable": [
+						{
+							"key": "conversationID",
+							"value": "{{conversation1ID}}"
+						},
+						{
+							"key": "messageID",
+							"value": "{{message1ID}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User2 will add User4 to the conversation",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "bb7c5eff-6b7a-40b0-a07f-8190b188d295",
+						"exec": [
+							"pm.test(\"Confirm you receive a status code 200 after updating a new conversation\", function () {",
+							"   ",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Confirm user 4 is listed as a participant in the conversation\", function () {",
+							"   ",
+							"    var jsonData = pm.response.json();",
+							"    ",
+							"    pm.expect(jsonData.participants[3]).to.eql(pm.environment.get(\"user4ID\"));",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token2}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"recipient\": [\"{{user4ID}}\"]\n}\n\t"
+				},
+				"url": {
+					"raw": "{{host}}/conversations/:conversationID",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"conversations",
+						":conversationID"
+					],
+					"variable": [
+						{
+							"key": "conversationID",
+							"value": "{{conversation1ID}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Check to make sure conversation is listed for user4",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "5a8e7e2f-ef51-4de2-9db2-fabdaef6fb51",
+						"exec": [
+							"pm.test(\"Confirm conversation is listed for user4\", function () {",
+							"   ",
+							"    var jsonData = pm.response.json();",
+							"    ",
+							"    pm.expect(jsonData.conversations[0]).to.eql(pm.environment.get(\"conversation1ID\"));",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token4}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "{{host}}/users/:id",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"users",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "{{user4ID}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Check conversation to see if message content is stored",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "5a8e7e2f-ef51-4de2-9db2-fabdaef6fb51",
+						"exec": [
+							"pm.test(\"Confirm user4 is not a participant of the conversation\", function () {",
+							"   ",
+							"    var participants = pm.response.json().participants;",
+							"    var flag = 0;",
+							"    var userID = pm.environment.get(\"user4ID\");",
+							"    ",
+							"    for (i = 0; i < participants.length; i++)",
+							"    {",
+							"        if (participants[i] == userID) flag = 1;",
+							"    }",
+							"    ",
+							"    ",
+							"    pm.expect(flag).to.eql(1);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "{{host}}/conversations/:conversationID",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"conversations",
+						":conversationID"
+					],
+					"variable": [
+						{
+							"key": "conversationID",
+							"value": "{{conversation1ID}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User 1 will try to delete a message that was sent by User2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "5a8e7e2f-ef51-4de2-9db2-fabdaef6fb51",
+						"exec": [
+							"pm.test(\"Confirm you receive a status code 403 after trying to see a conversation where user isn't a participant\", function () {",
+							"   ",
+							"    pm.response.to.have.status(403);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "{{host}}/conversations/:conversationID/messages/:messageID",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"conversations",
+						":conversationID",
+						"messages",
+						":messageID"
+					],
+					"variable": [
+						{
+							"key": "conversationID",
+							"value": "{{conversation1ID}}"
+						},
+						{
+							"key": "messageID",
+							"value": "{{message1ID}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User 2 will delete a message from the conversation",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "5a8e7e2f-ef51-4de2-9db2-fabdaef6fb51",
+						"exec": [
+							"pm.test(\"Confirm you get a status code 204 when you delete a message\", function () {",
+							"   ",
+							"    pm.response.to.have.status(204);",
+							"    ",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token2}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "{{host}}/conversations/:conversationID/messages/:messageID",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"conversations",
+						":conversationID",
+						"messages",
+						":messageID"
+					],
+					"variable": [
+						{
+							"key": "conversationID",
+							"value": "{{conversation1ID}}"
+						},
+						{
+							"key": "messageID",
+							"value": "{{message1ID}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Check conversation after deleting message",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "5a8e7e2f-ef51-4de2-9db2-fabdaef6fb51",
+						"exec": [
+							"pm.test(\"Confirm message content is in message field of conversation is correct and the number of messages is decreased\", function () {",
+							"   ",
+							"    var jsonData = pm.response.json();",
+							"    ",
+							"    pm.expect(jsonData.messages[0].content).to.eql(\"Hi, how are you\");",
+							"    pm.expect(jsonData.messages.length).to.eql(1);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "{{host}}/conversations/:conversationID",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"conversations",
+						":conversationID"
+					],
+					"variable": [
+						{
+							"key": "conversationID",
+							"value": "{{conversation1ID}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Remove user 4 from the conversation",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "5a8e7e2f-ef51-4de2-9db2-fabdaef6fb51",
+						"exec": [
+							"pm.test(\"Confirm status code is 200 after user4 leaves conversation\", function () {",
+							"   ",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token4}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "{{host}}/conversations/:conversationID/participants",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"conversations",
+						":conversationID",
+						"participants"
+					],
+					"variable": [
+						{
+							"key": "conversationID",
+							"value": "{{conversation1ID}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Check to make sure conversation isn't listed for user4",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "5a8e7e2f-ef51-4de2-9db2-fabdaef6fb51",
+						"exec": [
+							"pm.test(\"Confirm conversation is listed for user4\", function () {",
+							"   ",
+							"    var jsonData = pm.response.json();",
+							"    ",
+							"    pm.expect(jsonData.conversations.length).to.eql(0);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token4}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "{{host}}/users/:id",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"users",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "{{user4ID}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Check conversation to confirm user4 is not a participant of the conversation",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "5a8e7e2f-ef51-4de2-9db2-fabdaef6fb51",
+						"exec": [
+							"pm.test(\"Confirm user4 is not a participant of the conversation\", function () {",
+							"   ",
+							"    var participants = pm.response.json().participants;",
+							"    var flag = 0;",
+							"    var userID = pm.environment.get(\"user4ID\");",
+							"    ",
+							"    for (i = 0; i < participants.length; i++)",
+							"    {",
+							"        if (participants[i] == userID) flag = 1;",
+							"    }",
+							"    ",
+							"    ",
+							"    pm.expect(flag).to.eql(0);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "{{host}}/conversations/:conversationID",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"conversations",
+						":conversationID"
+					],
+					"variable": [
+						{
+							"key": "conversationID",
+							"value": "{{conversation1ID}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Check to make sure user4 can't access the conversation",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "bb7c5eff-6b7a-40b0-a07f-8190b188d295",
+						"exec": [
+							"pm.test(\"Confirm you receive a status code 403 after trying to see a conversation where user isn't a participant\", function () {",
+							"   ",
+							"    pm.response.to.have.status(403);",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token4}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{host}}/conversations/:conversationID",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"conversations",
+						":conversationID"
+					],
+					"variable": [
+						{
+							"key": "conversationID",
+							"value": "{{conversation1ID}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User1 will retrieve all activities before creating new ones",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "b05f21b9-f663-44bd-9eaa-4509f66fe436",
+						"exec": [
+							"pm.environment.set(\"numberOfActivitiesPre\", pm.response.json().length);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{host}}/activities",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"activities"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User1 will create a running activity in March",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "10fbb0c8-c7e1-4e8c-a45a-4e2aaf690027",
+						"exec": [
+							"pm.test(\"Confirm you receive a 200 status code after creating an activity\", function () {",
+							"   ",
+							"    pm.response.to.have.status(200);",
+							"    pm.environment.set(\"activity1ID\", pm.response.json()._id);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "description",
+							"value": "Running around the lake",
+							"type": "text"
+						},
+						{
+							"key": "type",
+							"value": "RUNNING",
+							"type": "text"
+						},
+						{
+							"key": "date",
+							"value": "03-01-2019",
+							"type": "text"
+						},
+						{
+							"key": "measurement",
+							"value": "DISTANCE",
+							"type": "text"
+						},
+						{
+							"key": "units",
+							"value": "kilometers",
+							"type": "text"
+						},
+						{
+							"key": "value",
+							"value": "10",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{host}}/activities",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"activities"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User1 will retrieve the contents of the activity",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "10fbb0c8-c7e1-4e8c-a45a-4e2aaf690027",
+						"exec": [
+							"pm.test(\"Confirm you receive the activity of user1\", function () {",
+							"   ",
+							"    pm.response.to.have.status(200);",
+							"    pm.expect(pm.response.json().description).to.eql(\"Running around the lake\");",
+							"    pm.expect(pm.response.json().type).to.eql(\"RUNNING\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{host}}/activities/:id",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"activities",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "{{activity1ID}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User1 will update an activity",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "description",
+							"value": "Running around the lake",
+							"type": "text"
+						},
+						{
+							"key": "type",
+							"value": "BIKING",
+							"type": "text"
+						},
+						{
+							"key": "date",
+							"value": "03-01-2019",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "measurement",
+							"value": "TIME",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "units",
+							"value": "kilometers",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "value",
+							"value": "10",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "{{host}}/activities/:id",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"activities",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "{{activity1ID}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User2 will try to update user1's activity",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "5b74587c-7bf9-4dc1-a79e-067e7bf1103c",
+						"exec": [
+							"pm.test(\"Confirm you receive a 403 status code after attempting to update a another user's activity\", function () {",
+							"   ",
+							"    pm.response.to.have.status(403);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token2}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "description",
+							"value": "Running around the lake",
+							"type": "text"
+						},
+						{
+							"key": "type",
+							"value": "BIKING",
+							"type": "text"
+						},
+						{
+							"key": "date",
+							"value": "03-01-2019",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "measurement",
+							"value": "TIME",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "units",
+							"value": "kilometers",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "value",
+							"value": "10",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "{{host}}/activities/:id",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"activities",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "{{activity1ID}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User1 will create a running activity in February",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "10fbb0c8-c7e1-4e8c-a45a-4e2aaf690027",
+						"exec": [
+							"pm.test(\"Confirm you receive a 200 status code after creating an activity\", function () {",
+							"   ",
+							"    pm.response.to.have.status(200);",
+							"    pm.environment.set(\"activity2ID\", pm.response.json()._id);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "description",
+							"value": "Running around the lake",
+							"type": "text"
+						},
+						{
+							"key": "type",
+							"value": "RUNNING",
+							"type": "text"
+						},
+						{
+							"key": "date",
+							"value": "02-01-2019",
+							"type": "text"
+						},
+						{
+							"key": "measurement",
+							"value": "TIME",
+							"type": "text"
+						},
+						{
+							"key": "units",
+							"value": "kilometers",
+							"type": "text"
+						},
+						{
+							"key": "value",
+							"value": "10",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{host}}/activities",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"activities"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User1 will create an running activity in March",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "10fbb0c8-c7e1-4e8c-a45a-4e2aaf690027",
+						"exec": [
+							"pm.test(\"Confirm you receive a 200 status code after creating an activity\", function () {",
+							"   ",
+							"    pm.response.to.have.status(200);",
+							"    pm.environment.set(\"activity3ID\", pm.response.json()._id);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "description",
+							"value": "Running around the gym",
+							"type": "text"
+						},
+						{
+							"key": "type",
+							"value": "RUNNING",
+							"type": "text"
+						},
+						{
+							"key": "date",
+							"value": "03-01-2019",
+							"type": "text"
+						},
+						{
+							"key": "measurement",
+							"value": "DISTANCE",
+							"type": "text"
+						},
+						{
+							"key": "units",
+							"value": "kilometers",
+							"type": "text"
+						},
+						{
+							"key": "value",
+							"value": "5",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{host}}/activities",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"activities"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User1 will create another running activity in March",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "10fbb0c8-c7e1-4e8c-a45a-4e2aaf690027",
+						"exec": [
+							"pm.test(\"Confirm you receive a 200 status code after creating an activity\", function () {",
+							"   ",
+							"    pm.response.to.have.status(200);",
+							"    pm.environment.set(\"activity4ID\", pm.response.json()._id);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "description",
+							"value": "Running around the lake",
+							"type": "text"
+						},
+						{
+							"key": "type",
+							"value": "RUNNING",
+							"type": "text"
+						},
+						{
+							"key": "date",
+							"value": "03-30-2019",
+							"type": "text"
+						},
+						{
+							"key": "measurement",
+							"value": "DISTANCE",
+							"type": "text"
+						},
+						{
+							"key": "units",
+							"value": "kilometers",
+							"type": "text"
+						},
+						{
+							"key": "value",
+							"value": "10",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{host}}/activities",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"activities"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User2 will create a running activity in March",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "10fbb0c8-c7e1-4e8c-a45a-4e2aaf690027",
+						"exec": [
+							"pm.test(\"Confirm you receive a 200 status code after creating an activity\", function () {",
+							"   ",
+							"    pm.response.to.have.status(200);",
+							"    pm.environment.set(\"activity5ID\", pm.response.json()._id);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token2}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "description",
+							"value": "Running around the lake",
+							"type": "text"
+						},
+						{
+							"key": "type",
+							"value": "RUNNING",
+							"type": "text"
+						},
+						{
+							"key": "date",
+							"value": "03-30-2019",
+							"type": "text"
+						},
+						{
+							"key": "measurement",
+							"value": "DISTANCE",
+							"type": "text"
+						},
+						{
+							"key": "units",
+							"value": "kilometers",
+							"type": "text"
+						},
+						{
+							"key": "value",
+							"value": "10",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{host}}/activities",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"activities"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Check to make sure the number of activities have increased",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "b05f21b9-f663-44bd-9eaa-4509f66fe436",
+						"exec": [
+							"pm.test(\"Confirm there the length of activities have increased by 5\", function () {",
+							"    var expectedLength = pm.environment.get(\"numberOfActivitiesPre\") + 5;",
+							"    pm.expect(pm.response.json().length).to.eql(expectedLength);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{host}}/activities",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"activities"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User1 will retrieve all running activities",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "b05f21b9-f663-44bd-9eaa-4509f66fe436",
+						"exec": [
+							"pm.test(\"Confirm there are 3 running activities for user 1\", function () {",
+							"   ",
+							"    pm.expect(pm.response.json().length).to.eql(3);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{host}}/activities/?user_id={{user1ID}}&type=RUNNING",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"activities",
+						""
+					],
+					"query": [
+						{
+							"key": "user_id",
+							"value": "{{user1ID}}"
+						},
+						{
+							"key": "type",
+							"value": "RUNNING"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User1 will retrieve all running activities in March",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "b05f21b9-f663-44bd-9eaa-4509f66fe436",
+						"exec": [
+							"pm.test(\"Confirm there are 2 running activities in March for user 1\", function () {",
+							"   ",
+							"    pm.expect(pm.response.json().length).to.eql(2);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{host}}/activities/?user_id={{user1ID}}&type=RUNNING&start_date=2019-03-01&end_date=2019-03-31",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"activities",
+						""
+					],
+					"query": [
+						{
+							"key": "user_id",
+							"value": "{{user1ID}}"
+						},
+						{
+							"key": "type",
+							"value": "RUNNING"
+						},
+						{
+							"key": "start_date",
+							"value": "2019-03-01"
+						},
+						{
+							"key": "end_date",
+							"value": "2019-03-31"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User 2 will attempt to delete the activity of user 1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "53104e90-744d-4c3c-8c37-358a84379698",
+						"exec": [
+							"pm.test(\"Confirm you receive a 403 status code after attempting to delete another user's activity\", function () {",
+							"   ",
+							"    pm.response.to.have.status(403);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token2}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{host}}/activities/:id",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"activities",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "{{activity1ID}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User 1 will delete the activity they created",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{host}}/activities/:id",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"activities",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "{{activity1ID}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User1 will update an activity that has already been deleted",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "b05f21b9-f663-44bd-9eaa-4509f66fe436",
+						"exec": [
+							"pm.test(\"Confirm you receive a 404 status code after attempting to update an activity that has been deleted\", function () {",
+							"   ",
+							"    pm.response.to.have.status(404);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "description",
+							"value": "Running around the lake",
+							"type": "text"
+						},
+						{
+							"key": "type",
+							"value": "BIKING",
+							"type": "text"
+						},
+						{
+							"key": "date",
+							"value": "03-01-2019",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "measurement",
+							"value": "TIME",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "units",
+							"value": "kilometers",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "value",
+							"value": "10",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "{{host}}/activities/:id",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"activities",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "{{activity1ID}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User 1 will delete the activity they created",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{host}}/activities/:id",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"activities",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "{{activity2ID}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User 1 will delete the activity they created",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{host}}/activities/:id",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"activities",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "{{activity3ID}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User 1 will delete the activity they created",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{host}}/activities/:id",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"activities",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "{{activity4ID}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User 2 will delete the activity they created",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token2}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{host}}/activities/:id",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"activities",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "{{activity5ID}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User1 will create a new record",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "59f9b5b1-f964-4306-8f73-ddc061180768",
+						"exec": [
+							"pm.environment.set(\"recordID1\", pm.response.json()._id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "date",
+							"value": "03-10-2019",
+							"type": "text"
+						},
+						{
+							"key": "type",
+							"value": "20,000 Steps In A Day",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{host}}/records",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"records"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Check to make sure User1 has the record in their profile",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0dd0a891-422a-418e-bfe8-a7f596405cf7",
+						"exec": [
+							"pm.test(\"Confirm the record shows up in their user info\",  function() {",
+							"   ",
+							"    pm.expect(pm.response.json().records[pm.response.json().records.length - 1]).to.eql(pm.environment.get(\"recordID1\"));",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{host}}/users/:id",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"users",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "{{user1ID}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User1 will update a record",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "59f9b5b1-f964-4306-8f73-ddc061180768",
+						"exec": [
+							"pm.test(\"Confirm you receive a 200 status code after attempting to update a record\", function () {",
+							"   ",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "type",
+							"value": "30,000 Steps In A Day",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{host}}/records/:id",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"records",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "{{recordID1}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User1 will check to see that the record is updated",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "59f9b5b1-f964-4306-8f73-ddc061180768",
+						"exec": [
+							"pm.test(\"Confirm the record now contains the updated record\", function () {",
+							"   ",
+							"    pm.expect(pm.response.json().type).to.eql(\"30,000 Steps In A Day\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{host}}/records/:id",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"records",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "{{recordID1}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User1 will delete a record",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "59f9b5b1-f964-4306-8f73-ddc061180768",
+						"exec": [
+							"pm.test(\"Confirm you receive a 204 status code after attempting to delete a record\", function () {",
+							"   ",
+							"    pm.response.to.have.status(204);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{host}}/records/:id",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"records",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "{{recordID1}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Check to make sure User1 has no longer has the record in their profile",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0dd0a891-422a-418e-bfe8-a7f596405cf7",
+						"exec": [
+							"pm.test(\"Confirm the record does not show up in their user info\",  function() {",
+							"   var records = pm.response.json().records;",
+							"   ",
+							"   for (i = 0; i < records.length; i++)",
+							"   {",
+							"       pm.expect(records[i]).to.not.eql(pm.environment.get(\"recordID1\"));",
+							"       ",
+							"   }",
+							"    ",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{host}}/users/:id",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"users",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "{{user1ID}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete a user without authentication",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "4133fc71-8ef9-49d8-b441-376f6fa51997",
+						"exec": [
+							"pm.test(\"Confirm you receive a status code 401 Unauthorized after attempting to delete a user without correct credientials\", function () {",
+							"   ",
+							"    pm.response.to.have.status(401);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{host}}/users/:id",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"users",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "{{user1ID}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete a user with incorrect credentials",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "4133fc71-8ef9-49d8-b441-376f6fa51997",
+						"exec": [
+							"pm.test(\"Confirm you receive a status code 403 Forbidden after attempting to delete a user without correct credientials\", function () {",
+							"   ",
+							"    pm.response.to.have.status(403);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token2}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{host}}/users/:id",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"users",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "{{user1ID}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete user1 with correct credentials",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "4133fc71-8ef9-49d8-b441-376f6fa51997",
+						"exec": [
+							"pm.test(\"Confirm you receive a status code 204 after properly deleting a user with correct credientials\", function () {",
+							"   ",
+							"    pm.response.to.have.status(204);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{host}}/users/:id",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"users",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "{{user1ID}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete a user2 with correct credentials",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "4133fc71-8ef9-49d8-b441-376f6fa51997",
+						"exec": [
+							"pm.test(\"Confirm you receive a status code 204 after properly deleting a user with correct credientials\", function () {",
+							"   ",
+							"    pm.response.to.have.status(204);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token2}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{host}}/users/:id",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"users",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "{{user2ID}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete a user3 with correct credentials",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "4133fc71-8ef9-49d8-b441-376f6fa51997",
+						"exec": [
+							"pm.test(\"Confirm you receive a status code 204 after properly deleting a user with correct credientials\", function () {",
+							"   ",
+							"    pm.response.to.have.status(204);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token3}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{host}}/users/:id",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"users",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "{{user3ID}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete a user4 with correct credentials",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "4133fc71-8ef9-49d8-b441-376f6fa51997",
+						"exec": [
+							"pm.test(\"Confirm you receive a status code 204 after properly deleting a user with correct credientials\", function () {",
+							"   ",
+							"    pm.response.to.have.status(204);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token4}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{host}}/users/:id",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"users",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "{{user4ID}}"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

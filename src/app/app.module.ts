@@ -86,7 +86,7 @@ import { ActivitiesRecordsComponent } from './profile/activities-records/activit
     MatSortModule,
     HttpClientModule,
     ScrollDispatchModule,
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: true })
+    ServiceWorkerModule.register('src/ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [AuthGuard, ResolveGuard, AuthService, CdkColumnDef, DatePipe],
   bootstrap: [AppComponent]
